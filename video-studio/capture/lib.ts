@@ -24,16 +24,20 @@ const OVERLAY = `
 
 export type Session = { browser: Browser; context: BrowserContext; page: Page; pos: { x: number; y: number } };
 
-export async function startSession(videoDir: string, baseURL: string): Promise<Session> {
+export type SessionOpts = { viewport?: { width: number; height: number }; initScripts?: string[] };
+
+/** Records at 1920x1080. A smaller viewport is NOT upscaled (Playwright pads it with grey): keep 1920x1080 and enlarge the UI with an init script (e.g. `body{zoom:1.3333}`). */
+export async function startSession(videoDir: string, baseURL: string, opts: SessionOpts = {}): Promise<Session> {
   const browser = await chromium.launch();
   const context = await browser.newContext({
-    viewport: { width: 1920, height: 1080 },
+    viewport: opts.viewport ?? { width: 1920, height: 1080 },
     deviceScaleFactor: 1,
     colorScheme: "dark",
     baseURL,
     recordVideo: { dir: videoDir, size: { width: 1920, height: 1080 } }
   });
   await context.addInitScript(OVERLAY);
+  for (const s of opts.initScripts ?? []) await context.addInitScript(s);
   const page = await context.newPage();
   return { browser, context, page, pos: { x: 960, y: 540 } };
 }
