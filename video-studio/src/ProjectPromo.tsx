@@ -1,11 +1,12 @@
-import { AbsoluteFill, Easing, interpolate, OffthreadVideo, Sequence, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import { AbsoluteFill, Easing, interpolate, Sequence, useCurrentFrame, useVideoConfig } from "remotion";
+import { ClipFrame, ClipWindow } from "./components/ClipFrame";
+import { PainGraphic } from "./components/PainGraphic";
 import { CalloutBadge } from "./components/Callout";
 import { EndCard } from "./components/EndCard";
 import { CornerBrackets, GridBackground } from "./components/GridBackground";
 import { KineticText } from "./components/KineticText";
 import { MetricCounter } from "./components/MetricCounter";
 import { NeonTitle } from "./components/NeonTitle";
-import { ZoomPan } from "./components/ZoomPan";
 import { theme, titleFont } from "./theme";
 import type { PromoProps, Scene } from "./types";
 
@@ -17,6 +18,19 @@ const Sweep: React.FC<{ frames: number }> = ({ frames }) => {
     <AbsoluteFill style={{ pointerEvents: "none" }}>
       <div style={{ position: "absolute", top: 0, bottom: 0, left: `${x}%`, width: "30%", background: `linear-gradient(90deg, transparent, ${theme.accent}55, transparent)`, transform: "skewX(-20deg)" }} />
     </AbsoluteFill>
+  );
+};
+
+let FPS = 30;
+
+const TrioPanelView: React.FC<{ p: NonNullable<Scene["panels"]>[number] }> = ({ p }) => {
+  const f = useCurrentFrame();
+  const t = interpolate(f - p.delaySec * FPS, [0, 14], [0, 1], { easing: Easing.out(Easing.cubic), extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const bob = Math.sin(f / 24 + p.x) * 6;
+  return (
+    <div style={{ position: "absolute", left: 0, top: 0, opacity: t, transform: `translateY(${(1 - t) * 80 + bob}px)` }}>
+      <ClipWindow clip={p.clip} startSec={p.startSec} rate={p.rate} crop={p.crop} w={p.w} style={{ left: p.x, top: p.y }} />
+    </div>
   );
 };
 
@@ -36,20 +50,62 @@ const SceneBody: React.FC<{ s: Scene }> = ({ s }) => {
           <KineticText text={s.text ?? ""} size={80} color={theme.danger} />
         </AbsoluteFill>
       );
-    case "clip":
+    case "pain":
       return (
         <AbsoluteFill>
-          <ZoomPan from={s.zoom?.from} to={s.zoom?.to}>
-            {s.clip && <OffthreadVideo src={staticFile(s.clip)} muted style={{ width: 1920, height: 1080 }} />}
-          </ZoomPan>
-          {s.callouts?.map((c) => <CalloutBadge key={c.n} c={c} />)}
+          <div style={{ position: "absolute", top: 90, left: 0, right: 0, display: "flex", justifyContent: "center" }}>
+            <KineticText text={s.text ?? ""} size={64} color={theme.text} />
+          </div>
+          <PainGraphic />
+        </AbsoluteFill>
+      );
+    case "trio":
+      return (
+        <AbsoluteFill>
+          <div style={{ position: "absolute", top: 70, left: 0, right: 0 }}>
+            <NeonTitle text={s.text ?? ""} size={84} />
+          </div>
+          {s.panels?.map((p, i) => <TrioPanelView key={i} p={p} />)}
+        </AbsoluteFill>
+      );
+    case "clip": {
+      const mode = s.frame ?? "inset";
+      let at = 0;
+      return (
+        <AbsoluteFill>
+          {s.segments?.map((g, i) => {
+            const d = Math.round(g.durationSec * FPS);
+            const from = at;
+            at += d;
+            return (
+              <Sequence key={i} from={from} durationInFrames={d} layout="none">
+                <ClipFrame clip={g.clip} startSec={g.startSec} rate={g.rate} zoom={g.zoom} mode={mode}>
+                  {g.callouts?.map((c) => <CalloutBadge key={c.n} c={c} />)}
+                </ClipFrame>
+              </Sequence>
+            );
+          })}
           {s.text && (
-            <div style={{ position: "absolute", left: 96, bottom: 80, fontFamily: titleFont, fontWeight: 700, fontSize: 52, color: theme.text, background: "#000000cc", padding: "10px 22px", borderLeft: `6px solid ${theme.accent}` }}>{s.text}</div>
+            mode === "full" ? (
+              <div style={{ position: "absolute", left: 96, bottom: 150, maxWidth: 1300, fontFamily: titleFont, fontWeight: 700, fontSize: 52, color: theme.text, background: "#000000d9", padding: "12px 24px", borderLeft: `6px solid ${theme.accent}` }}>{s.text}</div>
+            ) : (
+              <div style={{ position: "absolute", left: 204, top: 24, fontFamily: titleFont, fontWeight: 700, fontSize: 40, color: theme.text, background: "#000000cc", padding: "6px 20px", borderLeft: `6px solid ${theme.accent}` }}>{s.text}</div>
+            )
           )}
         </AbsoluteFill>
       );
+    }
     case "metric":
-      return <AbsoluteFill style={center}>{s.metric && <MetricCounter m={s.metric} />}</AbsoluteFill>;
+      return (
+        <AbsoluteFill style={center}>
+          {s.backdrop && (
+            <AbsoluteFill style={{ opacity: 0.16, filter: "blur(6px)" }}>
+              <ClipFrame clip={s.backdrop.clip} startSec={s.backdrop.startSec} mode="full" />
+            </AbsoluteFill>
+          )}
+          {s.metric && <MetricCounter m={s.metric} />}
+        </AbsoluteFill>
+      );
     case "end":
       return <AbsoluteFill style={center}>{s.end && <EndCard e={s.end} />}</AbsoluteFill>;
   }
@@ -66,7 +122,10 @@ const Subtitles: React.FC<{ cues: NonNullable<PromoProps["subtitles"]> }> = ({ c
   );
 };
 
-export const ProjectPromo: React.FC<PromoProps & { burnSubtitles?: boolean }> = ({ scenes, fps, transitionFrames, subtitles, burnSubtitles }) => {
+export const ProjectPromo: React.FC<PromoProps & { burnSubtitles?: boolean }> = ({ scenes, fps, transitionFrames, subtitles, burnSubtitles, fadeOutSec }) => {
+  FPS = fps;
+  const { durationInFrames } = useVideoConfig();
+  const frame = useCurrentFrame();
   let start = 0;
   return (
     <AbsoluteFill style={{ background: theme.bg }}>
@@ -76,13 +135,14 @@ export const ProjectPromo: React.FC<PromoProps & { burnSubtitles?: boolean }> = 
         start += dur;
         return (
           <Sequence key={s.id} from={from} durationInFrames={dur} name={s.id}>
-            {s.kind !== "clip" && <GridBackground dim={s.kind === "metric" ? 0.6 : 1} />}
-            {s.kind !== "clip" && <CornerBrackets />}
+            {!(s.kind === "clip" && s.frame === "full") && <GridBackground dim={s.kind === "metric" ? 0.6 : 1} />}
+            {!(s.kind === "clip" && s.frame === "full") && <CornerBrackets />}
             <SceneBody s={s} />
             {i > 0 && <Sweep frames={transitionFrames} />}
           </Sequence>
         );
       })}
+      {fadeOutSec ? <AbsoluteFill style={{ background: "#000", opacity: interpolate(frame, [durationInFrames - fadeOutSec * fps, durationInFrames], [0, 1], { extrapolateLeft: "clamp" }) }} /> : null}
       {burnSubtitles && subtitles && <Subtitles cues={subtitles} />}
     </AbsoluteFill>
   );

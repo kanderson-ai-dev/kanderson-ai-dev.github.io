@@ -1,0 +1,419 @@
+{
+  "slug": "supply-chain-compliance-copilot-py",
+  "title": "Supply Chain Compliance Co-Pilot",
+  "fps": 30,
+  "transitionFrames": 8,
+  "fadeOutSec": 1.5,
+  "scenes": [
+    {
+      "id": "hook",
+      "durationSec": 7,
+      "kind": "clip",
+      "frame": "full",
+      "text": "An audit goes in. A cited risk score and an action plan come out",
+      "voice": {
+        "id": "s01",
+        "atSec": 0.4
+      },
+      "segments": [
+        {
+          "clip": "clips/03-report.webm",
+          "startSec": 0,
+          "durationSec": 7,
+          "zoom": {
+            "from": {
+              "x": 0,
+              "y": 0,
+              "w": 1920,
+              "h": 1080
+            },
+            "to": {
+              "x": 96,
+              "y": 54,
+              "w": 1728,
+              "h": 972
+            }
+          },
+          "rate": 0.6
+        }
+      ],
+      "sfx": [
+        {
+          "sfx": "hit",
+          "atSec": 0.2
+        },
+        {
+          "sfx": "glitch",
+          "atSec": 0.3
+        }
+      ]
+    },
+    {
+      "id": "problem",
+      "durationSec": 9,
+      "kind": "pain",
+      "text": "Reviewing a supplier audit takes hours",
+      "voice": {
+        "id": "s02",
+        "atSec": 0.4
+      },
+      "sfx": []
+    },
+    {
+      "id": "solution",
+      "durationSec": 11,
+      "kind": "trio",
+      "text": "Supply Chain Compliance Co-Pilot",
+      "voice": {
+        "id": "s03",
+        "atSec": 0.4
+      },
+      "panels": [
+        {
+          "clip": "clips/01-intake-run.webm",
+          "startSec": 14.5,
+          "rate": 0.25,
+          "crop": {
+            "x": 200,
+            "y": 150,
+            "w": 1400,
+            "h": 788
+          },
+          "x": 40,
+          "y": 430,
+          "w": 720,
+          "delaySec": 1.2
+        },
+        {
+          "clip": "clips/02-review.webm",
+          "startSec": 9,
+          "rate": 0.5,
+          "crop": {
+            "x": 420,
+            "y": 40,
+            "w": 1080,
+            "h": 608
+          },
+          "x": 1160,
+          "y": 430,
+          "w": 720,
+          "delaySec": 2.0
+        },
+        {
+          "clip": "clips/03-report.webm",
+          "startSec": 0.5,
+          "rate": 0.5,
+          "crop": {
+            "x": 230,
+            "y": 0,
+            "w": 1460,
+            "h": 821
+          },
+          "x": 480,
+          "y": 290,
+          "w": 960,
+          "delaySec": 0.5
+        }
+      ],
+      "sfx": [
+        {
+          "sfx": "whoosh",
+          "atSec": 0.0
+        },
+        {
+          "sfx": "riser",
+          "atSec": 0.3,
+          "gain": 0.5
+        }
+      ]
+    },
+    {
+      "id": "feature1",
+      "durationSec": 13,
+      "kind": "clip",
+      "text": "A supervisor assembles the team",
+      "voice": {
+        "id": "s04",
+        "atSec": 0.4
+      },
+      "segments": [
+        {
+          "clip": "clips/01-intake-run.webm",
+          "startSec": 7.0,
+          "durationSec": 3.4,
+          "zoom": {
+            "from": {
+              "x": 200,
+              "y": 0,
+              "w": 1520,
+              "h": 855
+            },
+            "to": {
+              "x": 200,
+              "y": 300,
+              "w": 1520,
+              "h": 855
+            }
+          }
+        },
+        {
+          "clip": "clips/01-intake-run.webm",
+          "startSec": 13.8,
+          "durationSec": 9.6,
+          "rate": 0.4,
+          "zoom": {
+            "from": {
+              "x": 0,
+              "y": 0,
+              "w": 1920,
+              "h": 1080
+            },
+            "to": {
+              "x": 200,
+              "y": 230,
+              "w": 1200,
+              "h": 675
+            }
+          },
+          "callouts": [
+            {
+              "n": 1,
+              "text": "Live worker lanes",
+              "x": 1080,
+              "y": 640,
+              "atSec": 0.3
+            },
+            {
+              "n": 2,
+              "text": "Four pillars in parallel",
+              "x": 1080,
+              "y": 740,
+              "atSec": 3.0
+            }
+          ]
+        }
+      ],
+      "sfx": [
+        {
+          "sfx": "whoosh",
+          "atSec": 0.0
+        },
+        {
+          "sfx": "click",
+          "atSec": 3.0
+        }
+      ]
+    },
+    {
+      "id": "feature2",
+      "durationSec": 13,
+      "kind": "clip",
+      "text": "Each finding carries a verbatim quote",
+      "voice": {
+        "id": "s05",
+        "atSec": 0.4
+      },
+      "segments": [
+        {
+          "clip": "clips/03-report.webm",
+          "startSec": 4.8,
+          "durationSec": 13,
+          "rate": 0.1,
+          "zoom": {
+            "from": {
+              "x": 300,
+              "y": 100,
+              "w": 1320,
+              "h": 743
+            },
+            "to": {
+              "x": 660,
+              "y": 280,
+              "w": 1060,
+              "h": 596
+            }
+          },
+          "callouts": [
+            {
+              "n": 1,
+              "text": "Verbatim quote",
+              "x": 1080,
+              "y": 130,
+              "atSec": 2.5
+            },
+            {
+              "n": 2,
+              "text": "Checked against the audit",
+              "x": 1080,
+              "y": 900,
+              "atSec": 5.5
+            }
+          ]
+        }
+      ],
+      "sfx": [
+        {
+          "sfx": "whoosh",
+          "atSec": 0.0
+        },
+        {
+          "sfx": "click",
+          "atSec": 3.0
+        }
+      ]
+    },
+    {
+      "id": "feature3",
+      "durationSec": 13,
+      "kind": "clip",
+      "text": "Nothing is sent without a human decision",
+      "voice": {
+        "id": "s06",
+        "atSec": 0.4
+      },
+      "segments": [
+        {
+          "clip": "clips/02-review.webm",
+          "startSec": 5,
+          "durationSec": 9.5,
+          "rate": 1.26,
+          "zoom": {
+            "from": {
+              "x": 380,
+              "y": 40,
+              "w": 1160,
+              "h": 653
+            },
+            "to": {
+              "x": 380,
+              "y": 300,
+              "w": 1160,
+              "h": 653
+            }
+          },
+          "callouts": [
+            {
+              "n": 1,
+              "text": "Approve · Edit · Reject",
+              "x": 1230,
+              "y": 860,
+              "atSec": 1.0
+            }
+          ]
+        },
+        {
+          "clip": "clips/03-report.webm",
+          "startSec": 18.5,
+          "durationSec": 3.5,
+          "rate": 0.8,
+          "zoom": {
+            "from": {
+              "x": 200,
+              "y": 225,
+              "w": 1520,
+              "h": 855
+            },
+            "to": {
+              "x": 220,
+              "y": 460,
+              "w": 1100,
+              "h": 619
+            }
+          },
+          "callouts": [
+            {
+              "n": 2,
+              "text": "Audit chain verified",
+              "x": 700,
+              "y": 860,
+              "atSec": 0.5
+            }
+          ]
+        }
+      ],
+      "sfx": [
+        {
+          "sfx": "whoosh",
+          "atSec": 0.0
+        },
+        {
+          "sfx": "click",
+          "atSec": 1.5
+        },
+        {
+          "sfx": "click",
+          "atSec": 3.5
+        },
+        {
+          "sfx": "click",
+          "atSec": 6.0
+        },
+        {
+          "sfx": "whoosh",
+          "atSec": 9.5,
+          "gain": 0.5
+        }
+      ]
+    },
+    {
+      "id": "proof",
+      "durationSec": 10,
+      "kind": "metric",
+      "voice": {
+        "id": "s07",
+        "atSec": 0.4
+      },
+      "backdrop": {
+        "clip": "clips/03-report.webm",
+        "startSec": 5
+      },
+      "metric": {
+        "label": "Fabricated quotes",
+        "from": 10.4,
+        "to": 0,
+        "suffix": "%",
+        "versus": {
+          "label": "single bare prompt",
+          "value": "10.4%"
+        },
+        "note": "scorecard · 6 synthetic cases · pipeline vs bare-prompt baseline"
+      },
+      "sfx": [
+        {
+          "sfx": "whoosh",
+          "atSec": 0.0
+        },
+        {
+          "sfx": "riser",
+          "atSec": 0.0,
+          "gain": 0.6
+        },
+        {
+          "sfx": "impact",
+          "atSec": 1.6
+        }
+      ]
+    },
+    {
+      "id": "cta",
+      "durationSec": 7,
+      "kind": "end",
+      "voice": {
+        "id": "s08",
+        "atSec": 0.4
+      },
+      "end": {
+        "url": "kaarstenanderson.com",
+        "line": "Private repository · evaluation access on request",
+        "contact": "contact@kaarstenanderson.com",
+        "disclaimer": "Not affiliated with Sedex"
+      },
+      "sfx": [
+        {
+          "sfx": "stinger",
+          "atSec": 0.2
+        }
+      ]
+    }
+  ]
+}
