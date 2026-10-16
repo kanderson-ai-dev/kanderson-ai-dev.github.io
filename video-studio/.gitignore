@@ -1,0 +1,7 @@
+node_modules/
+out/
+.venv/
+__pycache__/
+*.wav
+*.mp4
+*.webm
