@@ -15,4 +15,5 @@ Record one row per track/effect actually used in a published video: URL, title, 
 
 | Title | Author | URL | License | Downloaded | Used in |
 |---|---|---|---|---|---|
-| _none yet_ | | | | | |
+| Space City (space_city_bpm115.mp3, 115 BPM) | MintoDog | https://opengameart.org/content/space-city | CC0 1.0 (public domain) | 2026-10-16 | supply-chain-compliance-copilot-py (base series track) |
+| UI click, whoosh, hit, glitch, riser, impact, stinger | Own synthesis (`video-studio/scripts/sfx.py`) | n/a | Original work, no third-party material | 2026-10-16 | all videos |
