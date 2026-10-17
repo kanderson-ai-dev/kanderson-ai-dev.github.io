@@ -138,7 +138,9 @@ export const Subtitles: React.FC<{ cues: NonNullable<PromoProps["subtitles"]>; b
   const cue = cues.find((c) => t >= c.from && t < c.to);
   if (!cue) return null;
   return (
-    <div style={{ position: "absolute", left: 40, right: 40, bottom, textAlign: "center", fontFamily: titleFont, fontWeight: 500, fontSize: size, color: "#fff", textShadow: "0 2px 8px #000, 0 0 3px #000", whiteSpace: "pre-line" }}>{cue.text}</div>
+    <div style={{ position: "absolute", left: 40, right: 40, bottom, textAlign: "center", fontFamily: titleFont, fontWeight: 500, fontSize: size, color: "#fff", textShadow: "0 2px 8px #000, 0 0 3px #000", whiteSpace: "pre-line" }}>
+      <span style={{ background: "rgba(4,10,14,0.78)", borderRadius: 14, padding: "8px 26px", boxDecorationBreak: "clone", WebkitBoxDecorationBreak: "clone", lineHeight: 1.7 } as React.CSSProperties}>{cue.text}</span>
+    </div>
   );
 };
 
