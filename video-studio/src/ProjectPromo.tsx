@@ -1,5 +1,6 @@
 import { AbsoluteFill, Easing, interpolate, Sequence, useCurrentFrame, useVideoConfig } from "remotion";
 import { ClipFrame, ClipWindow } from "./components/ClipFrame";
+import { HookFlow } from "./components/HookFlow";
 import { PainGraphic } from "./components/PainGraphic";
 import { CalloutBadge } from "./components/Callout";
 import { EndCard } from "./components/EndCard";
@@ -48,6 +49,15 @@ const SceneBody: React.FC<{ s: Scene }> = ({ s }) => {
       return (
         <AbsoluteFill style={center}>
           <KineticText text={s.text ?? ""} size={80} color={theme.danger} />
+        </AbsoluteFill>
+      );
+    case "flow":
+      return (
+        <AbsoluteFill>
+          <div style={{ position: "absolute", top: 90, left: 0, right: 0, display: "flex", justifyContent: "center" }}>
+            <KineticText text={s.text ?? ""} size={56} color={theme.text} />
+          </div>
+          <HookFlow />
         </AbsoluteFill>
       );
     case "pain":

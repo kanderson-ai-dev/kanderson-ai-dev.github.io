@@ -8,35 +8,12 @@
     {
       "id": "hook",
       "durationSec": 7,
-      "kind": "clip",
-      "frame": "inset",
+      "kind": "flow",
       "text": "An audit goes in. A cited risk score and an action plan come out",
       "voice": {
         "id": "s01",
         "atSec": 0.4
       },
-      "segments": [
-        {
-          "clip": "clips/03-report.webm",
-          "startSec": 1.8,
-          "durationSec": 7,
-          "rate": 0.5,
-          "zoom": {
-            "from": {
-              "x": 200,
-              "y": 0,
-              "w": 1520,
-              "h": 855
-            },
-            "to": {
-              "x": 250,
-              "y": 60,
-              "w": 1200,
-              "h": 675
-            }
-          }
-        }
-      ],
       "sfx": [
         {
           "sfx": "hit",

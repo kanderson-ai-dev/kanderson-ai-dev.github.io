@@ -9,7 +9,7 @@ export type TrioPanel = { clip: string; startSec: number; rate?: number; crop: R
 export type Scene = {
   id: string;
   durationSec: number;
-  kind: "title" | "problem" | "pain" | "clip" | "trio" | "metric" | "end";
+  kind: "title" | "problem" | "pain" | "flow" | "clip" | "trio" | "metric" | "end";
   voice?: { id: string; atSec: number };
   sfx?: { sfx: string; atSec: number; gain?: number }[];
   frame?: "full" | "inset";
