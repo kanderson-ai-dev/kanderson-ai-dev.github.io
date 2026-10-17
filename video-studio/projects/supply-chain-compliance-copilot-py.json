@@ -303,7 +303,7 @@
           "callouts": [
             {
               "n": 1,
-              "text": "Approve \u00b7 Edit \u00b7 Reject",
+              "text": "Approve · Edit · Reject",
               "x": 1130,
               "y": 600,
               "atSec": 0.6
@@ -527,7 +527,7 @@
           "label": "single bare prompt",
           "value": "10.4%"
         },
-        "note": "scorecard \u00b7 6 synthetic cases \u00b7 pipeline vs bare-prompt baseline"
+        "note": "scorecard · 6 synthetic cases · pipeline vs bare-prompt baseline"
       },
       "sfx": [
         {
@@ -555,7 +555,7 @@
       },
       "end": {
         "url": "kaarstenanderson.com",
-        "line": "Private repository \u00b7 evaluation access on request",
+        "line": "Private repository · evaluation access on request",
         "contact": "contact@kaarstenanderson.com"
       },
       "sfx": [
@@ -567,7 +567,7 @@
     }
   ],
   "thumb": {
-    "big": "0% fabricated quotes",
-    "sub": "Code decides. The model only phrases."
+    "big": "Multi-agent compliance",
+    "sub": "Code-controlled · 0% fabricated quotes"
   }
 }
