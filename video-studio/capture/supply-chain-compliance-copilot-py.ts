@@ -154,8 +154,18 @@ async function report() {
   await save(s, "03-report");
 }
 
+const MASK_ACTOR = `
+addEventListener('DOMContentLoaded', () => {
+  const fix = (root) => {
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    for (let n = w.nextNode(); n; n = w.nextNode()) if (/devin/i.test(n.nodeValue)) n.nodeValue = n.nodeValue.replace(/devin/gi, 'maintainer');
+  };
+  new MutationObserver(() => fix(document.body)).observe(document.body, { childList: true, subtree: true, characterData: true });
+  fix(document.body);
+});`;
+
 async function registry() {
-  const s = await startSession(resolve(WORK, "raw"), BASE, opts);
+  const s = await startSession(resolve(WORK, "raw"), BASE, { initScripts: [...opts.initScripts, MASK_ACTOR] });
   const p = s.page;
   await p.goto("/");
   await p.waitForSelector("nav");
