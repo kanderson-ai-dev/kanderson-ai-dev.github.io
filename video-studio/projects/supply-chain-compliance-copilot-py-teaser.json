@@ -1,0 +1,131 @@
+{
+  "slug": "supply-chain-compliance-copilot-py-teaser",
+  "title": "Supply Chain Compliance Co-Pilot",
+  "fps": 30,
+  "transitionFrames": 8,
+  "fadeOutSec": 1.0,
+  "scenes": [
+    {
+      "id": "hook",
+      "durationSec": 7,
+      "kind": "flow",
+      "voice": {
+        "id": "s01",
+        "atSec": 0.4
+      },
+      "sfx": [
+        {
+          "sfx": "hit",
+          "atSec": 0.2
+        },
+        {
+          "sfx": "glitch",
+          "atSec": 0.3
+        }
+      ],
+      "headline": "An audit goes in. A cited risk score and an action plan come out"
+    },
+    {
+      "id": "feature2",
+      "durationSec": 10,
+      "kind": "clip",
+      "voice": {
+        "id": "s05",
+        "atSec": 0.4
+      },
+      "segments": [
+        {
+          "clip": "clips/03-report.mp4",
+          "startSec": 4.2,
+          "durationSec": 10,
+          "rate": 0.15,
+          "zoom": {
+            "from": {
+              "x": 0,
+              "y": 0,
+              "w": 1920,
+              "h": 1080
+            },
+            "to": {
+              "x": 540,
+              "y": 330,
+              "w": 1120,
+              "h": 630
+            }
+          },
+          "callouts": [
+            {
+              "n": 1,
+              "text": "Verbatim quote",
+              "x": 1000,
+              "y": 150,
+              "atSec": 2.5
+            },
+            {
+              "n": 2,
+              "text": "Checked against the audit document",
+              "x": 700,
+              "y": 760,
+              "atSec": 5.5
+            }
+          ]
+        }
+      ],
+      "sfx": [
+        {
+          "sfx": "whoosh",
+          "atSec": 0.0
+        },
+        {
+          "sfx": "click",
+          "atSec": 2.5
+        }
+      ],
+      "headline": "Each finding carries a verbatim quote"
+    },
+    {
+      "id": "cta",
+      "durationSec": 5.5,
+      "kind": "end",
+      "voice": {
+        "id": "s08",
+        "atSec": 0.4
+      },
+      "end": {
+        "url": "kaarstenanderson.com",
+        "line": "Private repository \u00b7 evaluation access on request",
+        "contact": "contact@kaarstenanderson.com"
+      },
+      "sfx": [
+        {
+          "sfx": "stinger",
+          "atSec": 0.2
+        }
+      ],
+      "headline": null,
+      "stageScale": 0.8
+    }
+  ],
+  "subtitles": [
+    {
+      "from": 0.4,
+      "to": 6.35,
+      "text": "An audit goes in. A cited risk score and a\nhuman-approved action plan come out."
+    },
+    {
+      "from": 7.4,
+      "to": 13.243,
+      "text": "Each non-conformance carries a verbatim\nquote, checked against the uploaded audit."
+    },
+    {
+      "from": 13.243,
+      "to": 16.45,
+      "text": "Fabricated citations are dropped and\ncounted."
+    },
+    {
+      "from": 17.4,
+      "to": 20.975,
+      "text": "See the full case at kaarstenanderson.com."
+    }
+  ]
+}

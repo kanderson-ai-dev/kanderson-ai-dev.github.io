@@ -24,6 +24,8 @@ export type Scene = {
   callouts?: Callout[];
   metric?: { label: string; from: number; to: number; suffix: string; versus?: { label: string; value: string }; note?: string };
   end?: { url: string; line?: string; disclaimer?: string; contact?: string };
+  headline?: string;
+  stageScale?: number;
 };
 
 export type PromoProps = {
@@ -34,4 +36,5 @@ export type PromoProps = {
   transitionFrames: number;
   fadeOutSec?: number;
   subtitles?: { from: number; to: number; text: string }[];
+  thumb?: { big: string; sub?: string };
 };

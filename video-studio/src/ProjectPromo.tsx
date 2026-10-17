@@ -12,7 +12,7 @@ import { NeonTitle } from "./components/NeonTitle";
 import { theme, titleFont } from "./theme";
 import type { PromoProps, Scene } from "./types";
 
-const Sweep: React.FC<{ frames: number }> = ({ frames }) => {
+export const Sweep: React.FC<{ frames: number }> = ({ frames }) => {
   const f = useCurrentFrame();
   if (f >= frames) return null;
   const x = interpolate(f, [0, frames], [-30, 130], { easing: Easing.inOut(Easing.quad) });
@@ -36,7 +36,7 @@ const TrioPanelView: React.FC<{ p: NonNullable<Scene["panels"]>[number] }> = ({ 
   );
 };
 
-const SceneBody: React.FC<{ s: Scene }> = ({ s }) => {
+export const SceneBody: React.FC<{ s: Scene }> = ({ s }) => {
   const center: React.CSSProperties = { alignItems: "center", justifyContent: "center", gap: 28 };
   switch (s.kind) {
     case "title":
@@ -131,14 +131,14 @@ const SceneBody: React.FC<{ s: Scene }> = ({ s }) => {
   }
 };
 
-const Subtitles: React.FC<{ cues: NonNullable<PromoProps["subtitles"]> }> = ({ cues }) => {
+export const Subtitles: React.FC<{ cues: NonNullable<PromoProps["subtitles"]>; bottom?: number; size?: number }> = ({ cues, bottom = 36, size = 44 }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = f / fps;
   const cue = cues.find((c) => t >= c.from && t < c.to);
   if (!cue) return null;
   return (
-    <div style={{ position: "absolute", left: 160, right: 160, bottom: 36, textAlign: "center", fontFamily: titleFont, fontWeight: 500, fontSize: 44, color: "#fff", textShadow: "0 2px 8px #000, 0 0 3px #000", whiteSpace: "pre-line" }}>{cue.text}</div>
+    <div style={{ position: "absolute", left: 40, right: 40, bottom, textAlign: "center", fontFamily: titleFont, fontWeight: 500, fontSize: size, color: "#fff", textShadow: "0 2px 8px #000, 0 0 3px #000", whiteSpace: "pre-line" }}>{cue.text}</div>
   );
 };
 

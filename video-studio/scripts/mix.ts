@@ -16,8 +16,10 @@ const m = /\{[^{}]*"input_i"[^{}]*\}/.exec(measure.stderr)?.[0];
 if (!m) throw new Error(`loudnorm measurement failed:\n${measure.stderr.slice(-800)}`);
 const j = JSON.parse(m) as Record<string, string>;
 const second = `loudnorm=${target}:measured_I=${j.input_i}:measured_TP=${j.input_tp}:measured_LRA=${j.input_lra}:measured_thresh=${j.input_thresh}:offset=${j.target_offset}:linear=true`;
+// loudnorm linear does not guarantee the true-peak ceiling; catch residual overshoots.
+const limiter = "alimiter=limit=0.75:level=false"; // -2.5 dBFS sample peak so inter-sample true peak stays <= -1.5 dBFS
 
-const args = ["-y", ...inputs, "-filter_complex", `${bed},${second}[a]`, "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-t", "", "-movflags", "+faststart", out];
+const args = ["-y", ...inputs, "-filter_complex", `${bed},${second},${limiter}[a]`, "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-t", "", "-movflags", "+faststart", out];
 args.splice(args.indexOf("-t"), 2);
 const r = spawnSync("ffmpeg", args, { stdio: "inherit" });
 process.exit(r.status ?? 1);

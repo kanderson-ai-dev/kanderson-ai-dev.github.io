@@ -1,0 +1,72 @@
+WEBVTT
+
+00:00:00.400 --> 00:00:06.350
+An audit goes in. A cited risk score and a
+human-approved action plan come out.
+
+00:00:07.400 --> 00:00:10.235
+Reviewing a supplier audit takes hours,
+
+00:00:10.235 --> 00:00:14.525
+and an AI summary that invents findings is
+worse than none.
+
+00:00:15.400 --> 00:00:20.104
+The Supply Chain Compliance Co-Pilot is a
+multi-agent system:
+
+00:00:20.104 --> 00:00:23.575
+a supervisor routing five specialist
+workers.
+
+00:00:24.400 --> 00:00:29.815
+The workflow is compliance-grade. The
+model only structures and phrases;
+
+00:00:29.815 --> 00:00:33.350
+code scores, verifies and gates every
+decision.
+
+00:00:34.400 --> 00:00:36.901
+A supervisor assembles the team,
+
+00:00:36.901 --> 00:00:41.825
+and the analyst works the four SMETA-style
+pillars in parallel.
+
+00:00:42.900 --> 00:00:48.743
+Each non-conformance carries a verbatim
+quote, checked against the uploaded audit.
+
+00:00:48.743 --> 00:00:51.950
+Fabricated citations are dropped and
+counted.
+
+00:00:52.900 --> 00:00:56.025
+Corrective actions pause for a human
+decision,
+
+00:00:56.025 --> 00:00:59.150
+then are sealed in a hash-chained audit
+trail.
+
+00:01:00.900 --> 00:01:03.884
+Every prompt is versioned in a registry.
+
+00:01:03.884 --> 00:01:07.241
+Promotion is gated by evaluation and
+audited,
+
+00:01:07.241 --> 00:01:10.300
+and each run records its prompt versions.
+
+00:01:11.900 --> 00:01:15.895
+In the evaluation gate, fabricated quotes
+measure zero,
+
+00:01:15.895 --> 00:01:19.600
+against about ten percent for a single
+bare prompt.
+
+00:01:20.400 --> 00:01:23.975
+See the full case at kaarstenanderson.com.
