@@ -6,6 +6,7 @@ import numpy as np, soundfile as sf
 
 proj, vo, sfxd, out = sys.argv[1:5]
 SR = 48000
+SFX_MASTER = 0.3  # effects sit well under the voice
 p = json.load(open(proj, encoding="utf-8"))
 total = sum(s["durationSec"] for s in p["scenes"])
 voice = np.zeros(int(SR * total)); bed = np.zeros(int(SR * total))
@@ -27,5 +28,6 @@ for s in p["scenes"]:
     start += s["durationSec"]
 os.makedirs(out, exist_ok=True)
 sf.write(os.path.join(out, "voice_full.wav"), np.clip(voice, -1, 1), SR)
+bed *= SFX_MASTER
 sf.write(os.path.join(out, "sfx_bed.wav"), np.clip(bed, -1, 1), SR)
 print("ok", total)

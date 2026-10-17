@@ -41,3 +41,7 @@ Clips used by `clip` scenes are resolved with `staticFile()`: copy them into `vi
 - Remotion's renderer downloads Chrome Headless Shell on first render.
 - ffmpeg/espeak-ng are GPL tools; they are not redistributed with the videos.
 - Reading generated frames/clips: keep review copies under `_video/` (the `out/` folder is ignored).
+
+## Capture quality (learned on the pilot)
+
+Playwright's `recordVideo` is capped at 1 Mbit/s VP8 and looks soft once zoomed. `capture/lib.ts` therefore records through the CDP screencast (JPEG q=100 frames with real timestamps) at a 2880x1620 viewport (`body{zoom:2}` keeps the 1440 px layout) and encodes with x264 CRF 14 to `.mp4`. Remotion renders with JPEG quality 100 and the silent render uses `--crf=12`. Effects are scaled by `SFX_MASTER` in `scripts/build_audio.py`; `scripts/build_audio.py` builds `voice_full.wav` and `sfx_bed.wav` from the project JSON.

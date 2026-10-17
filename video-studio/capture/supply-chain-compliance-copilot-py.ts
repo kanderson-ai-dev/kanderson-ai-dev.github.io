@@ -17,12 +17,12 @@ const SUPPLIER = "Meridian Textiles Ltd";
 const HIDE_TOKEN = `
 addEventListener('DOMContentLoaded', () => {
   const st = document.createElement('style');
-  st.textContent = 'span.token{visibility:hidden!important}body{zoom:1.3333}';
+  st.textContent = 'span.token{visibility:hidden!important}';
   document.head.appendChild(st);
 });
 localStorage.setItem('sccc_operator_token', 'demo-token');`;
 
-const opts = { viewport: VIEWPORT, initScripts: [HIDE_TOKEN] };
+const opts = { initScripts: [HIDE_TOKEN] };
 
 async function fillIntake(page: Page, fast = false) {
   await page.getByRole("button", { name: /new case/i }).first().click().catch(() => page.goto("/#/new"));
@@ -62,7 +62,7 @@ async function prepCase(stage: "review" | "done"): Promise<string> {
 async function save(s: Session, name: string) {
   const tmp = await finish(s);
   mkdirSync(CLIPS, { recursive: true });
-  const out = resolve(CLIPS, `${name}.webm`);
+  const out = resolve(CLIPS, `${name}.mp4`);
   rmSync(out, { force: true });
   renameSync(tmp, out);
   console.log("saved", out);
@@ -88,14 +88,14 @@ async function intakeRun() {
   await pause(900);
   await clickOn(s, 'button:has-text("Create"), button:has-text("Start"), button:has-text("Submit")', 400);
   await p.waitForSelector('[aria-label="SMETA pillar fan-out"]', { timeout: 60000 });
-  await moveTo(s, 1000, 560);
+  await moveTo(s, 1500, 840);
   await p.waitForSelector("text=/awaiting human review/i", { timeout: 120000 });
   await pause(1200);
   await p.waitForSelector('[role="dialog"]');
   await pause(500);
   await p.getByRole("button", { name: /close review/i }).click();
   await pause(900);
-  await clickOn(s, "summary:has-text('Event log')", 1800);
+  await clickOn(s, "summary:has-text('Event log')", 4500);
   await save(s, "01-intake-run");
 }
 
@@ -110,7 +110,7 @@ async function review() {
   console.log("capas", n);
   const card = (i: number) => `fieldset.capa-card >> nth=${i}`;
   const radio = (i: number, d: string) => `${card(i)} >> label:has-text("${d}")`;
-  await moveTo(s, 1000, 560);
+  await moveTo(s, 1500, 840);
   await pause(1800);
   await clickOn(s, radio(0, "Approve"), 900);
   if (n > 1) {
@@ -139,12 +139,12 @@ async function report() {
   await p.locator('article[aria-label="final report"]').scrollIntoViewIfNeeded();
   await pause(2500);
   const scroll = async (dy: number, hold: number) => {
-    await p.evaluate(`scrollBy({ top: ${dy}, behavior: "smooth" })`);
+    await p.evaluate(`scrollBy({ top: ${Math.round(dy * 1.5)}, behavior: "smooth" })`);
     await pause(900);
     await pause(250);
     await pause(hold);
   };
-  await moveTo(s, 1200, 400);
+  await moveTo(s, 1800, 600);
   await scroll(380, 2200);
   await scroll(420, 2600);
   await scroll(420, 2200);
@@ -154,7 +154,28 @@ async function report() {
   await save(s, "03-report");
 }
 
-const all = { "intake-run": intakeRun, review, report } as const;
+async function registry() {
+  const s = await startSession(resolve(WORK, "raw"), BASE, opts);
+  const p = s.page;
+  await p.goto("/");
+  await p.waitForSelector("nav");
+  await pause(900);
+  await clickOn(s, 'nav a:has-text("Prompt Registry")', 1800);
+  await p.waitForSelector('[aria-label="prompt registry"]');
+  await pause(1500);
+  await clickOn(s, 'nav[aria-label="workers"] button:has-text("Compliance Analyst")', 2200);
+  await clickOn(s, 'button:has-text("diff v1")', 1500);
+  await p.locator('pre[aria-label="prompt diff"]').scrollIntoViewIfNeeded();
+  await pause(3500);
+  await p.evaluate("scrollTo({ top: 0, behavior: 'smooth' })");
+  await pause(1500);
+  await clickOn(s, "summary:has-text('Audit timeline')", 1200);
+  await p.evaluate("scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })");
+  await pause(4500);
+  await save(s, "04-registry");
+}
+
+const all = { "intake-run": intakeRun, review, report, registry } as const;
 const wanted = process.argv.slice(2);
 for (const k of Object.keys(all) as (keyof typeof all)[]) {
   if (wanted.length && !wanted.includes(k)) continue;

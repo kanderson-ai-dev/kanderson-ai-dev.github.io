@@ -9,12 +9,13 @@ export type TrioPanel = { clip: string; startSec: number; rate?: number; crop: R
 export type Scene = {
   id: string;
   durationSec: number;
-  kind: "title" | "problem" | "pain" | "flow" | "clip" | "trio" | "metric" | "end";
+  kind: "title" | "problem" | "pain" | "flow" | "arch" | "clip" | "trio" | "metric" | "end";
   voice?: { id: string; atSec: number };
   sfx?: { sfx: string; atSec: number; gain?: number }[];
   frame?: "full" | "inset";
   segments?: Segment[];
   panels?: TrioPanel[];
+  arch?: { llmAt: number; codeAt: number; humanAt: number };
   backdrop?: { clip: string; startSec: number };
   text?: string;
   sub?: string;

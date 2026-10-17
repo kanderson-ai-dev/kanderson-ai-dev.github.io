@@ -1,0 +1,14 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { finish, moveTo, pause, startSession } from "./lib";
+const WORK = resolve("..", "_video", "supply-chain-compliance-copilot-py");
+const BASE = readFileSync(resolve(WORK, "base_url.txt"), "utf8").trim();
+const s = await startSession(resolve(WORK, "raw"), BASE, { initScripts: [`localStorage.setItem('sccc_operator_token','demo-token');addEventListener('DOMContentLoaded',()=>{const st=document.createElement('style');st.textContent='span.token{visibility:hidden!important}';document.head.appendChild(st)});`] });
+await s.page.goto("/");
+await s.page.waitForSelector("nav");
+await moveTo(s, 900, 300);
+await s.page.goto("/#/prompts").catch(() => {});
+await pause(1500);
+await moveTo(s, 300, 500);
+await pause(1000);
+console.log(await finish(s));
