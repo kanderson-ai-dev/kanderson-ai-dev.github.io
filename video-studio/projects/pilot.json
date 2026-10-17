@@ -1,0 +1,21 @@
+{
+  "slug": "pilot",
+  "title": "Video studio pilot",
+  "fps": 30,
+  "transitionFrames": 8,
+  "scenes": [
+    { "id": "hook", "durationSec": 3.5, "kind": "title", "text": "An audit goes in. A cited risk score comes out." },
+    { "id": "problem", "durationSec": 2.5, "kind": "problem", "text": "Reviewing audits takes hours" },
+    {
+      "id": "proof",
+      "durationSec": 2.5,
+      "kind": "metric",
+      "metric": { "label": "Fabricated quotes", "from": 10.4, "to": 0, "suffix": "%", "versus": { "label": "bare prompt", "value": "10.4%" }, "note": "pipeline check (pilot placeholder values)" }
+    },
+    { "id": "end", "durationSec": 2.5, "kind": "end", "end": { "url": "kaarstenanderson.com", "line": "Pilot render" } }
+  ],
+  "subtitles": [
+    { "from": 0.2, "to": 3.4, "text": "An audit goes in.\nA cited risk score comes out." },
+    { "from": 3.7, "to": 5.9, "text": "Reviewing audits takes hours." }
+  ]
+}

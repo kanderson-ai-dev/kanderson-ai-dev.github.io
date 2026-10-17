@@ -8,7 +8,7 @@ if (!video || !voice || !music || !out) throw new Error("usage: mix.ts <silent.m
 const inputs = ["-i", video, "-i", voice, "-i", music, ...(sfx ? ["-i", sfx] : [])];
 const tail = sfx ? "[vo2][duck][3:a]amix=inputs=3:duration=first:normalize=0" : "[vo2][duck]amix=inputs=2:duration=first:normalize=0";
 const bed =
-  "[1:a]asplit=2[vo1][vo2];[2:a]volume=0.5[m];[m][vo1]sidechaincompress=threshold=0.02:ratio=8:attack=20:release=400[duck];" + tail;
+  "[1:a]asplit=2[vo1][vo2];[2:a]volume=0.3[m];[m][vo1]sidechaincompress=threshold=0.02:ratio=8:attack=20:release=400[duck];" + tail;
 const target = "I=-14:TP=-1.5:LRA=11";
 
 const measure = spawnSync("ffmpeg", ["-hide_banner", ...inputs, "-filter_complex", `${bed},loudnorm=${target}:print_format=json[a]`, "-map", "[a]", "-f", "null", "-"], { encoding: "utf8" });
