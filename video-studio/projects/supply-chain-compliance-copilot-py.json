@@ -48,13 +48,13 @@
       "panels": [
         {
           "clip": "clips/01-intake-run.mp4",
-          "startSec": 17.0,
+          "startSec": 16.5,
           "rate": 0.25,
           "crop": {
             "x": 200,
-            "y": 150,
-            "w": 1400,
-            "h": 788
+            "y": 105,
+            "w": 1520,
+            "h": 855
           },
           "x": 40,
           "y": 430,
@@ -63,11 +63,11 @@
         },
         {
           "clip": "clips/02-review.mp4",
-          "startSec": 9,
+          "startSec": 8.5,
           "rate": 0.5,
           "crop": {
             "x": 420,
-            "y": 40,
+            "y": 60,
             "w": 1080,
             "h": 608
           },
@@ -78,13 +78,13 @@
         },
         {
           "clip": "clips/03-report.mp4",
-          "startSec": 0.5,
+          "startSec": 3.0,
           "rate": 0.5,
           "crop": {
-            "x": 230,
-            "y": 0,
-            "w": 1460,
-            "h": 821
+            "x": 220,
+            "y": 105,
+            "w": 1480,
+            "h": 833
           },
           "x": 480,
           "y": 290,
@@ -149,8 +149,8 @@
       "segments": [
         {
           "clip": "clips/01-intake-run.mp4",
-          "startSec": 9.8,
-          "durationSec": 1.6,
+          "startSec": 10.5,
+          "durationSec": 2.5,
           "zoom": {
             "from": {
               "x": 0,
@@ -159,29 +159,30 @@
               "h": 1080
             },
             "to": {
-              "x": 240,
-              "y": 270,
-              "w": 1440,
-              "h": 810
+              "x": 200,
+              "y": 250,
+              "w": 1500,
+              "h": 844
             }
           }
         },
         {
           "clip": "clips/01-intake-run.mp4",
-          "startSec": 16.2,
-          "durationSec": 6.9,
+          "startSec": 16.4,
+          "durationSec": 6.0,
+          "rate": 1.02,
           "zoom": {
             "from": {
               "x": 230,
-              "y": 260,
-              "w": 1200,
-              "h": 675
+              "y": 150,
+              "w": 1500,
+              "h": 844
             },
             "to": {
-              "x": 230,
-              "y": 500,
-              "w": 900,
-              "h": 506
+              "x": 280,
+              "y": 290,
+              "w": 1350,
+              "h": 759
             }
           },
           "callouts": [
@@ -189,14 +190,14 @@
               "n": 1,
               "text": "Four pillars in parallel",
               "x": 1000,
-              "y": 430,
+              "y": 200,
               "atSec": 0.3
             },
             {
               "n": 2,
               "text": "Supervisor decisions, logged",
-              "x": 1000,
-              "y": 720,
+              "x": 780,
+              "y": 500,
               "atSec": 3.0
             }
           ]
@@ -225,7 +226,7 @@
       "segments": [
         {
           "clip": "clips/03-report.mp4",
-          "startSec": 4.2,
+          "startSec": 6.5,
           "durationSec": 10,
           "rate": 0.15,
           "zoom": {
@@ -236,25 +237,25 @@
               "h": 1080
             },
             "to": {
-              "x": 540,
-              "y": 330,
-              "w": 1120,
-              "h": 630
+              "x": 580,
+              "y": 360,
+              "w": 1150,
+              "h": 647
             }
           },
           "callouts": [
             {
               "n": 1,
               "text": "Verbatim quote",
-              "x": 1000,
-              "y": 150,
+              "x": 1200,
+              "y": 250,
               "atSec": 2.5
             },
             {
               "n": 2,
               "text": "Checked against the audit document",
               "x": 700,
-              "y": 760,
+              "y": 640,
               "atSec": 5.5
             }
           ]
@@ -283,58 +284,58 @@
       "segments": [
         {
           "clip": "clips/02-review.mp4",
-          "startSec": 6.8,
-          "durationSec": 3.8,
-          "rate": 2.8,
+          "startSec": 8.5,
+          "durationSec": 4.0,
+          "rate": 3.6,
           "zoom": {
             "from": {
-              "x": 380,
-              "y": 40,
-              "w": 1160,
-              "h": 653
+              "x": 400,
+              "y": 200,
+              "w": 1180,
+              "h": 664
             },
             "to": {
-              "x": 380,
-              "y": 300,
-              "w": 1160,
-              "h": 653
+              "x": 400,
+              "y": 330,
+              "w": 1180,
+              "h": 664
             }
           },
           "callouts": [
             {
               "n": 1,
               "text": "Approve · Edit · Reject",
-              "x": 1130,
-              "y": 600,
+              "x": 1150,
+              "y": 820,
               "atSec": 0.6
             }
           ]
         },
         {
           "clip": "clips/03-report.mp4",
-          "startSec": 20.2,
-          "durationSec": 4.2,
-          "rate": 0.4,
+          "startSec": 20.5,
+          "durationSec": 4.0,
+          "rate": 0.5,
           "zoom": {
             "from": {
               "x": 200,
-              "y": 225,
-              "w": 1520,
-              "h": 855
+              "y": 420,
+              "w": 1500,
+              "h": 844
             },
             "to": {
-              "x": 240,
-              "y": 461,
-              "w": 1100,
-              "h": 619
+              "x": 280,
+              "y": 600,
+              "w": 1250,
+              "h": 703
             }
           },
           "callouts": [
             {
               "n": 2,
               "text": "Audit chain verified",
-              "x": 700,
-              "y": 860,
+              "x": 750,
+              "y": 560,
               "atSec": 0.5
             }
           ]
@@ -376,7 +377,7 @@
       "segments": [
         {
           "clip": "clips/04-registry.mp4",
-          "startSec": 8.3,
+          "startSec": 9.0,
           "durationSec": 2.4,
           "zoom": {
             "from": {
@@ -405,10 +406,10 @@
               "h": 855
             },
             "to": {
-              "x": 240,
-              "y": 230,
-              "w": 1450,
-              "h": 816
+              "x": 200,
+              "y": 430,
+              "w": 1520,
+              "h": 855
             }
           },
           "callouts": [
@@ -429,52 +430,52 @@
           "zoom": {
             "from": {
               "x": 200,
-              "y": 225,
-              "w": 1520,
-              "h": 855
+              "y": 300,
+              "w": 1400,
+              "h": 788
             },
             "to": {
               "x": 240,
-              "y": 461,
-              "w": 1100,
-              "h": 619
+              "y": 420,
+              "w": 1250,
+              "h": 703
             }
           },
           "callouts": [
             {
               "n": 2,
               "text": "Every transition audited",
-              "x": 900,
-              "y": 700,
+              "x": 1000,
+              "y": 720,
               "atSec": 0.4
             }
           ]
         },
         {
           "clip": "clips/03-report.mp4",
-          "startSec": 20.0,
+          "startSec": 20.5,
           "durationSec": 3.6,
           "rate": 0.5,
           "zoom": {
             "from": {
               "x": 200,
-              "y": 225,
-              "w": 1520,
-              "h": 855
+              "y": 400,
+              "w": 1500,
+              "h": 844
             },
             "to": {
-              "x": 240,
-              "y": 640,
-              "w": 860,
-              "h": 484
+              "x": 280,
+              "y": 760,
+              "w": 1150,
+              "h": 647
             }
           },
           "callouts": [
             {
               "n": 3,
               "text": "Prompt versions recorded per run",
-              "x": 1020,
-              "y": 720,
+              "x": 800,
+              "y": 290,
               "atSec": 0.4
             }
           ]
@@ -547,7 +548,7 @@
     },
     {
       "id": "cta",
-      "durationSec": 5.5,
+      "durationSec": 7.0,
       "kind": "end",
       "voice": {
         "id": "s08",
@@ -555,7 +556,7 @@
       },
       "end": {
         "url": "kaarstenanderson.com",
-        "line": "Private repository · evaluation access on request",
+        "line": "Private project · adapted to your workflow on request",
         "contact": "contact@kaarstenanderson.com"
       },
       "sfx": [

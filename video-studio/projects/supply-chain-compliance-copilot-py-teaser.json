@@ -36,7 +36,7 @@
       "segments": [
         {
           "clip": "clips/03-report.mp4",
-          "startSec": 4.2,
+          "startSec": 6.5,
           "durationSec": 10,
           "rate": 0.15,
           "zoom": {
@@ -47,25 +47,25 @@
               "h": 1080
             },
             "to": {
-              "x": 540,
-              "y": 330,
-              "w": 1120,
-              "h": 630
+              "x": 580,
+              "y": 360,
+              "w": 1150,
+              "h": 647
             }
           },
           "callouts": [
             {
               "n": 1,
               "text": "Verbatim quote",
-              "x": 1000,
-              "y": 150,
+              "x": 1200,
+              "y": 250,
               "atSec": 2.5
             },
             {
               "n": 2,
               "text": "Checked against the audit document",
               "x": 700,
-              "y": 760,
+              "y": 640,
               "atSec": 5.5
             }
           ]
@@ -85,7 +85,7 @@
     },
     {
       "id": "cta",
-      "durationSec": 5.5,
+      "durationSec": 7.0,
       "kind": "end",
       "voice": {
         "id": "s08",
@@ -93,7 +93,7 @@
       },
       "end": {
         "url": "kaarstenanderson.com",
-        "line": "Private repository \u00b7 evaluation access on request",
+        "line": "Private project \u00b7 adapted to your workflow on request",
         "contact": "contact@kaarstenanderson.com"
       },
       "sfx": [
@@ -102,7 +102,7 @@
           "atSec": 0.2
         }
       ],
-      "headline": null,
+      "headline": "Want it adapted to your workflow?",
       "stageScale": 0.8
     }
   ],
@@ -124,8 +124,8 @@
     },
     {
       "from": 17.4,
-      "to": 20.975,
-      "text": "See the full case at kaarstenanderson.com."
+      "to": 23.6,
+      "text": "Want this adapted to your compliance\nworkflow? Get in touch at\nkaarstenanderson.com."
     }
   ]
 }

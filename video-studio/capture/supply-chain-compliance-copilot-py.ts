@@ -175,7 +175,7 @@ async function registry() {
   await pause(1500);
   await clickOn(s, 'nav[aria-label="workers"] button:has-text("Compliance Analyst")', 2200);
   await clickOn(s, 'button:has-text("diff v1")', 1500);
-  await p.locator('pre[aria-label="prompt diff"]').scrollIntoViewIfNeeded();
+  await p.locator('[aria-label="prompt diff"]').scrollIntoViewIfNeeded();
   await pause(3500);
   await p.evaluate("scrollTo({ top: 0, behavior: 'smooth' })");
   await pause(1500);
