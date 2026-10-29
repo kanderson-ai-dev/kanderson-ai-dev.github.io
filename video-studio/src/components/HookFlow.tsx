@@ -1,5 +1,6 @@
 import { Easing, interpolate, useCurrentFrame } from "remotion";
 import { theme, titleFont } from "../theme";
+import type { FlowSpec } from "../types";
 
 const ramp = (f: number, a: number, b: number) => interpolate(f, [a, b], [0, 1], { easing: Easing.out(Easing.cubic), extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 const box = (x: number, y: number, w: number, h: number, extra: React.CSSProperties = {}): React.CSSProperties => ({
@@ -18,27 +19,32 @@ const Beam: React.FC<{ x1: number; x2: number; y: number; start: number }> = ({ 
   );
 };
 
-const PILLARS = ["Labour Standards", "Health & Safety", "Environment", "Business Ethics"];
+const DEFAULT_FLOW: FlowSpec = {
+  input: "Supplier audit",
+  node: "Compliance Co-Pilot",
+  chips: ["Labour Standards", "Health & Safety", "Environment", "Business Ethics"],
+  outs: [
+    { big: "HIGH · 69", sub: "Risk score" },
+    { big: "8 findings", sub: "Each with a verbatim quote" },
+    { big: "Action plan", sub: "Approved by a human" }
+  ]
+};
 
-export const HookFlow: React.FC = () => {
+export const HookFlow: React.FC<{ flow?: FlowSpec }> = ({ flow = DEFAULT_FLOW }) => {
   const f = useCurrentFrame();
   const doc = ramp(f, 4, 26);
   const node = ramp(f, 30, 50);
-  const outs = [
-    { y: 340, big: "HIGH · 69", sub: "Risk score", at: 105 },
-    { y: 500, big: "8 findings", sub: "Each with a verbatim quote", at: 125 },
-    { y: 660, big: "Action plan", sub: "Approved by a human", at: 145 }
-  ];
+  const outs = flow.outs.map((o, i) => ({ ...o, y: 340 + i * 160, at: 105 + i * 20 }));
   return (
     <>
       <div style={box(150, 380, 320, 420, { transform: `translateX(${(1 - doc) * -300}px)`, opacity: doc, padding: 24 })}>
-        <div style={{ color: theme.muted, fontSize: 26, marginBottom: 20 }}>Supplier audit</div>
+        <div style={{ color: theme.muted, fontSize: 26, marginBottom: 20 }}>{flow.input}</div>
         {Array.from({ length: 11 }).map((_, i) => <div key={i} style={{ height: 8, marginBottom: 16, width: `${92 - ((i * 29) % 38)}%`, background: "#1c2b2f" }} />)}
       </div>
       <Beam x1={470} x2={750} y={590} start={55} />
       <div style={box(760, 340, 400, 500, { opacity: node, transform: `scale(${0.92 + 0.08 * node})`, padding: 28 })}>
-        <div style={{ color: theme.accent, fontSize: 34, fontWeight: 700, marginBottom: 24, textShadow: `0 0 10px ${theme.accent}` }}>Compliance Co-Pilot</div>
-        {PILLARS.map((p, i) => {
+        <div style={{ color: theme.accent, fontSize: 34, fontWeight: 700, marginBottom: 24, textShadow: `0 0 10px ${theme.accent}` }}>{flow.node}</div>
+        {flow.chips.map((p, i) => {
           const on = ramp(f, 62 + i * 8, 74 + i * 8);
           const pulse = f > 100 ? 0.6 + 0.4 * Math.sin(f / 6 + i) : 1;
           return (

@@ -1,0 +1,67 @@
+WEBVTT
+
+00:00:00.400 --> 00:00:05.750
+A two-hundred-forty-dollar return hits the
+hard gate, and waits for a human.
+
+00:00:07.500 --> 00:00:11.230
+Support tickets are judgment work with
+money attached,
+
+00:00:11.230 --> 00:00:14.200
+and every refund must trace back to
+policy.
+
+00:00:15.500 --> 00:00:20.208
+The E-commerce Support and Returns Copilot
+verifies the order,
+
+00:00:20.208 --> 00:00:23.549
+applies the return policy
+deterministically,
+
+00:00:23.549 --> 00:00:25.675
+and escalates large refunds.
+
+00:00:26.400 --> 00:00:31.199
+The model reads the ticket and drafts the
+reply. Code verifies,
+
+00:00:31.199 --> 00:00:34.550
+decides — and a human gates the big
+refunds.
+
+00:00:35.500 --> 00:00:40.584
+A deterministic policy engine decides
+eligibility and amounts.
+
+00:00:40.584 --> 00:00:43.700
+The model only drafts the explanation.
+
+00:00:44.500 --> 00:00:47.687
+Refunds above a cap can't be
+auto-approved.
+
+00:00:47.687 --> 00:00:50.800
+It's enforced at the database write layer.
+
+00:00:52.000 --> 00:00:56.546
+A twenty-two-technique injection corpus
+runs before any worker,
+
+00:00:56.546 --> 00:00:59.000
+with a hundred percent block rate.
+
+00:01:00.000 --> 00:01:02.427
+On thirty-six synthetic tickets,
+
+00:01:02.427 --> 00:01:06.219
+the pipeline resolves a hundred percent
+correctly.
+
+00:01:06.219 --> 00:01:08.950
+A single bare prompt manages eleven.
+
+00:01:10.000 --> 00:01:15.475
+Want this adapted to your own store? Get
+in touch at kaarstenanderson.com.

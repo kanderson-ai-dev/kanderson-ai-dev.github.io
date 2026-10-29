@@ -31,28 +31,34 @@ export type Session = {
   cdp: CDPSession; frames: { file: string; ts: number }[]; dir: string; out: { w: number; h: number };
 };
 
-export type SessionOpts = { viewport?: { width: number; height: number }; scale?: number; initScripts?: string[] };
+export type SessionOpts = { viewport?: { width: number; height: number }; scale?: number; initScripts?: string[]; dsf?: boolean };
 
 /**
  * High-quality capture: the page is rendered at `viewport * scale` device pixels (default 1440x810 CSS px at 2x = 2880x1620)
  * and recorded through the CDP screencast (lossless-ish JPEG q=100 frames with real timestamps), then encoded with x264.
  * Playwright's built-in recordVideo is capped at 1 Mbit/s VP8 and looks soft, so it is not used.
+ *
+ * `dsf: true` renders via `deviceScaleFactor` instead of `body{zoom}` — the CSS viewport stays 1440x810 so `vh`/`vw`
+ * units resolve correctly (the zoom approach doubles them and breaks layouts that size against the viewport).
  */
 export async function startSession(workDir: string, baseURL: string, opts: SessionOpts = {}): Promise<Session> {
   const base = opts.viewport ?? { width: 1440, height: 810 };
   const k = opts.scale ?? 2;
-  const viewport = { width: Math.round(base.width * k), height: Math.round(base.height * k) };
+  const dsf = opts.dsf ?? false;
+  const viewport = dsf ? base : { width: Math.round(base.width * k), height: Math.round(base.height * k) };
   const browser = await chromium.launch();
-  const context = await browser.newContext({ viewport, deviceScaleFactor: 1, colorScheme: "dark", baseURL });
-  await context.addInitScript(`window.__k = ${k};`);
+  const context = await browser.newContext({ viewport, deviceScaleFactor: dsf ? k : 1, colorScheme: "dark", baseURL });
+  await context.addInitScript(`window.__k = ${dsf ? 1 : k};`);
   await context.addInitScript(OVERLAY);
-  await context.addInitScript(`addEventListener('DOMContentLoaded', () => { const st = document.createElement('style'); st.textContent = 'body{zoom:${k}}'; document.head.appendChild(st); });`);
+  if (!dsf) {
+    await context.addInitScript(`addEventListener('DOMContentLoaded', () => { const st = document.createElement('style'); st.textContent = 'body{zoom:${k}}'; document.head.appendChild(st); });`);
+  }
   for (const s of opts.initScripts ?? []) await context.addInitScript(s);
   const page = await context.newPage();
   const cdp = await context.newCDPSession(page);
   const dir = join(workDir, `frames-${Date.now()}`);
   mkdirSync(dir, { recursive: true });
-  const out = { w: viewport.width, h: viewport.height };
+  const out = { w: Math.round(viewport.width * (dsf ? k : 1)), h: Math.round(viewport.height * (dsf ? k : 1)) };
   const frames: Session["frames"] = [];
   cdp.on("Page.screencastFrame", (e) => {
     const file = join(dir, `${String(frames.length).padStart(6, "0")}.jpg`);

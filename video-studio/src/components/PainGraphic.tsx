@@ -1,5 +1,6 @@
 import { interpolate, useCurrentFrame } from "remotion";
 import { theme, titleFont } from "../theme";
+import type { PainSpec } from "../types";
 
 const Doc: React.FC<{ x: number; y: number; r: number; delay: number; label: string }> = ({ x, y, r, delay, label }) => {
   const f = useCurrentFrame();
@@ -26,15 +27,22 @@ const Cells: React.FC = () => {
   );
 };
 
-export const PainGraphic: React.FC = () => {
+const DEFAULT_PAIN: PainSpec = {
+  docs: ["Supplier audit report", "Interview notes", "Payroll extract"],
+  glitch: "“…no overtime was ever worked…”",
+  glitchSub: "not in the document"
+};
+
+export const PainGraphic: React.FC<{ pain?: PainSpec }> = ({ pain = DEFAULT_PAIN }) => {
   const f = useCurrentFrame();
   const q = interpolate(f, [110, 122], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const jitter = f > 122 && f % 6 < 2 ? (f % 4 < 2 ? 7 : -7) : 0;
+  const [d0, d1, d2] = pain.docs;
   return (
     <>
-      <Doc x={200} y={300} r={-6} delay={0} label="Supplier audit report" />
-      <Doc x={440} y={340} r={3} delay={6} label="Interview notes" />
-      <Doc x={680} y={310} r={-2} delay={12} label="Payroll extract" />
+      <Doc x={200} y={300} r={-6} delay={0} label={d0} />
+      <Doc x={440} y={340} r={3} delay={6} label={d1} />
+      <Doc x={680} y={310} r={-2} delay={12} label={d2} />
       <Cells />
       <div
         style={{
@@ -42,8 +50,8 @@ export const PainGraphic: React.FC = () => {
           background: "#2a0a12cc", border: `1px solid ${theme.danger}`, padding: "10px 24px", textShadow: `0 0 14px ${theme.danger}88`
         }}
       >
-        “…no overtime was ever worked…”
-        <span style={{ marginLeft: 24, fontSize: 28, color: theme.danger }}>not in the document</span>
+        {pain.glitch}
+        <span style={{ marginLeft: 24, fontSize: 28, color: theme.danger }}>{pain.glitchSub}</span>
       </div>
     </>
   );

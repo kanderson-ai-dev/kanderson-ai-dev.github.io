@@ -1,0 +1,273 @@
+{
+  "slug": "ecommerce-support-returns-copilot",
+  "title": "E-commerce Support & Returns Copilot",
+  "fps": 30,
+  "transitionFrames": 8,
+  "fadeOutSec": 1.5,
+  "scenes": [
+    {
+      "id": "hook",
+      "durationSec": 7,
+      "kind": "flow",
+      "text": "A $240 return hits the hard gate — and waits for a human",
+      "voice": { "id": "s01", "atSec": 0.4 },
+      "flow": {
+        "input": "Return request",
+        "node": "Returns Copilot",
+        "chips": ["Input guardrail", "Order lookup", "Policy engine", "Refund decision"],
+        "outs": [
+          { "big": "ORD-1005", "sub": "Order verified · $240.00" },
+          { "big": "Eligible", "sub": "In window · unused · no prior refund" },
+          { "big": "Human review", "sub": "Held at the approval gate" }
+        ]
+      },
+      "sfx": [
+        { "sfx": "hit", "atSec": 0.2 },
+        { "sfx": "glitch", "atSec": 0.3 }
+      ]
+    },
+    {
+      "id": "problem",
+      "durationSec": 8,
+      "kind": "pain",
+      "text": "Judgment work with money attached",
+      "voice": { "id": "s02", "atSec": 0.5 },
+      "pain": {
+        "docs": ["Ticket inbox", "Order export", "Returns policy"],
+        "glitch": "“Refund issued: $240.00”",
+        "glitchSub": "outside the policy"
+      },
+      "sfx": []
+    },
+    {
+      "id": "solution",
+      "durationSec": 11,
+      "kind": "trio",
+      "text": "E-commerce Support & Returns Copilot",
+      "voice": { "id": "s03", "atSec": 0.5 },
+      "panels": [
+        {
+          "clip": "clips/01-widget-return.mp4",
+          "startSec": 10.2,
+          "rate": 0.3,
+          "crop": { "x": 480, "y": 130, "w": 980, "h": 700 },
+          "x": 40,
+          "y": 430,
+          "w": 720,
+          "delaySec": 1.2
+        },
+        {
+          "clip": "clips/02-console-trace.mp4",
+          "startSec": 6.2,
+          "rate": 0.35,
+          "crop": { "x": 690, "y": 150, "w": 1030, "h": 800 },
+          "x": 1180,
+          "y": 430,
+          "w": 700,
+          "delaySec": 2.0
+        },
+        {
+          "clip": "clips/03-approval.mp4",
+          "startSec": 6.5,
+          "rate": 0.35,
+          "crop": { "x": 340, "y": 80, "w": 1400, "h": 830 },
+          "x": 480,
+          "y": 250,
+          "w": 960,
+          "delaySec": 0.5
+        }
+      ],
+      "sfx": [
+        { "sfx": "whoosh", "atSec": 0.0 },
+        { "sfx": "riser", "atSec": 0.3, "gain": 0.5 }
+      ]
+    },
+    {
+      "id": "architecture",
+      "durationSec": 9,
+      "kind": "arch",
+      "text": "Model drafts · code decides · human gates",
+      "voice": { "id": "s04", "atSec": 0.4 },
+      "arch": { "llmAt": 60, "codeAt": 141, "humanAt": 186 },
+      "workers": [
+        { "name": "Order lookup", "rows": [
+          { "tag": "LLM", "text": "finds the order in the ticket" },
+          { "tag": "CODE", "text": "verifies it in the database" }
+        ]},
+        { "name": "Policy check", "rows": [
+          { "tag": "CODE", "text": "window · condition · duplicates" }
+        ]},
+        { "name": "Refund decision", "rows": [
+          { "tag": "CODE", "text": "computes amount + the cap" },
+          { "tag": "LLM", "text": "drafts the explanation" }
+        ]},
+        { "name": "Shipping tracker", "rows": [
+          { "tag": "CODE", "text": "reads the shipment record" },
+          { "tag": "LLM", "text": "explains the status" }
+        ]},
+        { "name": "Escalation", "rows": [
+          { "tag": "LLM", "text": "writes the handoff" },
+          { "tag": "HUMAN", "text": "approves above the cap" }
+        ]}
+      ],
+      "sfx": [
+        { "sfx": "whoosh", "atSec": 0.0 },
+        { "sfx": "click", "atSec": 2.0 },
+        { "sfx": "click", "atSec": 4.7 },
+        { "sfx": "click", "atSec": 6.2 }
+      ]
+    },
+    {
+      "id": "feature1",
+      "durationSec": 9,
+      "kind": "clip",
+      "text": "The policy engine decides — every verdict cited",
+      "voice": { "id": "s05", "atSec": 0.5 },
+      "segments": [
+        {
+          "clip": "clips/02-console-trace.mp4",
+          "startSec": 0.9,
+          "durationSec": 3.6,
+          "zoom": {
+            "from": { "x": 0, "y": 0, "w": 1920, "h": 1080 },
+            "to": { "x": 560, "y": 0, "w": 1250, "h": 703 }
+          },
+          "callouts": [
+            { "n": 1, "text": "Verdict + policy citation", "x": 1150, "y": 150, "atSec": 2.0 }
+          ]
+        },
+        {
+          "clip": "clips/02-console-trace.mp4",
+          "startSec": 5.6,
+          "durationSec": 5.4,
+          "zoom": {
+            "from": { "x": 600, "y": 60, "w": 1250, "h": 703 },
+            "to": { "x": 620, "y": 140, "w": 1250, "h": 703 }
+          },
+          "callouts": [
+            { "n": 2, "text": "Every router decision, logged", "x": 1280, "y": 560, "atSec": 0.8 }
+          ]
+        }
+      ],
+      "sfx": [
+        { "sfx": "whoosh", "atSec": 0.0 },
+        { "sfx": "click", "atSec": 1.2 },
+        { "sfx": "whoosh", "atSec": 3.6, "gain": 0.4 }
+      ]
+    },
+    {
+      "id": "feature2",
+      "durationSec": 7.5,
+      "kind": "clip",
+      "text": "Above the cap, a human must decide",
+      "voice": { "id": "s06", "atSec": 0.5 },
+      "segments": [
+        {
+          "clip": "clips/03-approval.mp4",
+          "startSec": 0.8,
+          "durationSec": 2.3,
+          "rate": 1.9,
+          "zoom": {
+            "from": { "x": 0, "y": 0, "w": 1920, "h": 1080 },
+            "to": { "x": 330, "y": 60, "w": 1450, "h": 816 }
+          }
+        },
+        {
+          "clip": "clips/03-approval.mp4",
+          "startSec": 5.5,
+          "durationSec": 5.2,
+          "rate": 1.6,
+          "zoom": {
+            "from": { "x": 330, "y": 60, "w": 1450, "h": 816 },
+            "to": { "x": 330, "y": 90, "w": 1450, "h": 816 }
+          },
+          "callouts": [
+            { "n": 1, "text": "Policy checked in code", "x": 300, "y": 140, "atSec": 0.6 },
+            { "n": 2, "text": "$240 vs the $75 cap", "x": 1190, "y": 455, "atSec": 2.0 },
+            { "n": 3, "text": "Human decides", "x": 400, "y": 860, "atSec": 4.4 }
+          ]
+        }
+      ],
+      "sfx": [
+        { "sfx": "whoosh", "atSec": 0.0 },
+        { "sfx": "click", "atSec": 1.6 },
+        { "sfx": "click", "atSec": 7.0 }
+      ]
+    },
+    {
+      "id": "feature3",
+      "durationSec": 8,
+      "kind": "clip",
+      "text": "Injection attempts are blocked pre-LLM",
+      "voice": { "id": "s07", "atSec": 0.5 },
+      "segments": [
+        {
+          "clip": "clips/04-injection.mp4",
+          "startSec": 1.5,
+          "durationSec": 4.0,
+          "rate": 2.6,
+          "zoom": {
+            "from": { "x": 0, "y": 0, "w": 1920, "h": 1080 },
+            "to": { "x": 0, "y": 0, "w": 1920, "h": 1080 }
+          }
+        },
+        {
+          "clip": "clips/04-injection.mp4",
+          "startSec": 12.3,
+          "durationSec": 4.0,
+          "rate": 0.85,
+          "zoom": {
+            "from": { "x": 0, "y": 0, "w": 1920, "h": 1080 },
+            "to": { "x": 380, "y": 180, "w": 1250, "h": 703 }
+          },
+          "callouts": [
+            { "n": 1, "text": "Blocked before any worker runs", "x": 560, "y": 640, "atSec": 0.8 }
+          ]
+        }
+      ],
+      "sfx": [
+        { "sfx": "whoosh", "atSec": 0.0 },
+        { "sfx": "glitch", "atSec": 4.0 },
+        { "sfx": "impact", "atSec": 4.4 }
+      ]
+    },
+    {
+      "id": "proof",
+      "durationSec": 10,
+      "kind": "metric",
+      "voice": { "id": "s08", "atSec": 0.5 },
+      "backdrop": { "clip": "clips/02-console-trace.mp4", "startSec": 5.5 },
+      "metric": {
+        "label": "Correct resolutions",
+        "from": 0,
+        "to": 100,
+        "suffix": "%",
+        "versus": { "label": "single bare prompt", "value": "11%" },
+        "note": "scorecard · 36 synthetic tickets · pipeline vs bare-prompt baseline"
+      },
+      "sfx": [
+        { "sfx": "whoosh", "atSec": 0.0 },
+        { "sfx": "riser", "atSec": 0.0, "gain": 0.6 },
+        { "sfx": "impact", "atSec": 1.6 }
+      ]
+    },
+    {
+      "id": "cta",
+      "durationSec": 6.5,
+      "kind": "end",
+      "voice": { "id": "s09", "atSec": 0.5 },
+      "end": {
+        "url": "kaarstenanderson.com",
+        "line": "Private project · adapted to your store on request",
+        "contact": "contact@kaarstenanderson.com"
+      },
+      "sfx": [
+        { "sfx": "stinger", "atSec": 0.2 }
+      ]
+    }
+  ],
+  "thumb": {
+    "big": "Refunds decided by code",
+    "sub": "Deterministic policy engine · human gate · 100% correct"
+  }
+}

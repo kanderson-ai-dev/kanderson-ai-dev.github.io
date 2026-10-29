@@ -58,7 +58,7 @@ export const SceneBody: React.FC<{ s: Scene }> = ({ s }) => {
           <div style={{ position: "absolute", top: 90, left: 0, right: 0, display: "flex", justifyContent: "center" }}>
             <KineticText text={s.text ?? ""} size={56} color={theme.text} />
           </div>
-          <HookFlow />
+          <HookFlow flow={s.flow} />
         </AbsoluteFill>
       );
     case "arch":
@@ -67,7 +67,7 @@ export const SceneBody: React.FC<{ s: Scene }> = ({ s }) => {
           <div style={{ position: "absolute", top: 60, left: 0, right: 0 }}>
             <NeonTitle text={s.text ?? ""} size={64} />
           </div>
-          <ArchGraphic llmAt={s.arch?.llmAt ?? 100} codeAt={s.arch?.codeAt ?? 186} humanAt={s.arch?.humanAt ?? 240} />
+          <ArchGraphic llmAt={s.arch?.llmAt ?? 100} codeAt={s.arch?.codeAt ?? 186} humanAt={s.arch?.humanAt ?? 240} workers={s.workers} />
         </AbsoluteFill>
       );
     case "pain":
@@ -76,7 +76,7 @@ export const SceneBody: React.FC<{ s: Scene }> = ({ s }) => {
           <div style={{ position: "absolute", top: 90, left: 0, right: 0, display: "flex", justifyContent: "center" }}>
             <KineticText text={s.text ?? ""} size={64} color={theme.text} />
           </div>
-          <PainGraphic />
+          <PainGraphic pain={s.pain} />
         </AbsoluteFill>
       );
     case "trio":

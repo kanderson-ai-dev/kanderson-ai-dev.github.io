@@ -6,6 +6,12 @@ export type Segment = { clip: string; startSec: number; durationSec: number; rat
 
 export type TrioPanel = { clip: string; startSec: number; rate?: number; crop: Rect; x: number; y: number; w: number; delaySec: number };
 
+export type ArchWorker = { name: string; rows: { tag: "LLM" | "CODE" | "HUMAN"; text: string }[] };
+
+export type FlowSpec = { input: string; node: string; chips: string[]; outs: { big: string; sub: string }[] };
+
+export type PainSpec = { docs: string[]; glitch: string; glitchSub: string };
+
 export type Scene = {
   id: string;
   durationSec: number;
@@ -16,6 +22,9 @@ export type Scene = {
   segments?: Segment[];
   panels?: TrioPanel[];
   arch?: { llmAt: number; codeAt: number; humanAt: number };
+  flow?: FlowSpec;
+  workers?: ArchWorker[];
+  pain?: PainSpec;
   backdrop?: { clip: string; startSec: number };
   text?: string;
   sub?: string;
