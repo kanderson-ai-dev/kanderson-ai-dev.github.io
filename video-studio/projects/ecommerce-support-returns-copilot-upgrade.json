@@ -1,0 +1,1252 @@
+{
+ "fps": 60,
+ "burnSubtitles": true,
+ "fadeOutSec": 1.4,
+ "music": {
+  "file": "music/edit.wav",
+  "duckDb": -6
+ },
+ "scenes": [
+  {
+   "id": "hook",
+   "kind": "hook",
+   "durationSec": 4.267,
+   "voStart": 0.9,
+   "voFile": "s01.wav"
+  },
+  {
+   "id": "tension",
+   "kind": "tension",
+   "durationSec": 12.802,
+   "voStart": 4.717,
+   "voFile": "s02.wav"
+  },
+  {
+   "id": "reveal",
+   "kind": "reveal",
+   "durationSec": 7.87,
+   "voStart": 17.519,
+   "voFile": "s03.wav"
+  },
+  {
+   "id": "setup",
+   "kind": "setup",
+   "durationSec": 4.4,
+   "voStart": 25.389,
+   "voFile": "s04.wav"
+  },
+  {
+   "id": "guardrail",
+   "kind": "guardrail",
+   "durationSec": 7.5,
+   "voStart": 29.789,
+   "voFile": "s05.wav"
+  },
+  {
+   "id": "routing",
+   "kind": "routing",
+   "durationSec": 8.0,
+   "voStart": 37.289,
+   "voFile": "s06.wav"
+  },
+  {
+   "id": "verify",
+   "kind": "verify",
+   "durationSec": 4.765,
+   "voStart": 45.289,
+   "voFile": "s07.wav"
+  },
+  {
+   "id": "policy",
+   "kind": "policy",
+   "durationSec": 7.648,
+   "voStart": 50.054,
+   "voFile": "s08.wav"
+  },
+  {
+   "id": "gate",
+   "kind": "gate",
+   "durationSec": 8.475,
+   "voStart": 57.702,
+   "voFile": "s09.wav"
+  },
+  {
+   "id": "human",
+   "kind": "human",
+   "durationSec": 6.967,
+   "voStart": 66.177,
+   "voFile": "s10.wav"
+  },
+  {
+   "id": "control",
+   "kind": "control",
+   "durationSec": 4.728,
+   "voStart": 73.144,
+   "voFile": "s11.wav"
+  },
+  {
+   "id": "proof",
+   "kind": "proof",
+   "durationSec": 7.06,
+   "voStart": 77.872,
+   "voFile": "s12.wav"
+  },
+  {
+   "id": "value",
+   "kind": "value",
+   "durationSec": 7.537,
+   "voStart": 84.932,
+   "voFile": "s13.wav"
+  },
+  {
+   "id": "real",
+   "kind": "real",
+   "durationSec": 7.234,
+   "voStart": 92.469,
+   "voFile": "s14.wav"
+  },
+  {
+   "id": "adapt",
+   "kind": "adapt",
+   "durationSec": 8.2,
+   "voStart": 99.703,
+   "voFile": "s15.wav"
+  },
+  {
+   "id": "cta",
+   "kind": "cta",
+   "durationSec": 10.3,
+   "voStart": 107.903,
+   "voFile": "s16.wav"
+  }
+ ],
+ "subtitles": [
+  {
+   "from": 0.9,
+   "to": 4.07,
+   "text": "Your support inbox. Every single day.",
+   "words": [
+    {
+     "w": "Your",
+     "s": 0.9,
+     "e": 1.1
+    },
+    {
+     "w": "support",
+     "s": 1.1,
+     "e": 1.52
+    },
+    {
+     "w": "inbox.",
+     "s": 1.52,
+     "e": 2.08
+    },
+    {
+     "w": "Every",
+     "s": 2.08,
+     "e": 2.96
+    },
+    {
+     "w": "single",
+     "s": 2.96,
+     "e": 3.32
+    },
+    {
+     "w": "day.",
+     "s": 3.32,
+     "e": 3.64
+    }
+   ]
+  },
+  {
+   "from": 4.72,
+   "to": 12.95,
+   "text": "More humans means more cost. A generic chatbot is cheaper \u2014 until it approves a refund your policy never allowed.",
+   "words": [
+    {
+     "w": "More",
+     "s": 4.72,
+     "e": 4.92
+    },
+    {
+     "w": "humans",
+     "s": 4.92,
+     "e": 5.3
+    },
+    {
+     "w": "means",
+     "s": 5.3,
+     "e": 5.7
+    },
+    {
+     "w": "more",
+     "s": 5.7,
+     "e": 6.06
+    },
+    {
+     "w": "cost.",
+     "s": 6.06,
+     "e": 6.46
+    },
+    {
+     "w": "A",
+     "s": 7.28,
+     "e": 7.34
+    },
+    {
+     "w": "generic",
+     "s": 7.34,
+     "e": 7.7
+    },
+    {
+     "w": "chatbot",
+     "s": 7.7,
+     "e": 8.3
+    },
+    {
+     "w": "is",
+     "s": 8.3,
+     "e": 8.56
+    },
+    {
+     "w": "cheaper",
+     "s": 8.56,
+     "e": 8.98
+    },
+    {
+     "w": "until",
+     "s": 9.42,
+     "e": 9.82
+    },
+    {
+     "w": "it",
+     "s": 9.82,
+     "e": 9.98
+    },
+    {
+     "w": "approves",
+     "s": 9.98,
+     "e": 10.32
+    },
+    {
+     "w": "a",
+     "s": 10.32,
+     "e": 10.5
+    },
+    {
+     "w": "refund",
+     "s": 10.5,
+     "e": 10.9
+    },
+    {
+     "w": "your",
+     "s": 10.9,
+     "e": 11.22
+    },
+    {
+     "w": "policy",
+     "s": 11.22,
+     "e": 11.64
+    },
+    {
+     "w": "never",
+     "s": 11.64,
+     "e": 12.0
+    },
+    {
+     "w": "allowed.",
+     "s": 12.0,
+     "e": 12.38
+    }
+   ]
+  },
+  {
+   "from": 17.52,
+   "to": 24.49,
+   "text": "This is the E-commerce Support and Returns Copilot. AI agents that resolve tickets \u2014 under your rules.",
+   "words": [
+    {
+     "w": "This",
+     "s": 17.52,
+     "e": 17.74
+    },
+    {
+     "w": "is",
+     "s": 17.74,
+     "e": 17.94
+    },
+    {
+     "w": "the",
+     "s": 17.94,
+     "e": 18.12
+    },
+    {
+     "w": "E-commerce",
+     "s": 18.12,
+     "e": 18.66
+    },
+    {
+     "w": "Support",
+     "s": 18.66,
+     "e": 19.12
+    },
+    {
+     "w": "and",
+     "s": 19.12,
+     "e": 19.34
+    },
+    {
+     "w": "Returns",
+     "s": 19.34,
+     "e": 19.74
+    },
+    {
+     "w": "Copilot.",
+     "s": 19.74,
+     "e": 20.42
+    },
+    {
+     "w": "AI",
+     "s": 21.02,
+     "e": 21.28
+    },
+    {
+     "w": "agents",
+     "s": 21.28,
+     "e": 21.72
+    },
+    {
+     "w": "that",
+     "s": 21.72,
+     "e": 22.0
+    },
+    {
+     "w": "resolve",
+     "s": 22.0,
+     "e": 22.32
+    },
+    {
+     "w": "tickets",
+     "s": 22.32,
+     "e": 22.84
+    },
+    {
+     "w": "under",
+     "s": 22.84,
+     "e": 23.32
+    },
+    {
+     "w": "your",
+     "s": 23.32,
+     "e": 23.58
+    },
+    {
+     "w": "rules.",
+     "s": 23.58,
+     "e": 23.88
+    }
+   ]
+  },
+  {
+   "from": 25.39,
+   "to": 26.87,
+   "text": "Follow one ticket.",
+   "words": [
+    {
+     "w": "Follow",
+     "s": 25.39,
+     "e": 25.63
+    },
+    {
+     "w": "one",
+     "s": 25.63,
+     "e": 25.97
+    },
+    {
+     "w": "ticket.",
+     "s": 25.97,
+     "e": 26.31
+    }
+   ]
+  },
+  {
+   "from": 29.79,
+   "to": 36.59,
+   "text": "Every message is screened first. Twenty-two attack techniques are blocked before any AI runs.",
+   "words": [
+    {
+     "w": "Every",
+     "s": 29.79,
+     "e": 30.05
+    },
+    {
+     "w": "message",
+     "s": 30.05,
+     "e": 30.49
+    },
+    {
+     "w": "is",
+     "s": 30.49,
+     "e": 30.79
+    },
+    {
+     "w": "screened",
+     "s": 30.79,
+     "e": 31.15
+    },
+    {
+     "w": "first.",
+     "s": 31.15,
+     "e": 31.71
+    },
+    {
+     "w": "Twenty-two",
+     "s": 33.03,
+     "e": 33.03
+    },
+    {
+     "w": "attack",
+     "s": 33.03,
+     "e": 33.49
+    },
+    {
+     "w": "techniques",
+     "s": 33.49,
+     "e": 33.95
+    },
+    {
+     "w": "are",
+     "s": 33.95,
+     "e": 34.31
+    },
+    {
+     "w": "blocked",
+     "s": 34.31,
+     "e": 34.61
+    },
+    {
+     "w": "before",
+     "s": 34.61,
+     "e": 35.05
+    },
+    {
+     "w": "any",
+     "s": 35.05,
+     "e": 35.33
+    },
+    {
+     "w": "AI",
+     "s": 35.33,
+     "e": 35.65
+    },
+    {
+     "w": "runs.",
+     "s": 35.65,
+     "e": 36.01
+    }
+   ]
+  },
+  {
+   "from": 37.29,
+   "to": 43.94,
+   "text": "A supervisor agent sends it to specialists: orders, policy, refunds, shipping, escalation.",
+   "words": [
+    {
+     "w": "A",
+     "s": 37.29,
+     "e": 37.39
+    },
+    {
+     "w": "supervisor",
+     "s": 37.39,
+     "e": 37.85
+    },
+    {
+     "w": "agent",
+     "s": 37.85,
+     "e": 38.41
+    },
+    {
+     "w": "sends",
+     "s": 38.41,
+     "e": 38.73
+    },
+    {
+     "w": "it",
+     "s": 38.73,
+     "e": 38.93
+    },
+    {
+     "w": "to",
+     "s": 38.93,
+     "e": 39.11
+    },
+    {
+     "w": "specialists:",
+     "s": 39.11,
+     "e": 39.57
+    },
+    {
+     "w": "orders,",
+     "s": 40.17,
+     "e": 40.39
+    },
+    {
+     "w": "policy,",
+     "s": 40.79,
+     "e": 41.09
+    },
+    {
+     "w": "refunds,",
+     "s": 41.49,
+     "e": 41.83
+    },
+    {
+     "w": "shipping,",
+     "s": 42.33,
+     "e": 42.57
+    },
+    {
+     "w": "escalation.",
+     "s": 42.89,
+     "e": 43.19
+    }
+   ]
+  },
+  {
+   "from": 45.29,
+   "to": 49.4,
+   "text": "The order is checked against the store's records \u2014 never guessed.",
+   "words": [
+    {
+     "w": "The",
+     "s": 45.29,
+     "e": 45.43
+    },
+    {
+     "w": "order",
+     "s": 45.43,
+     "e": 45.67
+    },
+    {
+     "w": "is",
+     "s": 45.67,
+     "e": 45.95
+    },
+    {
+     "w": "checked",
+     "s": 45.95,
+     "e": 46.25
+    },
+    {
+     "w": "against",
+     "s": 46.25,
+     "e": 46.55
+    },
+    {
+     "w": "the",
+     "s": 46.55,
+     "e": 46.81
+    },
+    {
+     "w": "store's",
+     "s": 46.81,
+     "e": 47.17
+    },
+    {
+     "w": "records",
+     "s": 47.17,
+     "e": 47.63
+    },
+    {
+     "w": "never",
+     "s": 48.23,
+     "e": 48.47
+    },
+    {
+     "w": "guessed.",
+     "s": 48.47,
+     "e": 48.75
+    }
+   ]
+  },
+  {
+   "from": 50.05,
+   "to": 57.05,
+   "text": "Then plain code applies your return policy. Same input, same decision \u2014 every time.",
+   "words": [
+    {
+     "w": "Then",
+     "s": 50.05,
+     "e": 50.31
+    },
+    {
+     "w": "plain",
+     "s": 50.49,
+     "e": 50.63
+    },
+    {
+     "w": "code",
+     "s": 50.63,
+     "e": 51.01
+    },
+    {
+     "w": "applies",
+     "s": 51.01,
+     "e": 51.49
+    },
+    {
+     "w": "your",
+     "s": 51.49,
+     "e": 51.71
+    },
+    {
+     "w": "return",
+     "s": 51.71,
+     "e": 52.05
+    },
+    {
+     "w": "policy.",
+     "s": 52.05,
+     "e": 52.55
+    },
+    {
+     "w": "Same",
+     "s": 53.31,
+     "e": 53.53
+    },
+    {
+     "w": "input,",
+     "s": 53.53,
+     "e": 53.91
+    },
+    {
+     "w": "same",
+     "s": 54.49,
+     "e": 54.65
+    },
+    {
+     "w": "decision",
+     "s": 54.65,
+     "e": 55.13
+    },
+    {
+     "w": "every",
+     "s": 55.71,
+     "e": 56.15
+    },
+    {
+     "w": "time.",
+     "s": 56.15,
+     "e": 56.51
+    }
+   ]
+  },
+  {
+   "from": 57.7,
+   "to": 65.53,
+   "text": "Two hundred forty dollars is over the seventy-five-dollar cap. No agent can approve it. The database itself refuses.",
+   "words": [
+    {
+     "w": "Two",
+     "s": 57.7,
+     "e": 57.905
+    },
+    {
+     "w": "hundred",
+     "s": 57.905,
+     "e": 58.11
+    },
+    {
+     "w": "forty",
+     "s": 58.11,
+     "e": 58.315
+    },
+    {
+     "w": "dollars",
+     "s": 58.315,
+     "e": 58.52
+    },
+    {
+     "w": "is",
+     "s": 58.52,
+     "e": 59.34
+    },
+    {
+     "w": "over",
+     "s": 59.34,
+     "e": 59.6
+    },
+    {
+     "w": "the",
+     "s": 59.6,
+     "e": 59.76
+    },
+    {
+     "w": "seventy-five-dollar",
+     "s": 59.76,
+     "e": 60.38
+    },
+    {
+     "w": "cap.",
+     "s": 60.38,
+     "e": 60.88
+    },
+    {
+     "w": "No",
+     "s": 61.38,
+     "e": 61.6
+    },
+    {
+     "w": "agent",
+     "s": 61.6,
+     "e": 61.9
+    },
+    {
+     "w": "can",
+     "s": 61.9,
+     "e": 62.18
+    },
+    {
+     "w": "approve",
+     "s": 62.18,
+     "e": 62.44
+    },
+    {
+     "w": "it.",
+     "s": 62.44,
+     "e": 62.7
+    },
+    {
+     "w": "The",
+     "s": 63.14,
+     "e": 63.24
+    },
+    {
+     "w": "database",
+     "s": 63.24,
+     "e": 63.62
+    },
+    {
+     "w": "itself",
+     "s": 63.62,
+     "e": 64.2
+    },
+    {
+     "w": "refuses.",
+     "s": 64.2,
+     "e": 64.78
+    }
+   ]
+  },
+  {
+   "from": 66.18,
+   "to": 72.49,
+   "text": "It waits for a person \u2014 policy check and drafted reply, side by side. One click.",
+   "words": [
+    {
+     "w": "It",
+     "s": 66.18,
+     "e": 66.32
+    },
+    {
+     "w": "waits",
+     "s": 66.32,
+     "e": 66.48
+    },
+    {
+     "w": "for",
+     "s": 66.48,
+     "e": 66.76
+    },
+    {
+     "w": "a",
+     "s": 66.76,
+     "e": 66.88
+    },
+    {
+     "w": "person",
+     "s": 66.88,
+     "e": 67.24
+    },
+    {
+     "w": "policy",
+     "s": 68.02,
+     "e": 68.1
+    },
+    {
+     "w": "check",
+     "s": 68.1,
+     "e": 68.46
+    },
+    {
+     "w": "and",
+     "s": 68.46,
+     "e": 68.98
+    },
+    {
+     "w": "drafted",
+     "s": 68.98,
+     "e": 69.34
+    },
+    {
+     "w": "reply,",
+     "s": 69.34,
+     "e": 69.84
+    },
+    {
+     "w": "side",
+     "s": 69.84,
+     "e": 70.32
+    },
+    {
+     "w": "by",
+     "s": 70.32,
+     "e": 70.54
+    },
+    {
+     "w": "side.",
+     "s": 70.54,
+     "e": 70.92
+    },
+    {
+     "w": "One",
+     "s": 71.4,
+     "e": 71.7
+    },
+    {
+     "w": "click.",
+     "s": 71.7,
+     "e": 71.96
+    }
+   ]
+  },
+  {
+   "from": 73.14,
+   "to": 77.22,
+   "text": "The AI writes the words. It never decides the money.",
+   "words": [
+    {
+     "w": "The",
+     "s": 73.14,
+     "e": 73.28
+    },
+    {
+     "w": "AI",
+     "s": 73.28,
+     "e": 73.68
+    },
+    {
+     "w": "writes",
+     "s": 73.68,
+     "e": 74.08
+    },
+    {
+     "w": "the",
+     "s": 74.08,
+     "e": 74.34
+    },
+    {
+     "w": "words.",
+     "s": 74.34,
+     "e": 74.64
+    },
+    {
+     "w": "It",
+     "s": 75.26,
+     "e": 75.5
+    },
+    {
+     "w": "never",
+     "s": 75.5,
+     "e": 75.8
+    },
+    {
+     "w": "decides",
+     "s": 75.8,
+     "e": 76.26
+    },
+    {
+     "w": "the",
+     "s": 76.26,
+     "e": 76.52
+    },
+    {
+     "w": "money.",
+     "s": 76.52,
+     "e": 76.68
+    }
+   ]
+  },
+  {
+   "from": 77.87,
+   "to": 84.28,
+   "text": "Thirty-six test tickets. It got every decision right. One bare prompt? Eleven percent.",
+   "words": [
+    {
+     "w": "Thirty-six",
+     "s": 77.87,
+     "e": 78.31
+    },
+    {
+     "w": "test",
+     "s": 78.31,
+     "e": 78.63
+    },
+    {
+     "w": "tickets.",
+     "s": 78.63,
+     "e": 79.09
+    },
+    {
+     "w": "It",
+     "s": 79.61,
+     "e": 79.77
+    },
+    {
+     "w": "got",
+     "s": 79.77,
+     "e": 79.95
+    },
+    {
+     "w": "every",
+     "s": 79.95,
+     "e": 80.27
+    },
+    {
+     "w": "decision",
+     "s": 80.27,
+     "e": 80.59
+    },
+    {
+     "w": "right.",
+     "s": 80.59,
+     "e": 80.97
+    },
+    {
+     "w": "One",
+     "s": 81.63,
+     "e": 81.85
+    },
+    {
+     "w": "bare",
+     "s": 81.85,
+     "e": 82.07
+    },
+    {
+     "w": "prompt?",
+     "s": 82.07,
+     "e": 82.49
+    },
+    {
+     "w": "Eleven",
+     "s": 82.99,
+     "e": 83.33
+    },
+    {
+     "w": "percent.",
+     "s": 83.33,
+     "e": 83.67
+    }
+   ]
+  },
+  {
+   "from": 84.93,
+   "to": 91.82,
+   "text": "Measured cost: less than a tenth of a cent per ticket. Four in five resolved without a human.",
+   "words": [
+    {
+     "w": "Measured",
+     "s": 84.93,
+     "e": 85.37
+    },
+    {
+     "w": "cost:",
+     "s": 85.37,
+     "e": 85.69
+    },
+    {
+     "w": "less",
+     "s": 86.19,
+     "e": 86.45
+    },
+    {
+     "w": "than",
+     "s": 86.45,
+     "e": 86.73
+    },
+    {
+     "w": "a",
+     "s": 86.73,
+     "e": 86.85
+    },
+    {
+     "w": "tenth",
+     "s": 86.85,
+     "e": 87.01
+    },
+    {
+     "w": "of",
+     "s": 87.01,
+     "e": 87.21
+    },
+    {
+     "w": "a",
+     "s": 87.21,
+     "e": 87.29
+    },
+    {
+     "w": "cent",
+     "s": 87.29,
+     "e": 87.51
+    },
+    {
+     "w": "per",
+     "s": 87.51,
+     "e": 87.79
+    },
+    {
+     "w": "ticket.",
+     "s": 87.79,
+     "e": 88.17
+    },
+    {
+     "w": "Four",
+     "s": 88.91,
+     "e": 89.17
+    },
+    {
+     "w": "in",
+     "s": 89.17,
+     "e": 89.35
+    },
+    {
+     "w": "five",
+     "s": 89.35,
+     "e": 89.77
+    },
+    {
+     "w": "resolved",
+     "s": 90.03,
+     "e": 90.43
+    },
+    {
+     "w": "without",
+     "s": 90.43,
+     "e": 90.85
+    },
+    {
+     "w": "a",
+     "s": 90.85,
+     "e": 91.01
+    },
+    {
+     "w": "human.",
+     "s": 91.01,
+     "e": 91.23
+    }
+   ]
+  },
+  {
+   "from": 92.47,
+   "to": 99.05,
+   "text": "And it's a real product: support console, approval queue, live performance and cost.",
+   "words": [
+    {
+     "w": "And",
+     "s": 92.47,
+     "e": 92.77
+    },
+    {
+     "w": "it's",
+     "s": 92.77,
+     "e": 93.05
+    },
+    {
+     "w": "a",
+     "s": 93.05,
+     "e": 93.17
+    },
+    {
+     "w": "real",
+     "s": 93.17,
+     "e": 93.35
+    },
+    {
+     "w": "product:",
+     "s": 93.35,
+     "e": 93.93
+    },
+    {
+     "w": "support",
+     "s": 94.31,
+     "e": 94.67
+    },
+    {
+     "w": "console,",
+     "s": 94.67,
+     "e": 95.19
+    },
+    {
+     "w": "approval",
+     "s": 95.83,
+     "e": 95.93
+    },
+    {
+     "w": "queue,",
+     "s": 95.93,
+     "e": 96.37
+    },
+    {
+     "w": "live",
+     "s": 96.93,
+     "e": 97.17
+    },
+    {
+     "w": "performance",
+     "s": 97.17,
+     "e": 97.71
+    },
+    {
+     "w": "and",
+     "s": 97.71,
+     "e": 98.09
+    },
+    {
+     "w": "cost.",
+     "s": 98.09,
+     "e": 98.39
+    }
+   ]
+  },
+  {
+   "from": 99.7,
+   "to": 106.24,
+   "text": "Your policy. Your limits. Your brand. Your data. Adapted to your store.",
+   "words": [
+    {
+     "w": "Your",
+     "s": 99.7,
+     "e": 99.92
+    },
+    {
+     "w": "policy.",
+     "s": 99.92,
+     "e": 100.48
+    },
+    {
+     "w": "Your",
+     "s": 101.06,
+     "e": 101.16
+    },
+    {
+     "w": "limits.",
+     "s": 101.16,
+     "e": 101.6
+    },
+    {
+     "w": "Your",
+     "s": 102.22,
+     "e": 102.34
+    },
+    {
+     "w": "brand.",
+     "s": 102.34,
+     "e": 102.78
+    },
+    {
+     "w": "Your",
+     "s": 103.34,
+     "e": 103.52
+    },
+    {
+     "w": "data.",
+     "s": 103.52,
+     "e": 104.0
+    },
+    {
+     "w": "Adapted",
+     "s": 104.44,
+     "e": 104.9
+    },
+    {
+     "w": "to",
+     "s": 104.9,
+     "e": 105.2
+    },
+    {
+     "w": "your",
+     "s": 105.2,
+     "e": 105.34
+    },
+    {
+     "w": "store.",
+     "s": 105.34,
+     "e": 105.68
+    }
+   ]
+  },
+  {
+   "from": 107.9,
+   "to": 112.85,
+   "text": "Want this working in your store? Get in touch at kaarstenanderson.com",
+   "words": [
+    {
+     "w": "Want",
+     "s": 107.9,
+     "e": 108.08
+    },
+    {
+     "w": "this",
+     "s": 108.08,
+     "e": 108.26
+    },
+    {
+     "w": "working",
+     "s": 108.26,
+     "e": 108.56
+    },
+    {
+     "w": "in",
+     "s": 108.56,
+     "e": 108.74
+    },
+    {
+     "w": "your",
+     "s": 108.74,
+     "e": 108.88
+    },
+    {
+     "w": "store?",
+     "s": 108.88,
+     "e": 109.18
+    },
+    {
+     "w": "Get",
+     "s": 109.84,
+     "e": 109.94
+    },
+    {
+     "w": "in",
+     "s": 109.94,
+     "e": 110.1
+    },
+    {
+     "w": "touch",
+     "s": 110.1,
+     "e": 110.34
+    },
+    {
+     "w": "at",
+     "s": 110.34,
+     "e": 110.72
+    },
+    {
+     "w": "kaarstenanderson.com",
+     "s": 110.72,
+     "e": 112.44
+    }
+   ]
+  }
+ ]
+}

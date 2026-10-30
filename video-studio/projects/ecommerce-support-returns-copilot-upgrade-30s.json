@@ -1,0 +1,309 @@
+{
+ "fps": 60,
+ "burnSubtitles": true,
+ "fadeOutSec": 1.4,
+ "music": {
+  "file": "music/edit.wav",
+  "duckDb": -6
+ },
+ "scenes": [
+  {
+   "id": "hook",
+   "kind": "hook",
+   "durationSec": 4.267,
+   "voStart": 0.9,
+   "voFile": "s01.wav"
+  },
+  {
+   "id": "gate",
+   "kind": "gate",
+   "durationSec": 8.475,
+   "voStart": 57.702,
+   "voFile": "s09.wav"
+  },
+  {
+   "id": "proof",
+   "kind": "proof",
+   "durationSec": 7.06,
+   "voStart": 77.872,
+   "voFile": "s12.wav"
+  },
+  {
+   "id": "cta",
+   "kind": "cta",
+   "durationSec": 10.3,
+   "voStart": 107.903,
+   "voFile": "s16.wav"
+  }
+ ],
+ "subtitles": [
+  {
+   "from": 0.9,
+   "to": 4.07,
+   "text": "Your support inbox. Every single day.",
+   "words": [
+    {
+     "w": "Your",
+     "s": 0.9,
+     "e": 1.1
+    },
+    {
+     "w": "support",
+     "s": 1.1,
+     "e": 1.52
+    },
+    {
+     "w": "inbox.",
+     "s": 1.52,
+     "e": 2.08
+    },
+    {
+     "w": "Every",
+     "s": 2.08,
+     "e": 2.96
+    },
+    {
+     "w": "single",
+     "s": 2.96,
+     "e": 3.32
+    },
+    {
+     "w": "day.",
+     "s": 3.32,
+     "e": 3.64
+    }
+   ]
+  },
+  {
+   "from": 4.715,
+   "to": 12.545,
+   "text": "Two hundred forty dollars is over the seventy-five-dollar cap. No agent can approve it. The database itself refuses.",
+   "words": [
+    {
+     "w": "Two",
+     "s": 4.715,
+     "e": 4.92
+    },
+    {
+     "w": "hundred",
+     "s": 4.92,
+     "e": 5.125
+    },
+    {
+     "w": "forty",
+     "s": 5.125,
+     "e": 5.33
+    },
+    {
+     "w": "dollars",
+     "s": 5.33,
+     "e": 5.535
+    },
+    {
+     "w": "is",
+     "s": 5.535,
+     "e": 6.355
+    },
+    {
+     "w": "over",
+     "s": 6.355,
+     "e": 6.615
+    },
+    {
+     "w": "the",
+     "s": 6.615,
+     "e": 6.775
+    },
+    {
+     "w": "seventy-five-dollar",
+     "s": 6.775,
+     "e": 7.395
+    },
+    {
+     "w": "cap.",
+     "s": 7.395,
+     "e": 7.895
+    },
+    {
+     "w": "No",
+     "s": 8.395,
+     "e": 8.615
+    },
+    {
+     "w": "agent",
+     "s": 8.615,
+     "e": 8.915
+    },
+    {
+     "w": "can",
+     "s": 8.915,
+     "e": 9.195
+    },
+    {
+     "w": "approve",
+     "s": 9.195,
+     "e": 9.455
+    },
+    {
+     "w": "it.",
+     "s": 9.455,
+     "e": 9.715
+    },
+    {
+     "w": "The",
+     "s": 10.155,
+     "e": 10.255
+    },
+    {
+     "w": "database",
+     "s": 10.255,
+     "e": 10.635
+    },
+    {
+     "w": "itself",
+     "s": 10.635,
+     "e": 11.215
+    },
+    {
+     "w": "refuses.",
+     "s": 11.215,
+     "e": 11.795
+    }
+   ]
+  },
+  {
+   "from": 13.19,
+   "to": 19.6,
+   "text": "Thirty-six test tickets. It got every decision right. One bare prompt? Eleven percent.",
+   "words": [
+    {
+     "w": "Thirty-six",
+     "s": 13.19,
+     "e": 13.63
+    },
+    {
+     "w": "test",
+     "s": 13.63,
+     "e": 13.95
+    },
+    {
+     "w": "tickets.",
+     "s": 13.95,
+     "e": 14.41
+    },
+    {
+     "w": "It",
+     "s": 14.93,
+     "e": 15.09
+    },
+    {
+     "w": "got",
+     "s": 15.09,
+     "e": 15.27
+    },
+    {
+     "w": "every",
+     "s": 15.27,
+     "e": 15.59
+    },
+    {
+     "w": "decision",
+     "s": 15.59,
+     "e": 15.91
+    },
+    {
+     "w": "right.",
+     "s": 15.91,
+     "e": 16.29
+    },
+    {
+     "w": "One",
+     "s": 16.95,
+     "e": 17.17
+    },
+    {
+     "w": "bare",
+     "s": 17.17,
+     "e": 17.39
+    },
+    {
+     "w": "prompt?",
+     "s": 17.39,
+     "e": 17.81
+    },
+    {
+     "w": "Eleven",
+     "s": 18.31,
+     "e": 18.65
+    },
+    {
+     "w": "percent.",
+     "s": 18.65,
+     "e": 18.99
+    }
+   ]
+  },
+  {
+   "from": 20.249,
+   "to": 25.199,
+   "text": "Want this working in your store? Get in touch at kaarstenanderson.com",
+   "words": [
+    {
+     "w": "Want",
+     "s": 20.249,
+     "e": 20.429
+    },
+    {
+     "w": "this",
+     "s": 20.429,
+     "e": 20.609
+    },
+    {
+     "w": "working",
+     "s": 20.609,
+     "e": 20.909
+    },
+    {
+     "w": "in",
+     "s": 20.909,
+     "e": 21.089
+    },
+    {
+     "w": "your",
+     "s": 21.089,
+     "e": 21.229
+    },
+    {
+     "w": "store?",
+     "s": 21.229,
+     "e": 21.529
+    },
+    {
+     "w": "Get",
+     "s": 22.189,
+     "e": 22.289
+    },
+    {
+     "w": "in",
+     "s": 22.289,
+     "e": 22.449
+    },
+    {
+     "w": "touch",
+     "s": 22.449,
+     "e": 22.689
+    },
+    {
+     "w": "at",
+     "s": 22.689,
+     "e": 23.069
+    },
+    {
+     "w": "kaarstenanderson.com",
+     "s": 23.069,
+     "e": 24.789
+    }
+   ]
+  }
+ ]
+}
