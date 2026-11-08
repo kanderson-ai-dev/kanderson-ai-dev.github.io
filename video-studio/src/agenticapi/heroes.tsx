@@ -384,12 +384,13 @@ export const DoorBeat: React.FC<{ t: number }> = ({ t }) => {
             borderRadius: 8,
           }}
         />
-        {/* the sweeping scan line as the card passes */}
+        {/* the scan sweep: a soft glow band inside the opening, no hard edge */}
         <div
           style={{
-            position: "absolute", left: 76, top: 58 + scan * 430, width: 508, height: 8, borderRadius: 4,
-            background: C.accent, boxShadow: glow(C.accent, 26),
-            opacity: scan > 0 && scan < 1 ? 0.95 : 0,
+            position: "absolute", left: 70, top: 52 + scan * 400, width: 520, height: 80,
+            background: `radial-gradient(ellipse, ${C.accent}30, transparent 70%)`,
+            filter: "blur(8px)",
+            opacity: scan > 0 && scan < 1 ? 0.8 : 0,
           }}
         />
       </div>
