@@ -393,11 +393,14 @@ export const DoorBeat: React.FC<{ t: number }> = ({ t }) => {
           }}
         />
       </div>
-      {/* light trail behind the card */}
+      {/* light trail behind the card — stops at the gate's left pillar and
+          dissipates once the card is through */}
       <div
         style={{
-          position: "absolute", left: 300, top: 452, width: (cardX - 300) * trail + 40, height: 6,
-          background: `linear-gradient(90deg, transparent, ${C.accent})`, filter: "blur(2px)", opacity: 0.7 * trail,
+          position: "absolute", left: 300, top: 452,
+          width: Math.min((cardX - 300) * trail + 40, cx - 330 - 300 - 8), height: 6,
+          background: `linear-gradient(90deg, transparent, ${C.accent})`, filter: "blur(2px)",
+          opacity: 0.7 * trail * (1 - seg(t, 0.52, 0.68)),
         }}
       />
       {/* the question card */}
