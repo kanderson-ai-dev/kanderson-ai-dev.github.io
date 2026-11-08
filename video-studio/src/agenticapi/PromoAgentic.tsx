@@ -140,15 +140,18 @@ export const PromoAgentic: React.FC<PromoAgenticProps> = ({ scenes, subtitles, b
               <Camera idx={i}>
                 {HEADLINES[s.kind] && (
                   <div
+                    data-qa="headline"
                     style={{
-                      position: "absolute", top: 64, left: 0, right: 0, textAlign: "center",
+                      position: "absolute", top: 84, left: 0, right: 0, textAlign: "center",
                       fontFamily: titleFont, fontWeight: 700, fontSize: 54, color: C.text, padding: "0 140px",
                     }}
                   >
                     {HEADLINES[s.kind]}
                   </div>
                 )}
-                <Beat s={s} />
+                <div data-qa={`beat-${s.kind}`} style={{ position: "absolute", inset: 0 }}>
+                  <Beat s={s} />
+                </div>
               </Camera>
             </Stage>
             {boxed && <SceneBox act={isAct(s.kind)} />}
@@ -163,7 +166,7 @@ export const PromoAgentic: React.FC<PromoAgenticProps> = ({ scenes, subtitles, b
           style={{ background: "#000", opacity: interpolate(frame, [durationInFrames - fadeOutSec * fps, durationInFrames], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) }}
         />
       ) : null}
-      {burnSubtitles && subtitles && <Captions3 cues={subtitles} />}
+      {burnSubtitles && subtitles && <div data-qa="captions"><Captions3 cues={subtitles} /></div>}
     </AbsoluteFill>
   );
 };

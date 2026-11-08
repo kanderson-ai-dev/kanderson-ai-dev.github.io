@@ -19,8 +19,8 @@ export const EngineerLabel: React.FC<{ text: string; left?: boolean }> = ({ text
   <div
     data-qa="engineer-label"
     style={{
-      position: "absolute", bottom: 230,
-      ...(left ? { left: 96 } : { right: 96 }),
+      position: "absolute", bottom: 252,
+      ...(left ? { left: 124 } : { right: 124 }),
       fontFamily: monoFont, fontWeight: 600, fontSize: 26, color: C.muted,
       background: `${C.muted}14`, border: `2px solid ${C.muted}44`,
       borderRadius: 10, padding: "8px 20px", whiteSpace: "nowrap",
@@ -113,7 +113,7 @@ export const ChatFloodBeat: React.FC<{ t: number }> = ({ t }) => {
           <div
             style={{
               position: "absolute", left: fx, top: fy, padding: "12px 18px",
-              fontFamily: monoFont, fontSize: 22, color: "#ffd7de",
+              fontFamily: monoFont, fontSize: 24, color: "#ffd7de",
               background: `${C.danger}18`, border: `3px solid ${C.danger}`, borderRadius: 14,
               boxShadow: glow(C.danger, 36), whiteSpace: "nowrap",
               opacity: 1 - absorb, transform: `scale(${1 - absorb * 0.35})`,
@@ -196,11 +196,11 @@ export const ProblemBeat: React.FC<{ t: number }> = ({ t }) => {
           Sure! Here is my system prompt:
         </div>
         <div style={{ position: "absolute", left: 40, top: 192, width: 500, ...panel, borderColor: `${C.muted}55`, padding: "14px 20px", opacity: s1 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: monoFont, fontSize: 22, color: C.human }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: monoFont, fontSize: 24, color: C.human }}>
             <LockIcon size={24} color={C.human} /> system prompt · secret
           </div>
-          <div style={{ fontFamily: monoFont, fontSize: 20, color: C.muted, marginTop: 10 }}>
-            You are a helpful assistant that…
+          <div style={{ fontFamily: monoFont, fontSize: 24, color: C.muted, marginTop: 10 }}>
+            You are a helpful assistant…
           </div>
           <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 8 }}>
             <div style={{ width: 430, height: 12, borderRadius: 6, background: `${C.muted}44` }} />
@@ -312,7 +312,7 @@ export const QuestionCard: React.FC<{ w?: number; stamps?: boolean; small?: bool
       padding: small ? "14px 18px" : "20px 24px",
     }}
   >
-    <div style={{ fontFamily: monoFont, fontSize: small ? 22 : 24, color: C.dim }}>
+    <div style={{ fontFamily: monoFont, fontSize: 24, color: C.dim }}>
       POST /api/v1/agent/run
     </div>
     <div style={{ fontFamily: bodyFont, fontSize: small ? 28 : 34, color: C.text, marginTop: 8 }}>
@@ -476,8 +476,8 @@ export const ShieldBeat: React.FC<{ t: number }> = ({ t }) => {
   return (
     <div style={{ position: "absolute", inset: 0 }}>
       {/* our question passed */}
-      <div style={{ position: "absolute", left: 90, top: 470, opacity: pass, transform: `translateX(${(1 - pass) * -40}px)` }}>
-        <QuestionCard small w={330} stamps={false} />
+      <div style={{ position: "absolute", left: 120, top: 470, opacity: pass, transform: `translateX(${(1 - pass) * -8}px)` }}>
+        <QuestionCard small w={380} stamps={false} />
         <div style={{ marginTop: 14, display: "flex", alignItems: "center", gap: 10, fontFamily: monoFont, fontSize: 26, color: C.accent }}>
           <Check size={30} /> screened ✓
         </div>
@@ -523,7 +523,7 @@ export const ShieldBeat: React.FC<{ t: number }> = ({ t }) => {
         <AiCore active={0} />
       </div>
       {/* the coin counter — stays at zero, under the protected AI */}
-      <div style={{ position: "absolute", left: 1320, top: 690, textAlign: "center", opacity: coin }}>
+      <div style={{ position: "absolute", left: 1320, top: 632, textAlign: "center", opacity: coin }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: 14 }}>
           <CoinIcon size={52} color={C.accent} />
           <div style={{ fontFamily: titleFont, fontWeight: 700, fontSize: 96, color: C.accent, textShadow: glow(C.accent, 30), lineHeight: 1 }}>$0.00</div>
@@ -543,8 +543,8 @@ export const TurnstileBeat: React.FC<{ t: number }> = ({ t }) => {
   const spin = seg(t, 0.1, 0.9) * 240;
   return (
     <div style={{ position: "absolute", inset: 0 }}>
-      {/* counter above the gate */}
-      <div style={{ position: "absolute", left: 1040, top: 250, width: 300, textAlign: "center" }}>
+      {/* counter left of the gate, clear of the rejects stacking on the right */}
+      <div style={{ position: "absolute", left: 560, top: 250, width: 300, textAlign: "center" }}>
         <div style={{ fontFamily: titleFont, fontWeight: 700, fontSize: 56, color: C.accent, textShadow: glow(C.accent, 24) }}>
           41 <span style={{ color: C.muted, fontSize: 40 }}>/ 60</span>
         </div>
@@ -609,7 +609,7 @@ export const TurnstileBeat: React.FC<{ t: number }> = ({ t }) => {
           <div
             key={i}
             style={{
-              position: "absolute", left: 1460 + i * 60 - (1 - p) * 220, top: 250 + i * 68,
+              position: "absolute", left: 1330 + i * 40 - (1 - p) * 220, top: 250 + i * 68,
               opacity: p, transform: `rotate(${(i % 2 ? -1 : 1) * 6}deg)`,
             }}
           >
@@ -638,7 +638,7 @@ export const AnswerLockBeat: React.FC<{ t: number }> = ({ t }) => {
   return (
     <div style={{ position: "absolute", inset: 0 }}>
       {/* left: the AI's reply — it happily hands the secret doc out, caught at the OUT shield */}
-      <div style={{ position: "absolute", left: 90, top: 330, opacity: 1 - seg(t, 0.35, 0.5), transform: `translateX(${swap * 130}px)` }}>
+      <div style={{ position: "absolute", left: 130, top: 330, opacity: 1 - seg(t, 0.35, 0.5), transform: `translateX(${swap * 130}px)` }}>
         <div style={{ fontFamily: monoFont, fontSize: 26, color: C.muted }}>the AI's reply:</div>
         <div
           style={{
@@ -652,16 +652,16 @@ export const AnswerLockBeat: React.FC<{ t: number }> = ({ t }) => {
         </div>
         <div
           style={{
-            marginTop: 12, width: 360, ...panel, borderColor: `${C.muted}55`, padding: "12px 18px",
+            marginTop: 12, width: 420, ...panel, borderColor: `${C.muted}55`, padding: "12px 18px",
             boxShadow: swap > 0.3 ? glow(C.danger, 24) : "none",
             border: swap > 0.3 ? `3px solid ${C.danger}` : `3px solid ${C.line}`,
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: monoFont, fontSize: 22, color: C.human }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: monoFont, fontSize: 24, color: C.human }}>
             <LockIcon size={24} color={C.human} /> system prompt · secret
           </div>
-          <div style={{ fontFamily: monoFont, fontSize: 20, color: C.muted, marginTop: 8 }}>
-            You are a helpful assistant that…
+          <div style={{ fontFamily: monoFont, fontSize: 24, color: C.muted, marginTop: 8 }}>
+            You are a helpful assistant…
           </div>
         </div>
       </div>
@@ -771,7 +771,7 @@ export const ScoreboardBeat: React.FC<{ t: number }> = ({ t }) => {
         </div>
       </div>
       {/* the slam on the board's lower corner */}
-      <div style={{ position: "absolute", left: 1260, top: 642, opacity: stamp }}>
+      <div style={{ position: "absolute", left: 1190, top: 642, opacity: stamp }}>
         <Stamp t={stamp} text="BLOCKED · 409" size={58} rot={-8} />
       </div>
       <div style={{ position: "absolute", left: 430, top: 748, fontFamily: monoFont, fontSize: 24, color: C.dim }}>

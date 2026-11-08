@@ -33,9 +33,9 @@ export const WorkBeat: React.FC<{ t: number }> = ({ t }) => {
         <AiCore active={plan} />
         {/* stem from the core down to its plan card */}
         <div style={{ position: "absolute", left: 113, top: 232, width: 4, height: 20, background: `${C.model}66` }} />
-        <div style={{ position: "absolute", left: -55, top: 252, width: 340, fontFamily: monoFont, fontSize: 26, color: C.muted, opacity: plan }}>
-          <div style={{ ...panel, padding: "18px 22px", borderColor: `${C.model}66`, width: 340 }}>
-            <div style={{ fontFamily: monoFont, fontSize: 22, color: C.dim }}>the plan</div>
+        <div style={{ position: "absolute", left: -75, top: 252, width: 380, fontFamily: monoFont, fontSize: 26, color: C.muted, opacity: plan }}>
+          <div style={{ ...panel, padding: "18px 22px", borderColor: `${C.model}66`, width: 380 }}>
+            <div style={{ fontFamily: monoFont, fontSize: 24, color: C.dim }}>the plan</div>
             <div style={{ marginTop: 8, color: C.text, whiteSpace: "nowrap" }}>calculator("15 * 4")</div>
           </div>
         </div>
@@ -109,7 +109,7 @@ export const MemoryBeat: React.FC<{ t: number }> = ({ t }) => {
           padding: "16px 24px",
         }}
       >
-        <span style={{ fontFamily: monoFont, fontSize: 22, color: C.dim, display: "block", marginBottom: 4 }}>turn 2</span>
+        <span style={{ fontFamily: monoFont, fontSize: 24, color: C.dim, display: "block", marginBottom: 4 }}>turn 2</span>
         "Now double that"
       </div>
       {/* thread linking turn 2 back to turn 1 */}
@@ -117,13 +117,13 @@ export const MemoryBeat: React.FC<{ t: number }> = ({ t }) => {
         <path d="M 300 640 C 170 640 160 500 250 470" pathLength={1} stroke={C.accent} strokeWidth="4" fill="none"
           strokeDasharray="1" strokeDashoffset={1 - link} style={{ filter: `drop-shadow(0 0 8px ${C.accent})` }} />
       </svg>
-      <div style={{ position: "absolute", left: 190, top: 445, opacity: link, fontFamily: monoFont, fontSize: 24, color: C.muted }}>
+      <div style={{ position: "absolute", left: 110, top: 445, opacity: link, fontFamily: monoFont, fontSize: 24, color: C.muted }}>
         remembers
       </div>
       {/* the answer, right — huge */}
       <div style={{ position: "absolute", left: 1120, top: 380, textAlign: "center", opacity: ans, transform: `scale(${0.7 + ans * 0.3})` }}>
         <div style={{ fontFamily: titleFont, fontWeight: 700, fontSize: 170, color: C.accent, textShadow: glow(C.accent, 50), lineHeight: 1 }}>120</div>
-        <div style={{ fontFamily: monoFont, fontSize: 26, color: C.muted, marginTop: 10 }}>60 × 2</div>
+        <div style={{ fontFamily: monoFont, fontSize: 26, color: C.muted, marginTop: 30 }}>60 × 2</div>
       </div>
       <EngineerLabel text="per-session checkpointed memory" />
     </div>
@@ -135,7 +135,7 @@ export const MemoryBeat: React.FC<{ t: number }> = ({ t }) => {
 const Receipt: React.FC<{ action: string; detail: string; ok?: boolean; p: number }> = ({ action, detail, ok = true, p }) => (
   <div
     style={{
-      width: 300, ...panel, borderColor: `${ok ? C.accent : C.danger}66`, padding: "18px 22px",
+      width: 340, ...panel, borderColor: `${ok ? C.accent : C.danger}66`, padding: "18px 22px",
       opacity: p, transform: `translateY(${(1 - p) * 30}px)`,
     }}
   >
@@ -143,8 +143,8 @@ const Receipt: React.FC<{ action: string; detail: string; ok?: boolean; p: numbe
       <ReceiptIcon size={34} color={ok ? C.accent : C.danger} />
       <div style={{ fontFamily: monoFont, fontWeight: 700, fontSize: 26, color: ok ? C.accent : C.danger }}>{action}</div>
     </div>
-    <div style={{ fontFamily: monoFont, fontSize: 22, color: C.muted, marginTop: 8 }}>{detail}</div>
-    <div style={{ fontFamily: monoFont, fontSize: 18, color: C.dim, marginTop: 6 }}>9d41b0c3…f2a1 · api-key-holder</div>
+    <div style={{ fontFamily: monoFont, fontSize: 24, color: C.muted, marginTop: 8 }}>{detail}</div>
+    <div style={{ fontFamily: monoFont, fontSize: 24, color: C.dim, marginTop: 6 }}>9d41b0c3…f2a1<br />api-key-holder</div>
   </div>
 );
 
@@ -166,7 +166,7 @@ export const RecordBeat: React.FC<{ t: number }> = ({ t }) => {
         {[0, 1].map((i) => {
           const p = i === 0 ? seg(t, 0.12, 0.3) : seg(t, 0.32, 0.5);
           return (
-            <path key={i} d={`M ${615 + i * 354} 350 H ${645 + i * 354}`} pathLength={1} stroke={C.accent} strokeWidth="4"
+            <path key={i} d={`M ${692 + i * 438} 350 H ${730 + i * 438}`} pathLength={1} stroke={C.accent} strokeWidth="4"
               strokeDasharray="1" strokeDashoffset={1 - p} style={{ filter: `drop-shadow(0 0 8px ${C.accent})` }} />
           );
         })}
@@ -187,20 +187,20 @@ export const RecordBeat: React.FC<{ t: number }> = ({ t }) => {
       {/* three panels the thread pierces */}
       <div style={{ position: "absolute", left: 540, top: 560, display: "flex", gap: 60, opacity: seg(t, 0.55, 0.75) }}>
         <div style={{ ...panel, width: 250, padding: "16px 20px" }}>
-          <div style={{ fontFamily: monoFont, fontSize: 22, color: C.dim, marginBottom: 10 }}>trace</div>
+          <div style={{ fontFamily: monoFont, fontSize: 24, color: C.dim, marginBottom: 10 }}>trace</div>
           {[80, 55, 95, 40].map((w, i) => (
             <div key={i} style={{ width: w * 2, height: 14, borderRadius: 7, background: `${C.accent}${i === 3 ? "" : "55"}`, marginTop: 8, opacity: seg(t, 0.6 + i * 0.07, 0.75 + i * 0.07) }} />
           ))}
         </div>
         <div style={{ ...panel, width: 250, padding: "16px 20px" }}>
-          <div style={{ fontFamily: monoFont, fontSize: 22, color: C.dim, marginBottom: 10 }}>log</div>
-          <div style={{ fontFamily: monoFont, fontSize: 19, color: C.muted, lineHeight: 1.7 }}>
+          <div style={{ fontFamily: monoFont, fontSize: 24, color: C.dim, marginBottom: 10 }}>log</div>
+          <div style={{ fontFamily: monoFont, fontSize: 24, color: C.muted, lineHeight: 1.7 }}>
             node=planner<br />status=ok<br />req=7f3a9c2e…
           </div>
         </div>
         <div style={{ ...panel, width: 250, padding: "16px 20px", borderColor: `${C.accent}66` }}>
-          <div style={{ fontFamily: monoFont, fontSize: 22, color: C.dim, marginBottom: 10 }}>response</div>
-          <div style={{ fontFamily: monoFont, fontSize: 19, color: C.text, lineHeight: 1.7 }}>
+          <div style={{ fontFamily: monoFont, fontSize: 24, color: C.dim, marginBottom: 10 }}>response</div>
+          <div style={{ fontFamily: monoFont, fontSize: 24, color: C.text, lineHeight: 1.7 }}>
             prompt v1<br /><span style={{ color: C.accent }}>c03f7baaef81</span>
           </div>
         </div>
@@ -270,7 +270,7 @@ export const RealBeatA: React.FC<{ t: number }> = ({ t }) => (
             style={{
               width: 440, height: 460, ...panel,
               borderColor: p.danger ? `${C.danger}66` : C.line,
-              padding: "22px 26px",
+              padding: "22px 16px",
               opacity: pr, transform: `translateY(${(1 - pr) * 60}px) rotateY(${(1 - pr) * -18}deg)`,
               transformOrigin: "left center",
             }}
@@ -278,7 +278,7 @@ export const RealBeatA: React.FC<{ t: number }> = ({ t }) => (
             <div style={{ fontFamily: monoFont, fontSize: 26, color: p.danger ? C.danger : C.muted, borderBottom: `2px solid ${C.line}`, paddingBottom: 10 }}>
               {p.tag}
             </div>
-            <div style={{ fontFamily: monoFont, fontSize: 22, color: C.text, marginTop: 16, lineHeight: 1.8, whiteSpace: "pre-wrap" }}>
+            <div style={{ fontFamily: monoFont, fontSize: 24, color: C.text, marginTop: 16, lineHeight: 1.8, whiteSpace: "pre-wrap" }}>
               {p.lines.map((l, k) => (
                 <div key={k} style={{ opacity: seg(t, 0.22 + i * 0.2 + k * 0.07, 0.34 + i * 0.2 + k * 0.07) }}>{l}</div>
               ))}
@@ -297,7 +297,7 @@ export const RealBeatA: React.FC<{ t: number }> = ({ t }) => (
     </div>
     <div
       style={{
-        position: "absolute", left: 0, right: 0, bottom: 230, textAlign: "center",
+        position: "absolute", left: 0, right: 0, bottom: 246, textAlign: "center",
         fontFamily: monoFont, fontSize: 26, color: C.muted, opacity: seg(t, 0.7, 0.9),
       }}
     >
@@ -331,7 +331,7 @@ export const YoursBeatA: React.FC<{ t: number }> = ({ t }) => {
           }}
         >
           <CalcIcon size={100} color={C.accent} />
-          <div style={{ position: "relative", height: 60, width: "100%" }}>
+          <div data-qa-xfade style={{ position: "relative", height: 60, width: "100%" }}>
             {TOOLS.map((tool, i) => {
               const in_ = seg(t, 0.15 + i * 0.24, 0.26 + i * 0.24);
               const out_ = i < 2 ? 1 - seg(t, 0.3 + i * 0.24, 0.4 + i * 0.24) : 1;
@@ -349,7 +349,7 @@ export const YoursBeatA: React.FC<{ t: number }> = ({ t }) => {
               );
             })}
           </div>
-          <div style={{ fontFamily: monoFont, fontSize: 22, color: C.dim }}>your tool</div>
+          <div style={{ fontFamily: monoFont, fontSize: 24, color: C.dim }}>your tool</div>
         </div>
       </div>
       <EngineerLabel text="examples · adapted on request" />
