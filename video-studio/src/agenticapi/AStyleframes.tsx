@@ -36,7 +36,7 @@ const DESIGNS: Record<
   },
   problem: {
     headline: <>One clever message <span style={{ color: C.danger }}>— and it turns on you.</span></>,
-    caption: "…leaks its secret instructions, runs up your bill, or crashes.",
+    caption: "…leaks its system prompt, runs up your bill, or crashes.",
     beat: <ProblemBeat t={0.95} />,
   },
   reveal: {

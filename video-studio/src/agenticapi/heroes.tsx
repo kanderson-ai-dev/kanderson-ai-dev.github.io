@@ -192,7 +192,7 @@ export const ProblemBeat: React.FC<{ t: number }> = ({ t }) => {
             borderRadius: "4px 18px 18px 18px", padding: "12px 20px",
           }}
         >
-          Sure! Here are my instructions:
+          Sure! Here is my system prompt:
         </div>
         <div style={{ position: "absolute", left: 40, top: 192, width: 500, ...panel, borderColor: `${C.muted}55`, padding: "14px 20px", opacity: s1 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: monoFont, fontSize: 22, color: C.human }}>
@@ -296,7 +296,7 @@ export const ApiTitleBeat: React.FC<{ t: number; open?: number }> = ({ t, open =
           <span style={{ color: C.accent, fontWeight: 700 }}>attacks stay out, secrets stay in.</span>
         </div>
       </div>
-      <LensFlare x={960} y={430} p={seg(t, 0.35, 0.55)} />
+      <LensFlare x={960} y={268} p={seg(t, 0.35, 0.55)} />
       <Letterbox open={open} />
     </div>
   );
@@ -643,7 +643,7 @@ export const AnswerLockBeat: React.FC<{ t: number }> = ({ t }) => {
             borderRadius: "4px 18px 18px 18px",
           }}
         >
-          Sure! Here are my instructions:
+          Sure! Here is my system prompt:
         </div>
         <div
           style={{
@@ -739,7 +739,7 @@ export const ScoreboardBeat: React.FC<{ t: number }> = ({ t }) => {
           <div style={{ fontFamily: titleFont, fontWeight: 700, fontSize: 56, color: C.text }}>v2</div>
           <Chip text="candidate" size={24} color={C.danger} />
         </div>
-        <div style={{ fontFamily: monoFont, fontSize: 24, color: C.muted, marginTop: 8 }}>planner · new instructions</div>
+        <div style={{ fontFamily: monoFont, fontSize: 24, color: C.muted, marginTop: 8 }}>planner · new prompt</div>
       </div>
       {/* the scoreboard */}
       <div
