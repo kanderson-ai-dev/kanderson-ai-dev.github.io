@@ -311,8 +311,6 @@ export const RealBeatA: React.FC<{ t: number }> = ({ t }) => (
 const TOOLS = ["order lookup", "CRM search", "create ticket"];
 
 export const YoursBeatA: React.FC<{ t: number }> = ({ t }) => {
-  const idx = Math.min(2, Math.floor(seg(t, 0.15, 0.85) * 3));
-  const flip = seg(t, 0.15 + idx * 0.22, 0.37 + idx * 0.22);
   return (
     <div style={{ position: "absolute", inset: 0 }}>
       {/* the safe core underneath: door + two shields, static and glowing once */}
@@ -322,20 +320,34 @@ export const YoursBeatA: React.FC<{ t: number }> = ({ t }) => {
       <div style={{ position: "absolute", left: 1440, top: 380, opacity: 0.9, transform: "scale(0.62)", transformOrigin: "top left" }}>
         <BigShield side="out" t={t} lit={seg(t, 0, 0.15)} />
       </div>
-      {/* the flipping tool tile in the middle */}
+      {/* the tool tile — always facing; tool names crossfade inside it */}
       <div style={{ position: "absolute", left: 800, top: 330 }}>
         <div
           style={{
             width: 330, height: 400, ...panel, borderColor: `${C.accent}66`,
             display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 30,
             boxShadow: `inset 0 0 60px ${C.accent}18, ${glow(C.accent, 30)}`,
-            transform: `rotateY(${(1 - flip) * 90}deg)`,
-            opacity: seg(t, 0.05, 0.2),
+            opacity: seg(t, 0.05, 0.2), transform: `translateY(${(1 - seg(t, 0.05, 0.2)) * 30}px)`,
           }}
         >
           <CalcIcon size={100} color={C.accent} />
-          <div style={{ fontFamily: titleFont, fontWeight: 700, fontSize: 40, color: C.accent, textAlign: "center", padding: "0 20px" }}>
-            {TOOLS[idx]}
+          <div style={{ position: "relative", height: 60, width: "100%" }}>
+            {TOOLS.map((tool, i) => {
+              const in_ = seg(t, 0.15 + i * 0.24, 0.26 + i * 0.24);
+              const out_ = i < 2 ? 1 - seg(t, 0.3 + i * 0.24, 0.4 + i * 0.24) : 1;
+              return (
+                <div
+                  key={tool}
+                  style={{
+                    position: "absolute", left: 0, right: 0, top: 0,
+                    fontFamily: titleFont, fontWeight: 700, fontSize: 40, color: C.accent, textAlign: "center",
+                    padding: "0 20px", opacity: in_ * out_, transform: `translateY(${(1 - in_) * 14}px)`,
+                  }}
+                >
+                  {tool}
+                </div>
+              );
+            })}
           </div>
           <div style={{ fontFamily: monoFont, fontSize: 22, color: C.dim }}>your tool</div>
         </div>

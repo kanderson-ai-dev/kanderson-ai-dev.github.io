@@ -333,48 +333,63 @@ export const DoorBeat: React.FC<{ t: number }> = ({ t }) => {
   const st2 = seg(t, 0.62, 0.85);
   const cx = 1240;
   const cardX = 360 + card * (cx - 230 - 360);
+  const scan = seg(t, 0.35, 0.75);
   return (
     <div style={{ position: "absolute", inset: 0 }}>
-      {/* the door frame — posts, lintel and threshold: a closed doorway */}
-      <div style={{ position: "absolute", left: cx - 270, top: 300, width: 540 }}>
-        <div style={{ position: "absolute", left: 0, top: -52, width: 540, textAlign: "center", fontFamily: monoFont, fontSize: 26, color: C.muted }}>
+      {/* the checkpoint arch — a security gate every request walks through */}
+      <div style={{ position: "absolute", left: cx - 330, top: 285, width: 660 }}>
+        <div style={{ position: "absolute", left: 0, top: -52, width: 660, textAlign: "center", fontFamily: monoFont, fontSize: 26, color: C.muted }}>
           the door
         </div>
-        {/* floor shadow under the doorway */}
+        {/* floor shadow */}
         <div
           style={{
-            position: "absolute", left: -30, top: 492, width: 600, height: 26, borderRadius: "50%",
-            background: `radial-gradient(ellipse, ${C.accent}22, transparent 70%)`,
+            position: "absolute", left: -20, top: 512, width: 700, height: 26, borderRadius: "50%",
+            background: `radial-gradient(ellipse, ${C.accent}1e, transparent 70%)`,
           }}
         />
-        {[{ left: 0 }, { left: 514 }].map((p, i) => (
-          <div
-            key={i}
-            style={{
-              position: "absolute", left: p.left, top: -8, width: 26, height: 500, borderRadius: 12,
-              background: `linear-gradient(90deg, ${C.accent}, ${C.accent}88)`,
-              boxShadow: glow(C.accent, 22),
-            }}
-          />
+        {/* pillars with feet */}
+        {[0, 590].map((pl, i) => (
+          <React.Fragment key={i}>
+            <div
+              style={{
+                position: "absolute", left: pl, top: 46, width: 70, height: 468, ...panel,
+                borderColor: `${C.accent}88`, boxShadow: glow(C.accent, 18), borderRadius: 20,
+              }}
+            />
+            <div
+              style={{
+                position: "absolute", left: pl - 8, top: 500, width: 86, height: 18, borderRadius: 9,
+                background: `linear-gradient(160deg, ${C.panel2}, ${C.panel})`,
+                border: `3px solid ${C.accent}66`,
+              }}
+            />
+          </React.Fragment>
         ))}
+        {/* top bridge joining the pillars, with a glowing scan strip */}
         <div
           style={{
-            position: "absolute", left: 0, top: -24, width: 540, height: 26, borderRadius: 12,
-            background: `linear-gradient(180deg, ${C.accent}, ${C.accent}88)`,
-            boxShadow: glow(C.accent, 22),
+            position: "absolute", left: 0, top: -12, width: 660, height: 64, ...panel,
+            borderColor: `${C.accent}88`, boxShadow: glow(C.accent, 18), borderRadius: 18,
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}
+        >
+          <div style={{ width: 440, height: 8, borderRadius: 4, background: `${C.accent}55`, boxShadow: glow(C.accent, 14) }} />
+        </div>
+        {/* the scan field inside the opening */}
+        <div
+          style={{
+            position: "absolute", left: 70, top: 52, width: 520, height: 452,
+            background: `linear-gradient(180deg, ${C.accent}10, transparent 55%)`,
+            borderRadius: 8,
           }}
         />
+        {/* the sweeping scan line as the card passes */}
         <div
           style={{
-            position: "absolute", left: 0, top: 492, width: 540, height: 14, borderRadius: 7,
-            background: `${C.accent}cc`, boxShadow: glow(C.accent, 16),
-          }}
-        />
-        <div
-          style={{
-            position: "absolute", left: 22, top: 6, width: 496, height: 482,
-            background: `linear-gradient(180deg, ${C.accent}12, transparent 45%), repeating-linear-gradient(180deg, ${C.accent}0a 0 4px, transparent 4px 26px)`,
-            borderRadius: 8, opacity: 0.95,
+            position: "absolute", left: 76, top: 58 + scan * 430, width: 508, height: 8, borderRadius: 4,
+            background: C.accent, boxShadow: glow(C.accent, 26),
+            opacity: scan > 0 && scan < 1 ? 0.95 : 0,
           }}
         />
       </div>
@@ -617,17 +632,33 @@ export const AnswerLockBeat: React.FC<{ t: number }> = ({ t }) => {
   const lock = seg(t, 0.5, 0.9);
   return (
     <div style={{ position: "absolute", inset: 0 }}>
-      {/* left: the tricked reply caught at the OUT shield */}
-      <div
-        style={{
-          position: "absolute", left: 100, top: 380, width: 360, padding: "18px 22px",
-          fontFamily: monoFont, fontSize: 24, color: "#ffd7de", lineHeight: 1.4,
-          background: `${C.danger}10`, border: `3px dashed ${C.danger}aa`, borderRadius: 16,
-          opacity: 1 - swap * 0.4, transform: `translateX(${swap * 60}px)`,
-        }}
-      >
-        tricked reply:
-        <div style={{ marginTop: 10 }}><RedactedBars n={3} w={270} /></div>
+      {/* left: the AI's reply — it happily hands the secret doc out, caught at the OUT shield */}
+      <div style={{ position: "absolute", left: 90, top: 330, opacity: 1 - seg(t, 0.35, 0.5), transform: `translateX(${swap * 130}px)` }}>
+        <div style={{ fontFamily: monoFont, fontSize: 26, color: C.muted }}>the AI's reply:</div>
+        <div
+          style={{
+            marginTop: 12, width: 400, padding: "14px 20px",
+            fontFamily: bodyFont, fontSize: 26, color: C.text,
+            background: `${C.model}12`, border: `2px solid ${C.model}55`,
+            borderRadius: "4px 18px 18px 18px",
+          }}
+        >
+          Sure! Here are my instructions:
+        </div>
+        <div
+          style={{
+            marginTop: 12, width: 360, ...panel, borderColor: `${C.muted}55`, padding: "12px 18px",
+            boxShadow: swap > 0.3 ? glow(C.danger, 24) : "none",
+            border: swap > 0.3 ? `3px solid ${C.danger}` : `3px solid ${C.line}`,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: monoFont, fontSize: 22, color: C.human }}>
+            <LockIcon size={24} color={C.human} /> system prompt · secret
+          </div>
+          <div style={{ fontFamily: monoFont, fontSize: 20, color: C.muted, marginTop: 8 }}>
+            You are a helpful assistant that…
+          </div>
+        </div>
       </div>
       <div style={{ position: "absolute", left: 620, top: 340, transform: "scale(0.68)", transformOrigin: "top left" }}>
         <BigShield side="out" t={t} />
@@ -713,8 +744,8 @@ export const ScoreboardBeat: React.FC<{ t: number }> = ({ t }) => {
       {/* the scoreboard */}
       <div
         style={{
-          position: "absolute", left: 470, top: 425, width: 980, ...panel,
-          borderColor: `${C.accent}44`, padding: "26px 34px", opacity: rows,
+          position: "absolute", left: 430, top: 425, width: 1060, ...panel,
+          borderColor: `${C.accent}44`, padding: "40px 40px 26px", opacity: rows,
         }}
       >
         <div style={{ display: "grid", gridTemplateColumns: "1fr 210px 210px", gap: 18, alignItems: "center" }}>
@@ -722,23 +753,23 @@ export const ScoreboardBeat: React.FC<{ t: number }> = ({ t }) => {
           <div style={{ fontFamily: monoFont, fontSize: 26, color: C.accent, textAlign: "center" }}>v1 live</div>
           <div style={{ fontFamily: monoFont, fontSize: 26, color: C.danger, textAlign: "center" }}>v2 new</div>
           <div style={{ fontFamily: bodyFont, fontSize: 34, color: C.text }}>picks the right tool</div>
-          <div style={{ fontFamily: titleFont, fontWeight: 700, fontSize: 52, color: C.accent, textAlign: "center" }}>100%</div>
-          <div style={{ fontFamily: titleFont, fontWeight: 700, fontSize: 52, color: C.danger, textAlign: "center" }}>45% ▼</div>
+          <div style={{ fontFamily: titleFont, fontWeight: 700, fontSize: 48, color: C.accent, textAlign: "center" }}>100%</div>
+          <div style={{ fontFamily: titleFont, fontWeight: 700, fontSize: 48, color: C.danger, textAlign: "center" }}>45% ▼</div>
           <div style={{ fontFamily: bodyFont, fontSize: 34, color: C.text, display: "flex", alignItems: "center", gap: 14, whiteSpace: "nowrap" }}>
             blocks attacks
             <span style={{ fontFamily: monoFont, fontSize: 24, color: C.human, border: `2px solid ${C.human}77`, borderRadius: 8, padding: "3px 12px", display: "inline-flex", alignItems: "center", gap: 8, whiteSpace: "nowrap" }}>
               <LockIcon size={24} color={C.human} /> never overridable
             </span>
           </div>
-          <div style={{ fontFamily: titleFont, fontWeight: 700, fontSize: 52, color: C.accent, textAlign: "center" }}>100%</div>
-          <div style={{ fontFamily: titleFont, fontWeight: 700, fontSize: 52, color: C.accent, textAlign: "center" }}>100%</div>
+          <div style={{ fontFamily: titleFont, fontWeight: 700, fontSize: 48, color: C.accent, textAlign: "center" }}>100%</div>
+          <div style={{ fontFamily: titleFont, fontWeight: 700, fontSize: 48, color: C.accent, textAlign: "center" }}>100%</div>
         </div>
       </div>
       {/* the slam on the board's lower corner */}
       <div style={{ position: "absolute", left: 1260, top: 642, opacity: stamp }}>
         <Stamp t={stamp} text="BLOCKED · 409" size={58} rot={-8} />
       </div>
-      <div style={{ position: "absolute", left: 0, right: 0, top: 792, textAlign: "center", fontFamily: monoFont, fontSize: 24, color: C.dim }}>
+      <div style={{ position: "absolute", left: 430, top: 748, fontFamily: monoFont, fontSize: 24, color: C.dim }}>
         Live experiment · candidate v2 vs promoted v1
       </div>
       <EngineerLabel text="prompt registry · A/B gate · 409" />
