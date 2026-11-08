@@ -15,11 +15,12 @@ import { CoinIcon } from "./aicons";
 
 /* ------------------------------ helpers ---------------------------------- */
 
-export const EngineerLabel: React.FC<{ text: string }> = ({ text }) => (
+export const EngineerLabel: React.FC<{ text: string; left?: boolean }> = ({ text, left }) => (
   <div
     data-qa="engineer-label"
     style={{
-      position: "absolute", right: 96, bottom: 230,
+      position: "absolute", bottom: 230,
+      ...(left ? { left: 96 } : { right: 96 }),
       fontFamily: monoFont, fontWeight: 600, fontSize: 26, color: C.muted,
       background: `${C.muted}14`, border: `2px solid ${C.muted}44`,
       borderRadius: 10, padding: "8px 20px", whiteSpace: "nowrap",
@@ -416,7 +417,7 @@ export const DoorBeat: React.FC<{ t: number }> = ({ t }) => {
           </span>
         </div>
       </div>
-      <EngineerLabel text="X-Request-ID · X-API-Key" />
+      <EngineerLabel text="X-Request-ID · X-API-Key" left />
     </div>
   );
 };
