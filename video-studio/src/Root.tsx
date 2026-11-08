@@ -7,6 +7,9 @@ import { Styleframes } from "./upgrade/Styleframes";
 import { PromoUpgrade } from "./upgrade/PromoUpgrade";
 import { PromoUpgradeVertical } from "./upgrade/PromoUpgradeVertical";
 import { ThumbUpgrade } from "./upgrade/ThumbUpgrade";
+import { AStyleframes } from "./agenticapi/AStyleframes";
+import { PromoAgentic } from "./agenticapi/PromoAgentic";
+import type { PromoAgenticProps } from "./agenticapi/PromoAgentic";
 import type { UpgradeProps } from "./upgrade/PromoUpgrade";
 import type { PromoProps } from "./types";
 
@@ -73,6 +76,28 @@ export const Root: React.FC = () => (
       fps={60}
       durationInFrames={60}
       defaultProps={{ design: "hook" } as { design: import("./upgrade/Styleframes").StyleframeDesign }}
+    />
+    <Composition
+      id="AgenticApiStyleframes"
+      component={AStyleframes}
+      width={1920}
+      height={1080}
+      fps={60}
+      durationInFrames={60}
+      defaultProps={{ design: "coldopen" } as { design: import("./agenticapi/AStyleframes").AgenticApiDesign }}
+    />
+    <Composition
+      id="PromoAgenticApi"
+      component={PromoAgentic}
+      width={1920}
+      height={1080}
+      fps={60}
+      durationInFrames={600}
+      defaultProps={{ scenes: [], subtitles: [], burnSubtitles: true, fadeOutSec: 1.2 } as PromoAgenticProps}
+      calculateMetadata={({ props }: { props: PromoAgenticProps }) => ({
+        fps: 60,
+        durationInFrames: Math.max(60, Math.round(props.scenes.reduce((a, s) => a + s.durationSec, 0) * 60)),
+      })}
     />
     <Composition
       id="UpgradeThumbnail"
