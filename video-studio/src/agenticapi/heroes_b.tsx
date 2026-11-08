@@ -31,16 +31,18 @@ export const WorkBeat: React.FC<{ t: number }> = ({ t }) => {
       {/* the AI core lights for the first time and prints the plan */}
       <div style={{ position: "absolute", left: 330, top: 300, opacity: plan, transform: `translateY(${(1 - plan) * 30}px)` }}>
         <AiCore active={plan} />
-        <div style={{ position: "absolute", left: 40, top: 250, width: 300, fontFamily: monoFont, fontSize: 26, color: C.muted, opacity: plan }}>
-          <div style={{ ...panel, padding: "18px 22px", borderColor: `${C.model}66`, width: 300 }}>
+        {/* stem from the core down to its plan card */}
+        <div style={{ position: "absolute", left: 113, top: 232, width: 4, height: 20, background: `${C.model}66` }} />
+        <div style={{ position: "absolute", left: -55, top: 252, width: 340, fontFamily: monoFont, fontSize: 26, color: C.muted, opacity: plan }}>
+          <div style={{ ...panel, padding: "18px 22px", borderColor: `${C.model}66`, width: 340 }}>
             <div style={{ fontFamily: monoFont, fontSize: 22, color: C.dim }}>the plan</div>
-            <div style={{ marginTop: 8, color: C.text }}>calculator("15 * 4")</div>
+            <div style={{ marginTop: 8, color: C.text, whiteSpace: "nowrap" }}>calculator("15 * 4")</div>
           </div>
         </div>
       </div>
-      {/* arrow into the calculator tile */}
+      {/* arrow from the AI into the calculator tile */}
       <svg width="1920" height="1080" style={{ position: "absolute", inset: 0 }}>
-        <path d="M 760 415 C 830 415 850 415 905 415" pathLength={1} stroke={C.accent} strokeWidth="4" fill="none"
+        <path d="M 585 415 C 700 415 780 415 925 415" pathLength={1} stroke={C.accent} strokeWidth="4" fill="none"
           strokeDasharray="1" strokeDashoffset={1 - seg(t, 0.25, 0.4)} style={{ filter: `drop-shadow(0 0 8px ${C.accent})` }} />
       </svg>
       {/* the calculator tile returns 60 */}
