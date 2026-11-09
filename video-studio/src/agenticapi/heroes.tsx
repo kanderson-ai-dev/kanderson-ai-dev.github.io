@@ -15,11 +15,11 @@ import { CoinIcon } from "./aicons";
 
 /* ------------------------------ helpers ---------------------------------- */
 
-export const EngineerLabel: React.FC<{ text: string; left?: boolean }> = ({ text, left }) => (
+export const EngineerLabel: React.FC<{ text: string; left?: boolean; bottom?: number }> = ({ text, left, bottom = 252 }) => (
   <div
     data-qa="engineer-label"
     style={{
-      position: "absolute", bottom: 252,
+      position: "absolute", bottom,
       ...(left ? { left: 124 } : { right: 124 }),
       fontFamily: monoFont, fontWeight: 600, fontSize: 26, color: C.muted,
       background: `${C.muted}14`, border: `2px solid ${C.muted}44`,
@@ -256,8 +256,8 @@ export const ApiTitleBeat: React.FC<{ t: number; open?: number }> = ({ t, open =
       <svg width="1920" height="1080" style={{ position: "absolute", inset: 0 }}>
         {[
           "M120 300 H560 L640 380",
-          "M200 800 H520 L600 720",
-          "M1740 840 H1360 L1300 760",
+          "M120 940 H560 L660 840",
+          "M1800 940 H1360 L1260 840",
           "M960 120 V300",
         ].map((d, i) => (
           <path key={i} d={d} pathLength={1} stroke={C.accent} strokeWidth="2.5" fill="none" opacity={0.28}
@@ -408,12 +408,12 @@ export const DoorBeat: React.FC<{ t: number }> = ({ t }) => {
       {/* the question card */}
       <div style={{ position: "absolute", left: cardX, top: 390, opacity: seg(t, 0.1, 0.4) }}>
         <QuestionCard stamps={false} />
-        <div style={{ display: "flex", gap: 12, marginTop: 18 }}>
+        <div style={{ display: "flex", gap: 12, marginTop: 18, alignItems: "center" }}>
           <span style={{ opacity: st1, transform: `translateY(${(1 - st1) * 16}px)` }}>
             <Chip text="tracked #7f3a…" size={26} />
           </span>
-          <span style={{ opacity: st2, transform: `translateY(${(1 - st2) * 16}px)`, display: "inline-flex", alignItems: "center", gap: 8, fontFamily: monoFont, fontWeight: 600, fontSize: 26, color: C.accent, background: `${C.accent}1a`, border: `2px solid ${C.accent}`, borderRadius: 10, padding: "6px 16px" }}>
-            <KeyIcon size={26} color={C.accent} /> key ✓
+          <span style={{ opacity: st2, transform: `translateY(${(1 - st2) * 16}px)`, display: "inline-flex", alignItems: "center" }}>
+            <Chip text="key ✓" size={26} />
           </span>
         </div>
       </div>
@@ -625,7 +625,7 @@ export const TurnstileBeat: React.FC<{ t: number }> = ({ t }) => {
           </div>
         );
       })}
-      <EngineerLabel text="429 · 60/min per key (configurable)" />
+      <EngineerLabel text="429 · 60/min per key (configurable)" left />
     </div>
   );
 };
@@ -719,7 +719,7 @@ export const AnswerLockBeat: React.FC<{ t: number }> = ({ t }) => {
           <LockIcon size={90} color={C.accent} />
         </div>
       </div>
-      <EngineerLabel text="output guardrail · OWASP LLM02 · gated stream" />
+      <EngineerLabel text="output guardrail · OWASP LLM02 · gated stream" left />
     </div>
   );
 };

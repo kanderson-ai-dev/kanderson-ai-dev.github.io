@@ -156,7 +156,7 @@ export const RecordBeat: React.FC<{ t: number }> = ({ t }) => {
   return (
     <div style={{ position: "absolute", inset: 0 }}>
       {/* receipt chain across the top */}
-      <div style={{ position: "absolute", left: 300, top: 250, display: "flex", alignItems: "center", gap: 54 }}>
+      <div style={{ position: "absolute", left: 300, top: 225, display: "flex", alignItems: "center", gap: 54 }}>
         <Receipt action="promote" detail="v1 · initial import" p={r1} />
         <Receipt action="blocked" detail="v2 · regression" ok={false} p={r2} />
         <Receipt action="rollback" detail="v1 · reason required" p={r3} />
@@ -166,17 +166,17 @@ export const RecordBeat: React.FC<{ t: number }> = ({ t }) => {
         {[0, 1].map((i) => {
           const p = i === 0 ? seg(t, 0.12, 0.3) : seg(t, 0.32, 0.5);
           return (
-            <path key={i} d={`M ${692 + i * 438} 350 H ${730 + i * 438}`} pathLength={1} stroke={C.accent} strokeWidth="4"
+            <path key={i} d={`M ${692 + i * 438} 325 H ${730 + i * 438}`} pathLength={1} stroke={C.accent} strokeWidth="4"
               strokeDasharray="1" strokeDashoffset={1 - p} style={{ filter: `drop-shadow(0 0 8px ${C.accent})` }} />
           );
         })}
         {/* the tracking thread piercing three panels */}
-        <path d="M 960 540 V 920" pathLength={1} stroke={C.accent} strokeWidth="4" fill="none"
+        <path d="M 960 500 V 880" pathLength={1} stroke={C.accent} strokeWidth="4" fill="none"
           strokeDasharray="1" strokeDashoffset={1 - thread} style={{ filter: `drop-shadow(0 0 8px ${C.accent})` }} />
       </svg>
       <div
         style={{
-          position: "absolute", left: 855, top: 470, opacity: seg(t, 0.45, 0.6),
+          position: "absolute", left: 855, top: 435, opacity: seg(t, 0.45, 0.6),
           fontFamily: monoFont, fontWeight: 700, fontSize: 30, color: C.accent,
           background: `${C.accent}1a`, border: `3px solid ${C.accent}`, borderRadius: 12, padding: "8px 20px",
           transform: `scale(${0.8 + seg(t, 0.45, 0.6) * 0.2})`,
@@ -185,7 +185,7 @@ export const RecordBeat: React.FC<{ t: number }> = ({ t }) => {
         #7f3a…
       </div>
       {/* three panels the thread pierces */}
-      <div style={{ position: "absolute", left: 540, top: 560, display: "flex", gap: 60, opacity: seg(t, 0.55, 0.75) }}>
+      <div style={{ position: "absolute", left: 540, top: 505, display: "flex", gap: 60, opacity: seg(t, 0.55, 0.75) }}>
         <div style={{ ...panel, width: 250, padding: "16px 20px" }}>
           <div style={{ fontFamily: monoFont, fontSize: 24, color: C.dim, marginBottom: 10 }}>trace</div>
           {[80, 55, 95, 40].map((w, i) => (
