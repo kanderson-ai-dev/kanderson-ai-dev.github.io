@@ -1,0 +1,135 @@
+1
+00:00:00,600 --> 00:00:03,140
+You put AI in front of your customers.
+
+2
+00:00:03,760 --> 00:00:05,920
+Now anyone can type anything to it.
+
+3
+00:00:06,720 --> 00:00:10,380
+One clever message, and it leaks its
+system prompt, runs up
+
+4
+00:00:10,400 --> 00:00:12,100
+your bill, or crashes.
+
+5
+00:00:14,630 --> 00:00:17,830
+This is the Guardrailed Agentic AI API.
+
+6
+00:00:18,190 --> 00:00:23,090
+A safe front door for your AI — attacks
+stay out, secrets stay in.
+
+7
+00:00:24,140 --> 00:00:25,740
+Follow one question.
+
+8
+00:00:26,220 --> 00:00:29,420
+At the door, it gets a tracking number and
+a key check.
+
+9
+00:00:31,490 --> 00:00:33,950
+Promise one: attacks stay out.
+
+10
+00:00:33,970 --> 00:00:38,470
+Every message is screened in code before
+the AI ever sees it.
+
+11
+00:00:39,010 --> 00:00:41,250
+A blocked attack costs nothing.
+
+12
+00:00:41,590 --> 00:00:46,090
+A flood of requests gets a polite 'slow
+down' — not a surprise bill.
+
+13
+00:00:46,890 --> 00:00:51,030
+Safe questions reach the AI, which only
+makes the plan.
+
+14
+00:00:51,390 --> 00:00:54,570
+Code does the math. A hiccup? It retries.
+
+15
+00:00:57,970 --> 00:01:00,730
+Promise two: secrets stay in.
+
+16
+00:01:00,750 --> 00:01:05,410
+Every answer is screened on the way out,
+before the user sees a word.
+
+17
+00:01:05,890 --> 00:01:08,790
+Promise three: every change is proven.
+
+18
+00:01:09,190 --> 00:01:12,010
+New prompts ship only if they score as
+well on the same
+
+19
+00:01:12,030 --> 00:01:15,530
+tests. This version got worse — blocked.
+
+20
+00:01:16,690 --> 00:01:20,110
+Every decision lands on a tamper-evident
+record.
+
+21
+00:01:20,510 --> 00:01:24,510
+One tracking number ties each answer to
+its trace and its logs.
+
+22
+00:01:25,410 --> 00:01:29,070
+The AI plans. Code guards and enforces.
+
+23
+00:01:29,470 --> 00:01:31,070
+People decide what ships.
+
+24
+00:01:32,920 --> 00:01:36,600
+Measured, not claimed: one hundred
+seventy-nine tests,
+
+25
+00:01:36,620 --> 00:01:38,500
+ninety-eight percent coverage —
+
+26
+00:01:38,520 --> 00:01:40,580
+no attack through, nothing leaked.
+
+27
+00:01:41,920 --> 00:01:45,840
+A real, running service — not a slide.
+
+28
+00:01:46,320 --> 00:01:49,680
+Your product. Your tools. Your rules.
+
+29
+00:01:49,920 --> 00:01:51,800
+The same safe core underneath.
+
+30
+00:01:52,290 --> 00:01:56,030
+Designed, built, and measured by Kaarsten
+Anderson.
+
+31
+00:01:56,790 --> 00:02:00,150
+Let's build yours — kaarstenanderson.com

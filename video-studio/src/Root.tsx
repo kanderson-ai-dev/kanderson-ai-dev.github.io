@@ -10,6 +10,7 @@ import { ThumbUpgrade } from "./upgrade/ThumbUpgrade";
 import { AStyleframes } from "./agenticapi/AStyleframes";
 import { PromoAgentic } from "./agenticapi/PromoAgentic";
 import type { PromoAgenticProps } from "./agenticapi/PromoAgentic";
+import { ThumbAgenticApi } from "./agenticapi/thumb";
 import type { UpgradeProps } from "./upgrade/PromoUpgrade";
 import type { PromoProps } from "./types";
 
@@ -98,6 +99,15 @@ export const Root: React.FC = () => (
         fps: 60,
         durationInFrames: Math.max(60, Math.round(props.scenes.reduce((a, s) => a + s.durationSec, 0) * 60)),
       })}
+    />
+    <Composition
+      id="ThumbAgenticApi"
+      component={ThumbAgenticApi}
+      width={1920}
+      height={1080}
+      fps={60}
+      durationInFrames={60}
+      defaultProps={{ variant: "brand" } as { variant?: string }}
     />
     <Composition
       id="UpgradeThumbnail"
