@@ -44,8 +44,28 @@ createServer((req, res) => {
 
   const gzip = req.headers['accept-encoding']?.includes('gzip') && existsSync(file + '.gz');
   const body = readFileSync(gzip ? file + '.gz' : file);
+  const type = MIME[extname(file)] ?? 'application/octet-stream';
+
+  // Range requests (video/audio streaming) — GitHub Pages honors these;
+  // without them Chrome won't play <video> sources.
+  const range = !gzip && req.headers.range?.match(/bytes=(\d+)-(\d*)/);
+  if (range) {
+    const start = Number(range[1]);
+    const end = range[2] ? Number(range[2]) : body.length - 1;
+    if (start < body.length) {
+      res.writeHead(206, {
+        'content-type': type,
+        'content-range': `bytes ${start}-${end}/${body.length}`,
+        'content-length': end - start + 1,
+        'accept-ranges': 'bytes',
+      });
+      return res.end(body.subarray(start, end + 1));
+    }
+  }
+
   res.writeHead(status, {
-    'content-type': MIME[extname(file)] ?? 'application/octet-stream',
+    'content-type': type,
+    'accept-ranges': 'bytes',
     ...(gzip ? { 'content-encoding': 'gzip' } : {}),
   });
   res.end(body);
