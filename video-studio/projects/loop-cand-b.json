@@ -1,0 +1,21 @@
+{
+ "name": "loop-cand",
+ "fps": 60,
+ "burnSubtitles": false,
+ "brackets": false,
+ "fadeInSec": 0.02,
+ "fadeOutSec": 0.02,
+ "scenes": [
+  {
+   "id": "s13",
+   "design": "constellation",
+   "startSec": 0,
+   "durationSec": 9.0,
+   "rays": [
+    50,
+    40
+   ],
+   "headOverride": " "
+  }
+ ]
+}
