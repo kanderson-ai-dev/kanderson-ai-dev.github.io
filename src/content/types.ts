@@ -1,0 +1,58 @@
+// Content model (Plan.md §7). Every project page renders only from this data.
+
+export type Lang = 'en' | 'es';
+export type Status = 'live' | 'in-development' | 'planned';
+export type Category = 'python' | 'node';
+
+export interface Img {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+}
+
+// Semantic accent (§3.1): code/verified, model, human, blocked
+export type Tone = 'accent' | 'model' | 'human' | 'danger';
+
+export interface ProjectCopy {
+  title: string;
+  tagline: string; // <= 140 chars
+  cardBlurb: string; // <= 120 chars (cards + mega-menu)
+  hook?: { line: string; accent: string; tone?: Tone };
+  problem: string;
+  solution: string;
+  howItWorks: { title: string; text: string }[]; // 4-6 steps
+  features: {
+    title: string;
+    titleAccent?: string;
+    tone?: Tone;
+    text: string;
+    image: Img; // 16:9 slot — film-derived 1600x900, real captures re-framed by tools/mockups
+  }[]; // 3-6 features; title + titleAccent render as a SplitHeadline
+  results?: { label: string; value: string; note: string; kind: 'measured' | 'simulated' }[];
+  baseline?: { label: string; pipeline: string; baseline: string; note: string };
+  limitations?: string | string[];
+  galleryHeadline?: { title: string; accent: string }; // overrides the shared gallery headline
+  cta?: { headline: string; text: string };
+}
+
+export interface Project {
+  slug: string;
+  order: number; // landing/menu order
+  category: Category;
+  status: Status;
+  year: number;
+  repoUrl: string | null;
+  stack: string[];
+  languages: Lang[];
+  defaultLang?: Lang;
+  hiddenFromIndex?: boolean;
+  cardImage: Img; // 16:10 thumbnail
+  heroImage: Img;
+  ogImage: string; // 1200x630
+  video: { youtubeId: string | null; poster: Img; captionsLang: Lang[] } | null;
+  loop?: { webm: string; mp4: string; poster: Img };
+  architecture?: { src: string; alt: string; description: string };
+  gallery?: Img[];
+  copy: Record<Lang, ProjectCopy | undefined>; // 'en' required, 'es' optional
+}

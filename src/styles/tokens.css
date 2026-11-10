@@ -1,0 +1,32 @@
+/* Design tokens — mirrored from video-studio/src/upgrade/utheme.ts (kept in
+   parity by tests/token-parity.test.ts). The films' semantic color language:
+   violet = the model, turquoise = the code, amber = the human, red = stopped. */
+
+:root {
+  --bg: #050709;
+  --bg-deep: #020304;
+  --panel: #0b1114;
+  --panel-2: #0f1a1f;
+  --line: #17343a;
+  --text: #e8fffb;
+  --muted: #7fa8a1;
+  --dim: #3f5f5a;
+  --accent: #00f5d4;
+  --model: #9b8cff;
+  --human: #ffc857;
+  --danger: #ff4d6d;
+  --warn: #ffb020;
+  --glow: rgba(0, 245, 212, 0.4);
+
+  --font-display: 'Chakra Petch', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --ease: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --max-w: 1240px;
+  --nav-h: 64px;
+  --radius: 14px;
+  --radius-lg: 20px;
+}
