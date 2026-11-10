@@ -36,7 +36,9 @@ export const EndCard2: React.FC<{ progress?: number }> = ({ progress = 1 }) => {
           }}
         />
       </div>
-      <div style={{ fontFamily: titleFont, fontWeight: 500, fontSize: 44, color: C.text, opacity: sub }}>Kaarsten Anderson</div>
+      <div style={{ fontFamily: titleFont, fontWeight: 500, fontSize: 44, color: C.text, opacity: sub }}>
+        Kaarsten Anderson <span style={{ color: C.accent, fontSize: 34 }}>· Agentic AI Developer</span>
+      </div>
       <div
         style={{
           fontFamily: bodyFont,

@@ -30,7 +30,7 @@ export const TicketCard: React.FC<{ status?: TicketStatus; w?: number; quote?: s
         fontFamily: bodyFont,
       }}
     >
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14, flexWrap: "wrap", rowGap: 12 }}>
         <span style={{ fontFamily: monoFont, fontSize: 22, color: C.muted, letterSpacing: 1, whiteSpace: "nowrap" }}>SUPPORT TICKET</span>
         <StatusPill text={m.text} color={m.color} size={20} />
       </div>

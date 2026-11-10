@@ -33,9 +33,9 @@ const Tag: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   </div>
 );
 
-export const ThumbAgenticApi: React.FC<{ variant?: string }> = ({ variant = "brand" }) => (
+export const ThumbAgenticApi: React.FC<{ variant?: string; brackets?: boolean; url?: boolean }> = ({ variant = "brand", brackets = true, url = true }) => (
   <AbsoluteFill>
-    <Stage dim={0.85}>
+    <Stage dim={0.85} brackets={brackets}>
       <Particles count={22} />
       {variant === "brand" && (
         <>
@@ -62,7 +62,7 @@ export const ThumbAgenticApi: React.FC<{ variant?: string }> = ({ variant = "bra
               Attacks stay out. <span style={{ color: C.accent }}>Secrets stay in.</span>
             </div>
           </div>
-          <Tag>KAARSTENANDERSON.COM</Tag>
+          {url && <Tag>KAARSTENANDERSON.COM</Tag>}
         </>
       )}
       {variant === "blocked" && (
@@ -73,7 +73,7 @@ export const ThumbAgenticApi: React.FC<{ variant?: string }> = ({ variant = "bra
           <div style={{ position: "absolute", inset: 0, top: 190, transform: "scale(0.88)", transformOrigin: "50% 50%" }}>
             <ShieldBeat t={0.52} />
           </div>
-          <Tag>GUARDRAILED AGENTIC AI API — OWASP LLM01</Tag>
+          {url && <Tag>GUARDRAILED AGENTIC AI API — OWASP LLM01</Tag>}
         </>
       )}
       {variant === "door" && (
@@ -82,7 +82,7 @@ export const ThumbAgenticApi: React.FC<{ variant?: string }> = ({ variant = "bra
           <div style={{ position: "absolute", inset: 0, top: 120, transform: "scale(0.92)", transformOrigin: "50% 50%" }}>
             <DoorBeat t={0.55} />
           </div>
-          <Tag>GUARDRAILED AGENTIC AI API — TRACKED · KEYED</Tag>
+          {url && <Tag>GUARDRAILED AGENTIC AI API — TRACKED · KEYED</Tag>}
         </>
       )}
       <Grain />

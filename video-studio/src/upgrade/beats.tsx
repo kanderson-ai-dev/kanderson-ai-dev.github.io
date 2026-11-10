@@ -177,25 +177,26 @@ export const GuardrailBeat: React.FC<{ t: number }> = ({ t }) => {
           </div>
         </div>
       )}
-      {shards.map((i) => {
-        const a = (i / 8) * Math.PI * 2;
-        const fly = Math.max(0, shatter - 0.62) * 130;
-        return (
-          <div
-            key={i}
-            style={{
-              position: "absolute",
-              left: 640 + Math.cos(a) * fly,
-              top: 400 + Math.sin(a) * fly,
-              width: 26,
-              height: 18,
-              background: C.danger,
-              opacity: Math.max(0, 1 - Math.max(0, shatter - 0.62) * 2.4),
-              transform: `rotate(${a * 57}deg)`,
-            }}
-          />
-        );
-      })}
+      {shatter > 0.62 &&
+        shards.map((i) => {
+          const a = (i / 8) * Math.PI * 2;
+          const fly = (shatter - 0.62) * 130;
+          return (
+            <div
+              key={i}
+              style={{
+                position: "absolute",
+                left: 790 + Math.cos(a) * fly,
+                top: 470 + Math.sin(a) * fly,
+                width: 26,
+                height: 18,
+                background: C.danger,
+                opacity: Math.max(0, 1 - (shatter - 0.62) * 3.0),
+                transform: `rotate(${a * 57}deg)`,
+              }}
+            />
+          );
+        })}
       {/* our card passes on the right */}
       <div style={{ position: "absolute", left: 1150 - pass * 80, top: 340, opacity: pass }}>
         <TicketCard status="verified" w={560} />

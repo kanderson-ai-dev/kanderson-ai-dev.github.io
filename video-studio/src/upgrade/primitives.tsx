@@ -98,6 +98,7 @@ export const Chip: React.FC<{ text: string; color?: string; size?: number; fille
       borderRadius: 10,
       padding: "6px 16px",
       whiteSpace: "nowrap",
+      flexShrink: 0,
     }}
   >
     {text}

@@ -1,0 +1,90 @@
+1
+00:00:00,584 --> 00:00:07,250
+Every big business decision starts with a
+report. Who to buy from. Where to grow. What
+could go wrong.
+
+2
+00:00:08,054 --> 00:00:14,040
+You could ask an AI. But it makes things up,
+runs up the bill, and can't show its work.
+
+3
+00:00:15,444 --> 00:00:23,190
+Meet the LangGraph Multi-Agent Orchestrator. A
+team of AI specialists that writes your
+reports — and proves every word.
+
+4
+00:00:23,844 --> 00:00:30,030
+Send a brief and a budget. Attacks are stopped
+at the door — before a cent is spent.
+
+5
+00:00:30,484 --> 00:00:38,590
+It assembles the right team: a researcher, an
+analyst, a compliance expert, a writer — and a
+critic who checks every claim.
+
+6
+00:00:38,944 --> 00:00:44,490
+An AI team lead decides who works next, and
+splits the work in parallel when it can.
+
+7
+00:00:44,794 --> 00:00:53,140
+Promise one: nothing made up. Every quote is
+checked against its source. Change twelve
+percent to twenty-one — caught.
+
+8
+00:00:53,894 --> 00:01:02,240
+Promise two: no runaway bills. Before every AI
+call, it checks the cost. Over budget? It
+stops — and asks you.
+
+9
+00:01:03,044 --> 00:01:11,270
+Promise three: proof for every word. Each step
+is sealed into a chain of receipts. Change one
+line — the seal breaks.
+
+10
+00:01:11,924 --> 00:01:17,910
+The AI does the work. Code enforces the rules.
+You make the final call.
+
+11
+00:01:18,514 --> 00:01:29,780
+Tested on twenty-two briefs it had never seen,
+with live AI and the live web. Every quality
+bar cleared. Twice. Every attack blocked.
+About a cent a report.
+
+12
+00:01:30,584 --> 00:01:37,850
+And every prompt is versioned and A/B tested —
+a change only ships when it beats the one
+running today.
+
+13
+00:01:38,604 --> 00:01:45,310
+This is it running — the live log, the sealed
+report, and a review that waits for you.
+
+14
+00:01:45,553 --> 00:01:53,580
+And it's not one team. Legal, finance, market
+research — the same engine builds the team
+your field needs.
+
+15
+00:01:54,583 --> 00:01:58,810
+Designed, built, and measured by Kaarsten
+Anderson.
+
+16
+00:02:00,579 --> 00:02:07,730
+Need AI agents you can trust with real work?
+Let's build yours, at kaarstenanderson.com
+

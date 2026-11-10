@@ -121,9 +121,10 @@ export type PromoAgenticProps = {
   subtitles?: CaptionCue[];
   burnSubtitles?: boolean;
   fadeOutSec?: number;
+  brackets?: boolean;
 };
 
-export const PromoAgentic: React.FC<PromoAgenticProps> = ({ scenes, subtitles, burnSubtitles = true, fadeOutSec = 1.2 }) => {
+export const PromoAgentic: React.FC<PromoAgenticProps> = ({ scenes, subtitles, burnSubtitles = true, fadeOutSec = 1.2, brackets = true }) => {
   const { fps, durationInFrames } = useVideoConfig();
   const frame = useCurrentFrame();
   let start = 0;
@@ -136,7 +137,7 @@ export const PromoAgentic: React.FC<PromoAgenticProps> = ({ scenes, subtitles, b
         const boxed = s.kind === "coldopen" || isAct(s.kind);
         return (
           <Sequence key={s.id} from={from} durationInFrames={dur} name={s.id}>
-            <Stage dim={s.kind === "proof" || s.kind === "cta" ? 0.7 : 1} brackets={s.kind !== "act1" && s.kind !== "act2" && s.kind !== "act3"}>
+            <Stage dim={s.kind === "proof" || s.kind === "cta" ? 0.7 : 1} brackets={brackets && s.kind !== "act1" && s.kind !== "act2" && s.kind !== "act3"}>
               <Camera idx={i}>
                 {HEADLINES[s.kind] && (
                   <div

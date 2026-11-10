@@ -1,0 +1,41 @@
+{
+  "//": "Clean film stills map. Frames are absolute composition frames at the comp fps (60 unless noted), picked where the beat has settled (~70% into the scene). Film props get burnSubtitles:false + brackets:false merged in; thumb comps get explicit inlineProps.",
+  "langgraph-multiagent-orchestrator": {
+    "props": "projects/langgraph-multiagent-orchestrator-upgrade.json",
+    "stills": [
+      { "name": "hook", "composition": "Orchestrator2Upgrade", "frame": 797, "scene": "s02 problem" },
+      { "name": "feature-1", "composition": "Orchestrator2Upgrade", "frame": 2561, "scene": "s06 lead" },
+      { "name": "feature-2", "composition": "Orchestrator2Upgrade", "frame": 3047, "scene": "s07 promise1" },
+      { "name": "feature-5", "composition": "Orchestrator2Upgrade", "frame": 4572, "scene": "s10 control" },
+      { "name": "title", "composition": "Orchestrator2Upgrade", "frame": 1249, "scene": "s03 reveal" },
+      { "name": "thumb", "composition": "ThumbOrchestrator2", "frame": 30, "inlineProps": { "variant": "team", "brackets": false, "url": false } },
+      { "name": "loop-poster", "composition": "OrchestratorLoop", "frame": 240, "note": "landing hero loop candidate A (owner-approved); video rendered from same comp at 45fps, poster = comp frame 240" }
+    ]
+  },
+  "mcp-agent-toolkit-py": {
+    "props": "projects/mcp-agent-toolkit-py-v3.json",
+    "stills": [
+      { "name": "hook", "composition": "PromoMcpToolkit3", "frame": 252, "scene": "hook" },
+      { "name": "title", "composition": "PromoMcpToolkit3", "frame": 1085, "scene": "reveal" },
+      { "name": "feature-5", "composition": "PromoMcpToolkit3", "frame": 5799, "scene": "proof" },
+      { "name": "thumb", "composition": "ThumbMcpToolkit3", "frame": 30, "inlineProps": { "variant": "brand", "brackets": false, "url": false } }
+    ]
+  },
+  "agentic-rag-system": {
+    "props": "projects/agentic-rag-system-film-4k.json",
+    "stills": [
+      { "name": "hook", "composition": "PromoRag", "frame": 380, "scene": "coldopen" },
+      { "name": "title", "composition": "PromoRag", "frame": 1283, "scene": "reveal" },
+      { "name": "feature-2", "composition": "PromoRag", "frame": 3270, "scene": "promise2a rewrite" },
+      { "name": "thumb", "composition": "RagThumbnail", "frame": 15, "inlineProps": { "variant": "proof", "brackets": false, "url": false } }
+    ]
+  },
+  "agentic-api": {
+    "props": "projects/agentic-api-flagship.json",
+    "stills": [
+      { "name": "hook", "composition": "PromoAgenticApi", "frame": 268, "scene": "coldopen" },
+      { "name": "title", "composition": "PromoAgenticApi", "frame": 1260, "scene": "reveal" },
+      { "name": "thumb", "composition": "ThumbAgenticApi", "frame": 30, "inlineProps": { "variant": "brand", "brackets": false, "url": false } }
+    ]
+  }
+}
