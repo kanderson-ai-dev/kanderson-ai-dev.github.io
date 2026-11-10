@@ -61,9 +61,10 @@ pad video-studio/public/rag/landing-answer.png $R/feature-1-1600.webp 1600 900
 
 A=agentic-api
 AS=_raw/$A/stills
-pad "$AS/title.png"      $A/card-800.webp          800  500
-pad "$AS/title.png"      $A/hero-1600.webp        1600 1000
-pad "$AS/title.png"      $A/og.png                1200  630
+# hero-1600 and og are produced by the mockup config
+# (tools/mockups/configs/agentic-api.json); card-800 is that hero composition
+# downscaled — same-source card, matching the other slugs' card↔hero rule.
+fit public/projects/$A/hero-1600.webp $A/card-800.webp   800  500
 fit "$AS/thumb.png"      $A/video-poster-1920.webp 1920 1080
 fit "$AS/hook.png"       $A/hook-1920.webp        1920 1080
 # API feature stills intentionally absent: its features are rebuilt from real

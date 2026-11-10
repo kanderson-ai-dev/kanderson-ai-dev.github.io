@@ -198,31 +198,6 @@
    }
   },
   {
-   "name": "card-800",
-   "template": "card-thumb",
-   "size": [
-    800,
-    500
-   ],
-   "out": "card-800.webp",
-   "params": {
-    "chrome": true,
-    "image": "_raw/agentic-api/captures/swagger-dark.png",
-    "imgSize": [
-     2880,
-     1800
-    ],
-    "crop": [
-     0,
-     0,
-     2880,
-     1500
-    ],
-    "winWidth": 780,
-    "lift": 30
-   }
-  },
-  {
    "name": "og",
    "template": "og-card",
    "size": [
