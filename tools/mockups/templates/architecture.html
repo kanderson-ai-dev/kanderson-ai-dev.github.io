@@ -1,0 +1,116 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../stage.css"></head>
+<body><script src="tpl.js"></script><script>
+/* architecture — JSON graph -> diagram on stage. Deterministic layout:
+   every node carries explicit x,y (grid units, see config).
+   params: nodes [{id,label,sub?,type,x,y,w?,h?,shape?}],
+           edges [{from,to,label?,kind?}], kind: gate(red)|plain(no arrow)|bi|dotted
+           groups? [{x,y,w,h,label?}] cluster frames (grid units),
+           unit? (px per grid unit), nodeW?, nodeH?, legend?, kicker?            */
+const COLORS = { model: 'var(--model)', code: 'var(--accent)', human: 'var(--human)',
+                 danger: 'var(--danger)', dim: 'var(--dim)', store: 'var(--muted)' };
+const SVGNS = 'http://www.w3.org/2000/svg';
+const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+window.render = (p) => {
+  const st = stage();
+  const W = innerWidth, H = innerHeight;
+  const U = p.unit || 120;
+  const nw = p.nodeW || 270, nh = p.nodeH || 100;
+  const nodes = {};
+  for (const n of p.nodes) nodes[n.id] = { ...n, w: n.w || nw, h: n.h || nh };
+  const col = (n) => COLORS[n.type] || COLORS.code;
+  const svg = document.createElementNS(SVGNS, 'svg');
+  svg.setAttribute('width', W); svg.setAttribute('height', H);
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.style.cssText = 'position:absolute;inset:0';
+  let html = `<defs>
+    <marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10" fill="none" stroke="context-stroke" stroke-width="2"/></marker>
+    <marker id="arS" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10" fill="none" stroke="context-stroke" stroke-width="2"/></marker>
+  </defs>`;
+  // cluster frames
+  for (const g of p.groups || []) {
+    html += `<rect x="${g.x * U}" y="${g.y * U}" width="${g.w * U}" height="${g.h * U}" rx="20" fill="#00F5D407" stroke="var(--accent)" stroke-width="2" stroke-dasharray="10 8" opacity="0.7"/>`;
+    if (g.label) html += `<text x="${g.x * U + 18}" y="${g.y * U + 34}" font-family="Consolas,monospace" font-size="20" font-weight="700" fill="var(--accent)" letter-spacing="0.12em">${esc(g.label)}</text>`;
+  }
+  // edges
+  for (const e of p.edges) {
+    const a = nodes[e.from], b = nodes[e.to];
+    const c = e.kind === 'gate' ? 'var(--danger)' : e.kind === 'dotted' ? 'var(--muted)' : 'var(--accent)';
+    const ax = a.x * U + a.w / 2, ay = a.y * U + a.h / 2;
+    const bx = b.x * U + b.w / 2, by = b.y * U + b.h / 2;
+    const dx = bx - ax, dy = by - ay;
+    const horiz = Math.abs(dx) > Math.abs(dy);
+    const off = e.off || 0; // perpendicular offset for parallel/antiparallel edges
+    let [sx, sy] = horiz ? [ax + Math.sign(dx) * a.w / 2, ay + off] : [ax + off, ay + Math.sign(dy) * a.h / 2];
+    let [tx2, ty2] = horiz ? [bx - Math.sign(dx) * b.w / 2, by + off] : [bx + off, by - Math.sign(dy) * b.h / 2];
+    const mx = (sx + tx2) / 2, my = (sy + ty2) / 2;
+    const d = horiz
+      ? `M${sx} ${sy} C ${mx} ${sy}, ${mx} ${ty2}, ${tx2} ${ty2}`
+      : `M${sx} ${sy} C ${sx} ${my}, ${tx2} ${my}, ${tx2} ${ty2}`;
+    const sw = e.kind === 'gate' ? 5 : 3.5;
+    const dash = e.kind === 'dotted' ? 'stroke-dasharray="4 9" stroke-linecap="round"' : e.dash ? `stroke-dasharray="${e.dash}"` : '';
+    const mEnd = e.kind === 'plain' ? '' : 'marker-end="url(#ar)"';
+    const mStart = e.kind === 'bi' ? 'marker-start="url(#arS)"' : '';
+    html += `<path d="${d}" stroke="${c}" stroke-width="${sw}" fill="none" ${dash} ${mEnd} ${mStart} opacity="0.9" style="filter:drop-shadow(0 0 6px ${c})"/>`;
+    const lines = Array.isArray(e.label) ? e.label : e.label ? [e.label] : [];
+    const [lox, loy] = e.loff || [0, 0];
+    lines.forEach((l, i) => {
+      const lx = (horiz ? mx : (sx + tx2) / 2 + 14) + lox;
+      const ly = (horiz ? (sy + ty2) / 2 - 14 : my) + (i - (lines.length - 1) / 2) * 22 + loy;
+      html += `<text x="${lx}" y="${ly}" text-anchor="middle" font-family="Consolas,monospace" font-size="${e.fs || p.edgeLabelSize || 20}" font-weight="600" fill="${c}" opacity="0.95">${esc(l)}</text>`;
+    });
+  }
+  // svg-shaped nodes (pill, shield, cyl) drawn over edges
+  const svgNodes = [];
+  for (const n of p.nodes) {
+    if (!n.shape) continue;
+    const c = col(n);
+    const x = n.x * U, y = n.y * U, w = nodes[n.id].w, h = nodes[n.id].h;
+    const cx = x + w / 2;
+    let shape = '';
+    if (n.shape === 'pill') {
+      shape = `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${h / 2}" fill="#0a1d1bf2" stroke="${c}" stroke-width="2.5" style="filter:drop-shadow(0 0 18px ${c}55)"/>`;
+    } else if (n.shape === 'shield') {
+      const top = h * 0.14, mid = h * 0.62;
+      shape = `<path d="M${cx} ${y} L${x + w} ${y + top} L${x + w} ${y + mid} Q${x + w} ${y + h * 0.86} ${cx} ${y + h} Q${x} ${y + h * 0.86} ${x} ${y + mid} L${x} ${y + top} Z" fill="#0a1d1bf2" stroke="${c}" stroke-width="3" style="filter:drop-shadow(0 0 18px ${c}66)"/>`;
+    } else if (n.shape === 'cyl') {
+      const r = Math.min(18, h * 0.18);
+      shape = `<path d="M${x} ${y + r} A${w / 2} ${r} 0 0 1 ${x + w} ${y + r} L${x + w} ${y + h - r} A${w / 2} ${r} 0 0 1 ${x} ${y + h - r} Z" fill="#0a1d1bf2" stroke="${c}" stroke-width="2.5" style="filter:drop-shadow(0 0 18px ${c}55)"/>
+        <ellipse cx="${cx}" cy="${y + r}" rx="${w / 2}" ry="${r}" fill="#0e2a26" stroke="${c}" stroke-width="2.5"/>`;
+    }
+    const lines = [n.label, ...(Array.isArray(n.sub) ? n.sub : n.sub ? [n.sub] : [])];
+    const lh = lines.length > 1 ? 26 : 0;
+    const ty = cy2(y, h, lines.length);
+    let txt = '';
+    lines.forEach((l, i) => {
+      txt += `<text x="${cx}" y="${ty + i * lh}" text-anchor="middle" font-family="${i ? 'Consolas,monospace' : 'var(--disp)'}" font-size="${i ? 17 : p.labelSize || 24}" font-weight="${i ? 400 : 700}" fill="${i ? c : 'var(--text)'}">${esc(l)}</text>`;
+    });
+    svgNodes.push(shape + txt);
+  }
+  html += svgNodes.join('');
+  svg.innerHTML = html;
+  st.appendChild(svg);
+  // html glass-box nodes (default shape)
+  for (const n of p.nodes) {
+    if (n.shape) continue;
+    const c = col(n);
+    const subs = Array.isArray(n.sub) ? n.sub : n.sub ? [n.sub] : [];
+    const d = document.createElement('div');
+    d.className = 'glass';
+    d.style.cssText = `position:absolute;left:${n.x * U}px;top:${n.y * U}px;width:${nodes[n.id].w}px;height:${nodes[n.id].h}px;border-color:${c}88;box-shadow:0 24px 60px #000000d9,0 0 0 1px ${c}22,0 0 44px ${c}30;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;z-index:2;padding:6px 4px;box-sizing:border-box`;
+    d.innerHTML = `<div style="font-family:var(--disp);font-weight:700;font-size:${p.labelSize || 24}px;color:var(--text);text-align:center;line-height:1.12">${esc(n.label)}</div>` +
+      subs.map((s) => `<div style="font-family:var(--mono);font-size:17px;color:${c};text-align:center;line-height:1.25">${esc(s)}</div>`).join('');
+    st.appendChild(d);
+  }
+  function cy2(y, h, n) { return y + h / 2 - (n - 1) * 13 + 8; }
+  for (const [i, l] of (p.legend || []).entries()) {
+    const e = chip(l.text, l.cls || '');
+    e.style.cssText = `position:absolute;left:${l.x ?? (70 + i * 300)}px;top:${l.y ?? (innerHeight - 90)}px;font-size:${l.size || 20}px;z-index:3`;
+    st.appendChild(e);
+  }
+  if (p.kicker) {
+    const k = kicker(p.kicker, 26);
+    k.style.cssText = `position:absolute;left:${p.kickerX ?? 70}px;top:${p.kickerY ?? 60}px;z-index:3`;
+    st.appendChild(k);
+  }
+};
+</script></body></html>

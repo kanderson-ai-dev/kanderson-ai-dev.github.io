@@ -1,0 +1,57 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../stage.css"></head>
+<body><script src="tpl.js"></script><style>
+.term { padding: 26px 30px; font-family: var(--mono); font-size: 28px; line-height: 1.55;
+        color: var(--text); white-space: pre-wrap; word-break: break-word; }
+.term .k { color: var(--model); }        /* keys */
+.term .s { color: var(--accent); }       /* strings */
+.term .n { color: var(--human); }        /* numbers */
+.term .c { color: var(--muted); }        /* comments/prompts */
+.term .ok { color: #28c840; }
+.term .bad { color: var(--danger); }
+.term .hl-line { display: block; background: #00F5D414; border-left: 4px solid var(--accent);
+                 margin: 0 -30px; padding: 0 26px 0 26px; }
+</style><script src="tpl.js"></script><script>
+/* terminal — hand-built terminal pane (never an OS console capture).
+   params: lines: [{t, cls?, hl?}] | text (string, auto JSON-highlighted),
+           winWidth?, tag?, url?, kicker? */
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function colorize(line){
+  // single pass: "key": -> k, "str" -> s, numbers -> n
+  return esc(line).replace(/("(?:[^"\\]|\\.)*")(\s*:)?|(-?\d[\d.,eE%]+)/g,
+    (m, s, colon, num) => s !== undefined
+      ? (colon ? `<span class="k">${s}</span>${colon}` : `<span class="s">${s}</span>`)
+      : `<span class="n">${num}</span>`);
+}
+window.render = (p) => {
+  const st = stage({ brackets: !!p.brackets });
+  const winW = p.winWidth || 1500;
+  let body;
+  if (p.text !== undefined) {
+    body = p.text.split('\n').map(colorize).join('\n');
+  } else {
+    body = (p.lines || []).map((l) =>
+      `<span class="${l.cls || ''}${l.hl ? ' hl-line' : ''}">${l.hl ? '' : ''}${l.cls ? esc(l.t) : colorize(l.t)}</span>`).join('\n');
+  }
+  const { root } = chrome({ width: winW, imgSrc: 'data:,', imgNatural: [1, 1], tag: p.tag ?? 'REAL APP · LIVE RUN', url: p.url });
+  const view = root.querySelector('.view');
+  view.innerHTML = `<div class="term" style="font-size:${p.fontSize || 28}px">${body}</div>`;
+  view.style.height = 'auto';
+  const W = innerWidth, H = innerHeight;
+  root.style.position = 'absolute';
+  st.appendChild(root);
+  const termEl = view.querySelector('.term');
+  let fs = p.fontSize || 28;
+  while (root.offsetHeight > H - 100 && fs > 10) {  // auto-fit: shrink until window fits
+    fs -= 1;
+    termEl.style.fontSize = fs + 'px';
+  }
+  const rh = root.offsetHeight;
+  root.style.left = ((W - winW) / 2) + 'px';
+  root.style.top = ((H - rh) / 2) + 'px';
+  if (p.kicker) {
+    const k = kicker(p.kicker, 26);
+    k.style.cssText = `position:absolute;left:${(W - winW) / 2}px;top:${(H - rh) / 2 - 60}px`;
+    st.appendChild(k);
+  }
+};
+</script></body></html>

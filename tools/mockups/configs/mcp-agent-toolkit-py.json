@@ -1,0 +1,453 @@
+{
+  "jobs": [
+    {
+      "name": "architecture",
+      "template": "architecture",
+      "size": [
+        1600,
+        900
+      ],
+      "out": "architecture.webp",
+      "params": {
+        "unit": 95,
+        "nodeH": 96,
+        "edgeLabelSize": 18,
+        "kicker": "SOURCE: PROJECT README · MERMAID TRANSCRIBED",
+        "labelSize": 23,
+        "groups": [
+          {
+            "x": 8.0,
+            "y": 0.3,
+            "w": 7.9,
+            "h": 3.3,
+            "label": "AGENT CLIENT"
+          },
+          {
+            "x": 0.3,
+            "y": 5.0,
+            "w": 15.9,
+            "h": 4.75,
+            "label": "MCP SERVER · CHILD PROCESS"
+          }
+        ],
+        "nodes": [
+          {
+            "id": "user",
+            "label": "User",
+            "shape": "pill",
+            "type": "dim",
+            "x": 0.3,
+            "y": 1.4,
+            "w": 150,
+            "h": 80
+          },
+          {
+            "id": "ui",
+            "label": "React console",
+            "sub": [
+              "Vite · TS · Tailwind"
+            ],
+            "x": 1.8,
+            "y": 0.4,
+            "w": 250
+          },
+          {
+            "id": "cli",
+            "label": "mcp-toolkit-agent",
+            "sub": [
+              "CLI"
+            ],
+            "x": 2.2,
+            "y": 2.8,
+            "w": 250
+          },
+          {
+            "id": "api",
+            "label": "FastAPI web adapter",
+            "sub": [
+              "one MCP child per process"
+            ],
+            "x": 5.3,
+            "y": 0.7,
+            "w": 270
+          },
+          {
+            "id": "loop",
+            "label": "Bounded agent loop",
+            "sub": [
+              "answer · iteration_limit",
+              "· budget_limit"
+            ],
+            "x": 8.4,
+            "y": 1.3,
+            "w": 300,
+            "h": 110
+          },
+          {
+            "id": "llm",
+            "label": "LLM adapter",
+            "type": "model",
+            "sub": [
+              "OpenAI · StubLLM"
+            ],
+            "x": 12.3,
+            "y": 0.8,
+            "w": 260,
+            "h": 90
+          },
+          {
+            "id": "mcpc",
+            "label": "MCP client",
+            "sub": [
+              "tools/list discovery"
+            ],
+            "x": 12.3,
+            "y": 2.2,
+            "w": 260,
+            "h": 90
+          },
+          {
+            "id": "reg",
+            "label": "Prompt Registry",
+            "shape": "cyl",
+            "type": "store",
+            "sub": [
+              "vN.yaml + audit chain"
+            ],
+            "x": 8.4,
+            "y": 4.0,
+            "w": 300
+          },
+          {
+            "id": "srv",
+            "label": "MCPServer",
+            "x": 0.8,
+            "y": 5.8,
+            "w": 180
+          },
+          {
+            "id": "gi",
+            "label": "guarded_invoke",
+            "x": 3.1,
+            "y": 5.8,
+            "w": 210
+          },
+          {
+            "id": "rl",
+            "label": "rate limit",
+            "shape": "shield",
+            "sub": [
+              "per tool + session"
+            ],
+            "x": 5.7,
+            "y": 5.75,
+            "w": 230,
+            "h": 105
+          },
+          {
+            "id": "h",
+            "label": "tool handler",
+            "x": 8.5,
+            "y": 5.8,
+            "w": 210
+          },
+          {
+            "id": "san",
+            "label": "sanitizer",
+            "sub": [
+              "+ typed result envelope"
+            ],
+            "x": 11.2,
+            "y": 5.8,
+            "w": 280
+          },
+          {
+            "id": "ws",
+            "label": "web_search",
+            "x": 6.8,
+            "y": 7.5,
+            "w": 190
+          },
+          {
+            "id": "net",
+            "label": "Tavily · DuckDuckGo",
+            "shape": "pill",
+            "type": "dim",
+            "x": 6.3,
+            "y": 8.4,
+            "w": 290,
+            "h": 86,
+            "sub": [
+              "· stub"
+            ]
+          },
+          {
+            "id": "dbq",
+            "label": "db_query",
+            "x": 9.3,
+            "y": 7.5,
+            "w": 180
+          },
+          {
+            "id": "db",
+            "label": "demo.db",
+            "shape": "cyl",
+            "type": "store",
+            "sub": [
+              "read-only"
+            ],
+            "x": 9.15,
+            "y": 8.35,
+            "w": 210,
+            "h": 76
+          },
+          {
+            "id": "fs",
+            "label": "read_file · write_file",
+            "x": 11.9,
+            "y": 7.5,
+            "w": 210
+          },
+          {
+            "id": "sb",
+            "label": "path sandbox",
+            "shape": "shield",
+            "x": 14.3,
+            "y": 7.5,
+            "w": 170,
+            "h": 100
+          },
+          {
+            "id": "fsys",
+            "label": "sandbox folder",
+            "shape": "cyl",
+            "type": "store",
+            "x": 13.9,
+            "y": 8.4,
+            "w": 200,
+            "h": 76
+          }
+        ],
+        "edges": [
+          {
+            "from": "user",
+            "to": "ui"
+          },
+          {
+            "from": "user",
+            "to": "cli"
+          },
+          {
+            "from": "ui",
+            "to": "api",
+            "label": [
+              "POST /api/chat",
+              "GET /api/chat/stream (SSE)"
+            ],
+            "fs": 14,
+            "loff": [
+              60,
+              95
+            ]
+          },
+          {
+            "from": "api",
+            "to": "loop"
+          },
+          {
+            "from": "cli",
+            "to": "loop"
+          },
+          {
+            "from": "loop",
+            "to": "llm",
+            "kind": "bi"
+          },
+          {
+            "from": "loop",
+            "to": "mcpc"
+          },
+          {
+            "from": "reg",
+            "to": "loop",
+            "label": [
+              "promoted prompt",
+              "resolved per run"
+            ],
+            "fs": 15,
+            "loff": [
+              95,
+              0
+            ]
+          },
+          {
+            "from": "mcpc",
+            "to": "srv",
+            "label": "stdio · JSON-RPC",
+            "fs": 16
+          },
+          {
+            "from": "srv",
+            "to": "gi"
+          },
+          {
+            "from": "gi",
+            "to": "rl"
+          },
+          {
+            "from": "rl",
+            "to": "h"
+          },
+          {
+            "from": "h",
+            "to": "san"
+          },
+          {
+            "from": "h",
+            "to": "ws"
+          },
+          {
+            "from": "h",
+            "to": "dbq"
+          },
+          {
+            "from": "h",
+            "to": "fs"
+          },
+          {
+            "from": "ws",
+            "to": "net"
+          },
+          {
+            "from": "dbq",
+            "to": "db"
+          },
+          {
+            "from": "fs",
+            "to": "sb"
+          },
+          {
+            "from": "sb",
+            "to": "fsys"
+          }
+        ],
+        "kickerX": 40,
+        "kickerY": 856
+      }
+    },
+    {
+      "name": "ui-discovery",
+      "template": "feature-browser",
+      "size": [
+        1600,
+        900
+      ],
+      "out": "ui-discovery.webp",
+      "params": {
+        "image": "../mcp-agent-toolkit-py/docs/ui-qa/03-result-expanded-1280.png",
+        "imgSize": [
+          1280,
+          1301
+        ],
+        "winWidth": 1150,
+        "tag": "REAL APP · LIVE RUN",
+        "crop": [
+          0,
+          50,
+          1280,
+          800
+        ]
+      }
+    },
+    {
+      "name": "ui-guardrail",
+      "template": "feature-browser",
+      "size": [
+        1600,
+        900
+      ],
+      "out": "ui-guardrail.webp",
+      "params": {
+        "image": "../mcp-agent-toolkit-py/docs/ui-qa/06-guardrail-block-1280.png",
+        "imgSize": [
+          1280,
+          800
+        ],
+        "winWidth": 1150,
+        "tag": "REAL APP · LIVE RUN"
+      }
+    },
+    {
+      "name": "ui-ab",
+      "template": "feature-browser",
+      "size": [
+        1600,
+        900
+      ],
+      "out": "ui-ab.webp",
+      "params": {
+        "image": "../mcp-agent-toolkit-py/docs/ui-qa/registry-dark/ab-blocked.png",
+        "imgSize": [
+          2560,
+          1720
+        ],
+        "winWidth": 1180,
+        "tag": "REAL APP · LIVE RUN",
+        "crop": [
+          690,
+          380,
+          1260,
+          850
+        ]
+      }
+    },
+    {
+      "name": "ui-auditlog",
+      "template": "feature-browser",
+      "size": [
+        1600,
+        900
+      ],
+      "out": "ui-auditlog.webp",
+      "params": {
+        "image": "../mcp-agent-toolkit-py/docs/ui-qa/registry-dark/audit.png",
+        "imgSize": [
+          2560,
+          1720
+        ],
+        "winWidth": 1180,
+        "tag": "REAL APP · LIVE RUN",
+        "crop": [
+          960,
+          830,
+          1180,
+          780
+        ]
+      }
+    },
+    {
+      "name": "ui-traffic",
+      "template": "feature-browser",
+      "size": [
+        1600,
+        900
+      ],
+      "out": "ui-traffic.webp",
+      "params": {
+        "image": "../mcp-agent-toolkit-py/docs/ui-qa/04-technical-json-1280.png",
+        "imgSize": [
+          1280,
+          1565
+        ],
+        "winWidth": 1240,
+        "tag": "REAL APP · LIVE RUN",
+        "crop": [
+          0,
+          430,
+          1280,
+          780
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../stage.css"></head>
+<body><script src="tpl.js"></script><script>
+/* video-poster — 1920×1080: clean still/capture full-bleed + styled play
+   button + optional title strip. params: image, imgSize, title?, tagline? */
+window.render = (p) => {
+  const st = stage({ brackets: false });
+  const W = innerWidth, H = innerHeight;
+  const [iw, ih] = p.imgSize;
+  const s = Math.max(W / iw, H / ih);
+  const img = document.createElement('img');
+  img.src = p.image;
+  img.style.cssText = `position:absolute;left:${(W - iw * s) / 2}px;top:${(H - ih * s) / 2}px;width:${iw * s}px;height:${ih * s}px`;
+  st.insertBefore(img, st.firstChild);
+  // soft bottom gradient for legibility
+  const gr = document.createElement('div');
+  gr.style.cssText = `position:absolute;left:0;right:0;bottom:0;height:38%;background:linear-gradient(180deg,transparent,#050709e6)`;
+  st.appendChild(gr);
+  // play button
+  const pb = document.createElement('div');
+  pb.style.cssText = `position:absolute;left:${W / 2 - 56}px;top:${H / 2 - 56}px;width:112px;height:112px;border-radius:56px;
+    background:#050709b8;border:2.5px solid var(--accent);box-shadow:0 0 44px #00F5D455,inset 0 0 22px #00F5D422;
+    display:flex;align-items:center;justify-content:center`;
+  pb.innerHTML = `<div style="width:0;height:0;border-left:34px solid var(--accent);border-top:21px solid transparent;border-bottom:21px solid transparent;margin-left:8px"></div>`;
+  st.appendChild(pb);
+  if (p.title) {
+    const t = document.createElement('div');
+    t.style.cssText = `position:absolute;left:70px;bottom:60px;font-family:var(--disp);font-weight:700;font-size:52px;color:var(--text);letter-spacing:0.02em;text-shadow:0 4px 30px #000`;
+    t.textContent = p.title;
+    st.appendChild(t);
+  }
+  if (p.tagline) {
+    const g = document.createElement('div');
+    g.style.cssText = `position:absolute;left:70px;bottom:${p.title ? 24 : 60}px;font-family:var(--mono);font-size:22px;color:var(--accent);letter-spacing:0.08em`;
+    g.textContent = p.tagline;
+    st.appendChild(g);
+  }
+};
+</script></body></html>

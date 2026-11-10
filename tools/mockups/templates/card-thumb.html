@@ -1,0 +1,31 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../stage.css"></head>
+<body><script src="tpl.js"></script><script>
+/* card-thumb — 16:10 card / mega-menu image: subject fills frame
+   (chrome window bled past edges or contained image, stage visible). */
+window.render = (p) => {
+  const st = stage({ brackets: false });
+  const W = innerWidth, H = innerHeight;
+  if (p.chrome) {
+    const w = p.winWidth || Math.round(W * 1.04);
+    const { root } = chrome({ width: w, imgSrc: p.image, imgNatural: p.imgSize, crop: p.crop, tag: '', url: '' });
+    root.style.position = 'absolute';
+    const cw = w, chh = root.offsetHeight;
+    root.style.left = ((W - cw) / 2) + 'px';
+    root.style.top = ((H - chh) / 2 - (p.lift || 0)) + 'px';
+    st.appendChild(root);
+  } else {
+    const [iw, ih] = p.imgSize;
+    const s = Math.max(W / iw, H / ih);
+    const img = document.createElement('img');
+    img.src = p.image;
+    img.style.cssText = `position:absolute;left:${(W - iw * s) / 2}px;top:${(H - ih * s) / 2}px;width:${iw * s}px;height:${ih * s}px`;
+    st.appendChild(img);
+    st.appendChild(Object.assign(document.createElement('div'), { className: 'vignette' }));
+  }
+  if (p.kicker) {
+    const k = kicker(p.kicker, 20);
+    k.style.cssText = `position:absolute;left:${p.kickerX ?? 30}px;bottom:${p.kickerY ?? 26}px;z-index:3`;
+    st.appendChild(k);
+  }
+};
+</script></body></html>

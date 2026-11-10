@@ -1,0 +1,462 @@
+{
+  "jobs": [
+    {
+      "name": "architecture",
+      "template": "architecture",
+      "size": [
+        1600,
+        900
+      ],
+      "out": "architecture.webp",
+      "params": {
+        "unit": 95,
+        "nodeH": 96,
+        "edgeLabelSize": 18,
+        "kicker": "SOURCE: PROJECT README · MERMAID TRANSCRIBED",
+        "nodes": [
+          {
+            "id": "start",
+            "label": "START",
+            "shape": "pill",
+            "type": "dim",
+            "x": 6.3,
+            "y": 0.15,
+            "w": 150,
+            "h": 76
+          },
+          {
+            "id": "ig",
+            "label": "input_guardrail",
+            "shape": "shield",
+            "x": 5.85,
+            "y": 1.1,
+            "w": 280,
+            "h": 105
+          },
+          {
+            "id": "rej",
+            "label": "rejection_output",
+            "type": "danger",
+            "x": 12.9,
+            "y": 0.8,
+            "w": 260,
+            "h": 90
+          },
+          {
+            "id": "sup",
+            "label": "Supervisor",
+            "type": "model",
+            "sub": [
+              "LLM router"
+            ],
+            "x": 5.7,
+            "y": 2.4,
+            "w": 300,
+            "h": 110
+          },
+          {
+            "id": "workers",
+            "label": "workers ×N",
+            "sub": [
+              "parallel mandates"
+            ],
+            "x": 9.7,
+            "y": 2.4,
+            "w": 270,
+            "h": 100
+          },
+          {
+            "id": "researcher",
+            "label": "researcher",
+            "type": "model",
+            "x": 1.5,
+            "y": 3.5,
+            "w": 240,
+            "h": 90
+          },
+          {
+            "id": "specialists",
+            "label": "financial_analyst /",
+            "type": "model",
+            "sub": [
+              "compliance_analyst"
+            ],
+            "x": 1.4,
+            "y": 4.8,
+            "w": 260,
+            "h": 90
+          },
+          {
+            "id": "writer",
+            "label": "writer",
+            "type": "model",
+            "x": 1.5,
+            "y": 6.1,
+            "w": 240,
+            "h": 90
+          },
+          {
+            "id": "reviewer",
+            "label": "reviewer",
+            "type": "model",
+            "x": 1.5,
+            "y": 7.4,
+            "w": 240,
+            "h": 90
+          },
+          {
+            "id": "hr",
+            "label": "human_review",
+            "type": "human",
+            "sub": [
+              "interrupt()"
+            ],
+            "x": 9.5,
+            "y": 5.0,
+            "w": 270,
+            "h": 110
+          },
+          {
+            "id": "ra",
+            "label": "report_assembler",
+            "x": 6.0,
+            "y": 7.0,
+            "w": 290,
+            "h": 100
+          },
+          {
+            "id": "end",
+            "label": "END",
+            "shape": "pill",
+            "type": "dim",
+            "x": 12.9,
+            "y": 8.3,
+            "w": 150,
+            "h": 80
+          }
+        ],
+        "edges": [
+          {
+            "from": "start",
+            "to": "ig"
+          },
+          {
+            "from": "ig",
+            "to": "rej",
+            "label": "blocked",
+            "kind": "gate",
+            "loff": [
+              0,
+              -32
+            ]
+          },
+          {
+            "from": "rej",
+            "to": "end"
+          },
+          {
+            "from": "ig",
+            "to": "sup",
+            "label": "safe",
+            "loff": [
+              16,
+              0
+            ]
+          },
+          {
+            "from": "sup",
+            "to": "workers",
+            "label": "Send() fan-out ×N",
+            "off": -16,
+            "fs": 15,
+            "loff": [
+              0,
+              -48
+            ]
+          },
+          {
+            "from": "workers",
+            "to": "sup",
+            "off": 16
+          },
+          {
+            "from": "sup",
+            "to": "researcher",
+            "label": "next_worker",
+            "fs": 15,
+            "loff": [
+              -30,
+              10
+            ]
+          },
+          {
+            "from": "sup",
+            "to": "specialists",
+            "label": "next_worker",
+            "fs": 15,
+            "loff": [
+              -42,
+              -22
+            ]
+          },
+          {
+            "from": "sup",
+            "to": "writer",
+            "label": "next_worker",
+            "fs": 15,
+            "loff": [
+              -42,
+              -14
+            ]
+          },
+          {
+            "from": "sup",
+            "to": "reviewer",
+            "label": "next_worker",
+            "fs": 15,
+            "loff": [
+              -42,
+              -6
+            ]
+          },
+          {
+            "from": "researcher",
+            "to": "sup",
+            "off": -14
+          },
+          {
+            "from": "specialists",
+            "to": "sup",
+            "off": -14
+          },
+          {
+            "from": "writer",
+            "to": "sup",
+            "off": -14
+          },
+          {
+            "from": "reviewer",
+            "to": "sup",
+            "label": [
+              "revise",
+              "(round < max)"
+            ],
+            "fs": 15,
+            "off": -14,
+            "loff": [
+              8,
+              52
+            ]
+          },
+          {
+            "from": "sup",
+            "to": "hr",
+            "label": [
+              "budget / rounds",
+              "exhausted"
+            ],
+            "kind": "gate",
+            "fs": 16,
+            "loff": [
+              -62,
+              -32
+            ]
+          },
+          {
+            "from": "sup",
+            "to": "ra",
+            "label": "approved",
+            "loff": [
+              -14,
+              0
+            ]
+          },
+          {
+            "from": "hr",
+            "to": "sup",
+            "label": "edit / fund",
+            "fs": 16,
+            "loff": [
+              58,
+              40
+            ]
+          },
+          {
+            "from": "hr",
+            "to": "ra",
+            "label": "approve",
+            "fs": 16
+          },
+          {
+            "from": "hr",
+            "to": "rej",
+            "label": "reject",
+            "kind": "gate"
+          },
+          {
+            "from": "ra",
+            "to": "end",
+            "label": [
+              "citations re-verified",
+              "+ audit seal"
+            ],
+            "fs": 16
+          }
+        ],
+        "legend": [
+          {
+            "text": "GENERAL → researcher · writer · reviewer",
+            "cls": "dim",
+            "x": 60,
+            "y": 96,
+            "size": 16
+          },
+          {
+            "text": "MARKET_INT / COMPETITIVE → + financial_analyst",
+            "cls": "dim",
+            "x": 60,
+            "y": 140,
+            "size": 16
+          },
+          {
+            "text": "VENDOR_ASSESS → + financial + compliance",
+            "cls": "dim",
+            "x": 60,
+            "y": 184,
+            "size": 16
+          },
+          {
+            "text": "TECH_DUE_DILIGENCE → + compliance_analyst",
+            "cls": "dim",
+            "x": 60,
+            "y": 228,
+            "size": 16
+          }
+        ],
+        "kickerX": 40,
+        "kickerY": 856
+      }
+    },
+    {
+      "name": "ui-budget",
+      "template": "feature-browser",
+      "size": [
+        1600,
+        900
+      ],
+      "out": "ui-budget.webp",
+      "params": {
+        "image": "../langgraph-multiagent-orchestrator/docs/ui-qa/runs/07-budget-fund.png",
+        "imgSize": [
+          1366,
+          1085
+        ],
+        "winWidth": 1200,
+        "tag": "REAL APP · LIVE RUN",
+        "crop": [
+          0,
+          140,
+          1366,
+          860
+        ]
+      }
+    },
+    {
+      "name": "ui-audit",
+      "template": "feature-browser",
+      "size": [
+        1600,
+        900
+      ],
+      "out": "ui-audit.webp",
+      "params": {
+        "image": "../langgraph-multiagent-orchestrator/docs/screenshots/console-audit.png",
+        "imgSize": [
+          1440,
+          900
+        ],
+        "winWidth": 1260,
+        "tag": "REAL APP · LIVE RUN"
+      }
+    },
+    {
+      "name": "ui-registry",
+      "template": "feature-browser",
+      "size": [
+        1600,
+        900
+      ],
+      "out": "ui-registry.webp",
+      "params": {
+        "image": "../langgraph-multiagent-orchestrator/docs/screenshots/console-prompt-registry.png",
+        "imgSize": [
+          1440,
+          900
+        ],
+        "winWidth": 1260,
+        "tag": "REAL APP · LIVE RUN"
+      }
+    },
+    {
+      "name": "gallery-1",
+      "template": "feature-browser",
+      "size": [
+        1200,
+        750
+      ],
+      "out": "gallery-1-1200.webp",
+      "params": {
+        "image": "_raw/langgraph-multiagent-orchestrator/gallery-1-src.webp",
+        "imgSize": [
+          1200,
+          750
+        ],
+        "winWidth": 980,
+        "tag": "REAL APP · LIVE RUN"
+      }
+    },
+    {
+      "name": "gallery-2",
+      "template": "feature-browser",
+      "size": [
+        1200,
+        750
+      ],
+      "out": "gallery-2-1200.webp",
+      "params": {
+        "image": "../langgraph-multiagent-orchestrator/docs/ui-qa/breakpoints/console-prompts-1280px.png",
+        "imgSize": [
+          1280,
+          1530
+        ],
+        "winWidth": 840,
+        "tag": "REAL APP · LIVE RUN",
+        "crop": [
+          340,
+          130,
+          920,
+          700
+        ]
+      }
+    },
+    {
+      "name": "gallery-3",
+      "template": "contain",
+      "size": [
+        1200,
+        750
+      ],
+      "out": "gallery-3-1200.webp",
+      "params": {
+        "image": "../langgraph-multiagent-orchestrator/docs/screenshots/report-audit-badge.png",
+        "imgSize": [
+          1440,
+          900
+        ],
+        "pad": 60,
+        "chrome": true,
+        "tag": "REAL APP · LIVE RUN"
+      }
+    }
+  ]
+}

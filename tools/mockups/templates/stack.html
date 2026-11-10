@@ -1,0 +1,25 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../stage.css"></head>
+<body><script src="tpl.js"></script><script>
+/* stack — arranges pre-rendered PNG parts on the stage as a composite.
+   params: parts: [{image, x, y, w?}], labels?: [{text,x,y,cls,size}],
+           kicker?, brackets? */
+window.render = (p) => {
+  const st = stage({ brackets: !!p.brackets });
+  for (const part of p.parts) {
+    const img = document.createElement('img');
+    img.src = part.image;
+    img.style.cssText = `position:absolute;left:${part.x}px;top:${part.y}px;${part.w ? `width:${part.w}px;` : ''}border-radius:12px;box-shadow:0 24px 60px #000000d9`;
+    st.appendChild(img);
+  }
+  for (const l of p.labels || []) {
+    const e = chip(l.text, l.cls || '');
+    e.style.cssText = `position:absolute;left:${l.x}px;top:${l.y}px;font-size:${l.size || 22}px;z-index:3`;
+    st.appendChild(e);
+  }
+  if (p.kicker) {
+    const k = kicker(p.kicker, p.kickerSize || 26);
+    k.style.cssText = `position:absolute;left:${p.kickerX ?? 70}px;top:${p.kickerY ?? 56}px;z-index:3`;
+    st.appendChild(k);
+  }
+};
+</script></body></html>

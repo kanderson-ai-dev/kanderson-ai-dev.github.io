@@ -1,0 +1,38 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../stage.css"></head>
+<body><script src="tpl.js"></script><script>
+/* og-card — 1200×630 social card: subject left, title + tagline + brand right.
+   params: image?, imgSize?, crop?, title, tagline?, brand?, kicker? */
+window.render = (p) => {
+  const st = stage({ brackets: true });
+  const W = innerWidth, H = innerHeight;
+  if (p.image) {
+    const w = p.winWidth || 620;
+    const { root } = chrome({ width: w, imgSrc: p.image, imgNatural: p.imgSize, crop: p.crop, tag: 'REAL APP · LIVE RUN' });
+    root.style.position = 'absolute';
+    const rh = root.offsetHeight || 420;
+    root.style.left = (p.imgX ?? 60) + 'px';
+    root.style.top = ((H - rh) / 2) + 'px';
+    st.appendChild(root);
+  }
+  const tx = p.textX ?? (p.image ? 740 : 60);
+  const ty = p.textY ?? (H * 0.30);
+  const box = document.createElement('div');
+  box.style.cssText = `position:absolute;left:${tx}px;top:${ty}px;width:${W - tx - 60}px;z-index:3`;
+  if (p.kicker) box.appendChild(kicker(p.kicker, 20));
+  const t = document.createElement('div');
+  t.style.cssText = `font-family:var(--disp);font-weight:700;font-size:${p.titleSize || 56}px;color:var(--text);letter-spacing:0.02em;line-height:1.08;margin-top:14px;text-shadow:0 0 30px #00F5D433`;
+  t.textContent = p.title;
+  box.appendChild(t);
+  if (p.tagline) {
+    const g = document.createElement('div');
+    g.style.cssText = `font-family:var(--body);font-size:${p.taglineSize || 26}px;color:var(--muted);margin-top:16px;line-height:1.4`;
+    g.textContent = p.tagline;
+    box.appendChild(g);
+  }
+  const b = document.createElement('div');
+  b.style.cssText = `font-family:var(--mono);font-size:20px;color:var(--accent);margin-top:26px;letter-spacing:0.1em`;
+  b.textContent = p.brand ?? 'kaarstenanderson.com';
+  box.appendChild(b);
+  st.appendChild(box);
+};
+</script></body></html>

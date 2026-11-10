@@ -1,0 +1,111 @@
+/* Film stage — shared look for all mockup templates.
+   Mirrors the films' stage: 64px accent grid + vignette, FrameBrackets,
+   glass panels, mono kickers, chips, GodRays halo, browser chrome. */
+@font-face { font-family: 'JB Mono'; src: url('../../brand/logo/fonts/jbmono-600.woff2') format('woff2'); font-weight: 600; }
+@font-face { font-family: 'Chakra'; src: url('../../brand/logo/fonts/chakra-700.woff2') format('woff2'); font-weight: 700; }
+@font-face { font-family: 'Inter'; src: url('../../brand/logo/fonts/inter-500.woff2') format('woff2'); font-weight: 500; }
+
+:root {
+  --bg: #050709;
+  --panel: #0b1114;
+  --panel2: #0f1a1f;
+  --accent: #00F5D4;
+  --text: #e8fffb;
+  --muted: #7fa8a1;
+  --dim: #3f5f5a;
+  --danger: #ff4d6d;
+  --model: #9b8cff;
+  --human: #ffc857;
+  --warn: #ffb020;
+  --line: #17343a;
+  --mono: 'JB Mono', 'Consolas', monospace;
+  --disp: 'Chakra', sans-serif;
+  --body: 'Inter', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg); }
+
+.stage { position: absolute; inset: 0; background: var(--bg); overflow: hidden; }
+.stage .grid {
+  position: absolute; inset: 0; opacity: 0.14;
+  background-image:
+    linear-gradient(var(--accent) 1px, transparent 1px),
+    linear-gradient(90deg, var(--accent) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+.stage .vignette {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 45%, transparent 45%, #000000cc 100%);
+}
+.stage .grain {
+  position: absolute; inset: 0; opacity: 0.05; mix-blend-mode: overlay; pointer-events: none;
+}
+.halo {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 52% 42% at 50% 52%, #00F5D426, transparent 70%);
+}
+.brackets { position: absolute; inset: 0; pointer-events: none; }
+.brackets i {
+  position: absolute; width: 40px; height: 40px;
+  border: 3px solid var(--accent); opacity: 0.7;
+}
+.brackets .tl { top: 44px; left: 44px; border-right: 0; border-bottom: 0; }
+.brackets .tr { top: 44px; right: 44px; border-left: 0; border-bottom: 0; }
+.brackets .bl { bottom: 44px; left: 44px; border-right: 0; border-top: 0; }
+.brackets .br { bottom: 44px; right: 44px; border-left: 0; border-top: 0; }
+
+.kicker {
+  font-family: var(--mono); font-weight: 600; color: var(--accent);
+  letter-spacing: 0.18em; text-transform: uppercase;
+}
+.chip {
+  font-family: var(--mono); font-weight: 600;
+  color: var(--accent); background: #00F5D41a;
+  border: 2px solid var(--accent); border-radius: 10px;
+  padding: 6px 16px; white-space: nowrap;
+}
+.chip.filled { color: #04211d; background: var(--accent); }
+.chip.model { color: var(--model); background: #9b8cff1a; border-color: var(--model); }
+.chip.human { color: var(--human); background: #ffc8571a; border-color: var(--human); }
+.chip.danger { color: var(--danger); background: #ff4d6d1a; border-color: var(--danger); }
+.chip.dim { color: var(--dim); background: #3f5f5a1a; border-color: var(--dim); }
+
+.glass {
+  background: linear-gradient(172deg, var(--panel2), var(--panel));
+  border: 1.5px solid #00F5D455;
+  border-radius: 18px;
+  box-shadow: 0 40px 90px #000000d9, 0 0 0 1px #00F5D422, 0 0 60px #00F5D426;
+}
+
+/* Film "real app" browser chrome (RealFrame replica) */
+.chrome { overflow: hidden; background: #0d1418; border: 1.5px solid #00F5D455;
+          border-radius: 18px;
+          box-shadow: 0 40px 90px #000000d9, 0 0 0 1px #00F5D422, 0 0 60px #00F5D426;
+          position: relative; }
+.chrome .bar {
+  height: 46px; display: flex; align-items: center; gap: 10px;
+  padding: 0 18px; background: #111a1f; border-bottom: 1px solid var(--line);
+}
+.chrome .dot { width: 13px; height: 13px; border-radius: 50%; opacity: 0.85; flex-shrink: 0; }
+.chrome .url {
+  margin-left: 14px; flex-shrink: 0; font-family: var(--mono); font-size: 18px;
+  color: var(--muted); background: #0a0f12; border: 1px solid var(--line);
+  border-radius: 8px; padding: 5px 16px; letter-spacing: 0.5px; white-space: nowrap;
+}
+.chrome .tag {
+  margin-left: auto; margin-right: 8px; flex-shrink: 0; white-space: nowrap;
+  font-family: var(--mono); font-size: 22px; color: var(--accent);
+  letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.9;
+}
+.chrome .view { position: relative; overflow: hidden; background: var(--bg); }
+.chrome .view img { position: absolute; display: block; }
+
+/* highlight box + label (RealFrame highlights replica) */
+.hl { position: absolute; border: 3px solid var(--accent); border-radius: 8px;
+      box-shadow: 0 0 22px #00F5D455, inset 0 0 22px #00F5D418; }
+.hl-label {
+  position: absolute; font-family: var(--mono); font-size: 24px; font-weight: 700;
+  color: #04110f; background: var(--accent); padding: 4px 14px; border-radius: 7px;
+  white-space: nowrap; box-shadow: 0 6px 24px #00F5D466;
+}
+.scrim { position: absolute; border-radius: 10px; box-shadow: 0 0 0 9999px rgba(3,7,9,0.4); }

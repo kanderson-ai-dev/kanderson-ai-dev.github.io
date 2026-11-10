@@ -1,0 +1,48 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../stage.css"></head>
+<body><script src="tpl.js"></script><script>
+/* detail-zoom — dimmed full capture behind + magnified crop panel
+   connected by lines to the source area.
+   params: image, imgSize, crop [x,y,w,h] (source region to zoom),
+           zoomPos [x,y], zoomW?, label?, tag?, bgScale? */
+window.render = (p) => {
+  const st = stage();
+  const W = innerWidth, H = innerHeight;
+  const [iw, ih] = p.imgSize;
+  const bs = p.bgScale ?? Math.max(W / iw, H / ih) * 0.85;
+  const bw = iw * bs, bh = ih * bs;
+  const bx = (W - bw) / 2, by = (H - bh) / 2;
+  // dimmed background full capture
+  const bg = document.createElement('img');
+  bg.src = p.image;
+  bg.style.cssText = `position:absolute;left:${bx}px;top:${by}px;width:${bw}px;height:${bh}px;opacity:0.45;filter:brightness(0.7)`;
+  st.appendChild(bg);
+  // source region marker
+  const [cx, cy, cw, ch] = p.crop;
+  const srcX = bx + cx * bs, srcY = by + cy * bs;
+  const src = document.createElement('div');
+  src.style.cssText = `position:absolute;left:${srcX - 6}px;top:${srcY - 6}px;width:${cw * bs + 12}px;height:${ch * bs + 12}px;border:3px dashed var(--accent);border-radius:10px;box-shadow:0 0 20px #00F5D444`;
+  st.appendChild(src);
+  // zoom panel
+  const zw = p.zoomW || Math.round(W * 0.44);
+  const [zx, zy] = p.zoomPos;
+  const { root } = chrome({ width: zw, imgSrc: p.image, imgNatural: [iw, ih], crop: p.crop, tag: p.tag ?? 'DETAIL · ZOOM' });
+  root.style.cssText = `position:absolute;left:${zx}px;top:${zy}px;z-index:2`;
+  st.appendChild(root);
+  // connector lines: from src rect to zoom panel corners
+  const zh = 46 + ch * (zw / cw);
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('width', W); svg.setAttribute('height', H);
+  svg.style.cssText = 'position:absolute;inset:0;z-index:1;pointer-events:none';
+  const x1 = srcX + cw * bs + 6, y1 = srcY + (ch * bs) / 2;
+  const x2 = zx, y2 = zy + zh / 2;
+  svg.innerHTML = `<path d="M${x1} ${y1} C ${x1 + 120} ${y1}, ${x2 - 120} ${y2}, ${x2} ${y2}" stroke="var(--accent)" stroke-width="3" fill="none" stroke-dasharray="8 6" opacity="0.8" style="filter:drop-shadow(0 0 6px var(--accent))"/>`;
+  st.appendChild(svg);
+  if (p.label) {
+    const l = document.createElement('div');
+    l.className = 'hl-label';
+    l.style.cssText = `position:absolute;left:${zx}px;top:${zy - 56}px;z-index:3`;
+    l.textContent = p.label;
+    st.appendChild(l);
+  }
+};
+</script></body></html>

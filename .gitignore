@@ -5,3 +5,7 @@ dist/
 .vite/
 .env
 .env.*
+
+# Remotion working assets and rendered films (large binaries, never shipped)
+video-studio/out/
+video-studio/public/

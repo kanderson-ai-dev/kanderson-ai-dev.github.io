@@ -1,0 +1,33 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../stage.css"></head>
+<body><script src="tpl.js"></script><script>
+/* feature-browser — real-app window floating on the stage.
+   params: image, imgSize [w,h], crop?, winWidth?, tag?, url?, highlights?,
+           kicker?, kickerPos [x,y], chips? [{text,cls,x,y}], tilt? */
+window.render = (p) => {
+  const st = stage({ brackets: !!p.brackets });
+  const winW = p.winWidth || 1400;
+  const { root, view, scale, offset } = chrome({
+    width: winW, imgSrc: p.image, imgNatural: p.imgSize, crop: p.crop,
+    tag: p.tag, url: p.url,
+  });
+  const W = innerWidth, H = innerHeight;
+  const cw = winW, chh = 46 + (p.crop ? p.crop[3] : p.imgSize[1]) * scale;
+  root.style.position = 'absolute';
+  root.style.left = ((W - cw) / 2) + 'px';
+  root.style.top = ((H - chh) / 2) + 'px';
+  if (p.tilt) root.style.transform = `perspective(2400px) rotateX(${p.tilt}deg)`;
+  st.appendChild(root);
+  if (p.highlights) addHighlights(view, p.highlights, scale, offset);
+  if (p.kicker) {
+    const k = kicker(p.kicker, p.kickerSize || 26);
+    const [kx, ky] = p.kickerPos || [(W - cw) / 2, (H - chh) / 2 - 60];
+    k.style.cssText = `position:absolute;left:${kx}px;top:${ky}px`;
+    st.appendChild(k);
+  }
+  for (const c of p.chips || []) {
+    const e = chip(c.text, c.cls || '');
+    e.style.cssText = `position:absolute;left:${c.x}px;top:${c.y}px;font-size:${c.size || 24}px;z-index:3`;
+    st.appendChild(e);
+  }
+};
+</script></body></html>

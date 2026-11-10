@@ -1,0 +1,359 @@
+{
+  "jobs": [
+    {
+      "name": "architecture",
+      "template": "architecture",
+      "size": [
+        1600,
+        900
+      ],
+      "out": "architecture.webp",
+      "params": {
+        "unit": 90,
+        "nodeH": 96,
+        "edgeLabelSize": 18,
+        "kicker": "SOURCE: PROJECT README · MERMAID TRANSCRIBED",
+        "nodes": [
+          {
+            "id": "start",
+            "label": "START",
+            "shape": "pill",
+            "type": "dim",
+            "x": 6.8,
+            "y": 0.2,
+            "w": 150,
+            "h": 76
+          },
+          {
+            "id": "guardrail",
+            "label": "guardrail",
+            "shape": "shield",
+            "x": 6.65,
+            "y": 1.2,
+            "w": 270,
+            "h": 105
+          },
+          {
+            "id": "errorout",
+            "label": "error_output",
+            "type": "danger",
+            "x": 11.0,
+            "y": 1.2,
+            "w": 240,
+            "h": 90
+          },
+          {
+            "id": "budget",
+            "label": "budget_gate",
+            "shape": "shield",
+            "x": 6.65,
+            "y": 2.7,
+            "w": 270,
+            "h": 105
+          },
+          {
+            "id": "retrieve",
+            "label": "hybrid retrieve",
+            "sub": [
+              "vector · Pinecone/Chroma",
+              "graph · Neo4j/NetworkX"
+            ],
+            "x": 6.55,
+            "y": 4.15,
+            "w": 290,
+            "h": 110
+          },
+          {
+            "id": "grade",
+            "label": "grade_documents",
+            "type": "model",
+            "x": 6.65,
+            "y": 5.55,
+            "w": 270
+          },
+          {
+            "id": "transform",
+            "label": "transform_query",
+            "x": 2.2,
+            "y": 4.6,
+            "w": 240,
+            "h": 90
+          },
+          {
+            "id": "review",
+            "label": "human_review",
+            "type": "human",
+            "x": 2.2,
+            "y": 6.3,
+            "w": 250,
+            "h": 100
+          },
+          {
+            "id": "generate",
+            "label": "generate",
+            "type": "model",
+            "x": 6.65,
+            "y": 6.9,
+            "w": 270
+          },
+          {
+            "id": "outguard",
+            "label": "output_guardrail",
+            "shape": "shield",
+            "x": 6.65,
+            "y": 8.2,
+            "w": 270,
+            "h": 105
+          },
+          {
+            "id": "end",
+            "label": "END",
+            "shape": "pill",
+            "type": "dim",
+            "x": 11.0,
+            "y": 7.3,
+            "w": 150,
+            "h": 80
+          }
+        ],
+        "edges": [
+          {
+            "from": "start",
+            "to": "guardrail"
+          },
+          {
+            "from": "guardrail",
+            "to": "errorout",
+            "label": "blocked",
+            "kind": "gate",
+            "loff": [
+              0,
+              -36
+            ]
+          },
+          {
+            "from": "errorout",
+            "to": "end"
+          },
+          {
+            "from": "guardrail",
+            "to": "budget",
+            "label": "safe",
+            "loff": [
+              28,
+              0
+            ]
+          },
+          {
+            "from": "budget",
+            "to": "end",
+            "label": "exhausted",
+            "kind": "gate",
+            "loff": [
+              20,
+              -8
+            ]
+          },
+          {
+            "from": "budget",
+            "to": "retrieve",
+            "label": "ok",
+            "loff": [
+              28,
+              0
+            ]
+          },
+          {
+            "from": "retrieve",
+            "to": "grade"
+          },
+          {
+            "from": "grade",
+            "to": "generate",
+            "label": "enough docs",
+            "fs": 16,
+            "loff": [
+              90,
+              0
+            ]
+          },
+          {
+            "from": "grade",
+            "to": "transform",
+            "label": "retry available",
+            "fs": 13,
+            "loff": [
+              -8,
+              -56
+            ]
+          },
+          {
+            "from": "transform",
+            "to": "retrieve",
+            "loff": [
+              -15,
+              -30
+            ]
+          },
+          {
+            "from": "grade",
+            "to": "review",
+            "label": [
+              "retries",
+              "exhausted"
+            ],
+            "fs": 16
+          },
+          {
+            "from": "review",
+            "to": "generate",
+            "label": "approve",
+            "fs": 16
+          },
+          {
+            "from": "review",
+            "to": "retrieve",
+            "label": "retry",
+            "fs": 16,
+            "loff": [
+              0,
+              8
+            ]
+          },
+          {
+            "from": "review",
+            "to": "outguard",
+            "label": "override",
+            "fs": 16,
+            "loff": [
+              6,
+              8
+            ]
+          },
+          {
+            "from": "generate",
+            "to": "outguard"
+          },
+          {
+            "from": "outguard",
+            "to": "end"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ui-answer",
+      "template": "feature-browser",
+      "size": [
+        1600,
+        900
+      ],
+      "out": "ui-answer.webp",
+      "params": {
+        "image": "../agentic-rag-system/docs/ui-qa/landing-answer.png",
+        "imgSize": [
+          1280,
+          900
+        ],
+        "winWidth": 1200,
+        "tag": "REAL APP · LIVE RUN",
+        "crop": [
+          0,
+          50,
+          1280,
+          760
+        ]
+      }
+    },
+    {
+      "name": "ui-hitl",
+      "template": "feature-browser",
+      "size": [
+        1600,
+        900
+      ],
+      "out": "ui-hitl.webp",
+      "params": {
+        "image": "../agentic-rag-system/docs/ui-qa/console-hitl-modal.png",
+        "imgSize": [
+          1280,
+          1000
+        ],
+        "winWidth": 880,
+        "tag": "REAL APP · LIVE RUN",
+        "crop": [
+          190,
+          90,
+          900,
+          790
+        ]
+      }
+    },
+    {
+      "name": "ui-quality",
+      "template": "feature-browser",
+      "size": [
+        1600,
+        900
+      ],
+      "out": "ui-quality.webp",
+      "params": {
+        "image": "../agentic-rag-system/docs/ui-qa/console-performance.png",
+        "imgSize": [
+          912,
+          1769
+        ],
+        "winWidth": 1000,
+        "tag": "REAL APP · LIVE RUN",
+        "crop": [
+          0,
+          255,
+          912,
+          620
+        ]
+      }
+    },
+    {
+      "name": "ui-ab",
+      "template": "feature-browser",
+      "size": [
+        1600,
+        900
+      ],
+      "out": "ui-ab.webp",
+      "params": {
+        "image": "../agentic-rag-system/docs/ui-qa/console-prompts-ab.png",
+        "imgSize": [
+          862,
+          377
+        ],
+        "winWidth": 1150,
+        "tag": "REAL APP · LIVE RUN"
+      }
+    },
+    {
+      "name": "ui-cost",
+      "template": "feature-browser",
+      "size": [
+        1600,
+        900
+      ],
+      "out": "ui-cost.webp",
+      "params": {
+        "image": "../agentic-rag-system/docs/ui-qa/console-performance.png",
+        "imgSize": [
+          912,
+          1769
+        ],
+        "winWidth": 1000,
+        "tag": "REAL APP · LIVE RUN",
+        "crop": [
+          0,
+          1200,
+          912,
+          489
+        ]
+      }
+    }
+  ]
+}

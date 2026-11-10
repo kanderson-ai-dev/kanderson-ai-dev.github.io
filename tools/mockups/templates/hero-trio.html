@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../stage.css"></head>
+<body><script src="tpl.js"></script><script>
+/* hero-trio — central large window + two flanking smaller windows with
+   perspective tilt, halo behind. params: center{image,imgSize,crop?,tag?},
+   left{image,imgSize,crop?}, right{...}, tags?, labels? */
+window.render = (p) => {
+  const st = stage();
+  const W = innerWidth, H = innerHeight;
+  const mk = (cfg, w, x, y, rot) => {
+    const { root } = chrome({ width: w, imgSrc: cfg.image, imgNatural: cfg.imgSize, crop: cfg.crop, tag: cfg.tag ?? 'REAL APP · LIVE RUN' });
+    root.style.position = 'absolute';
+    root.style.left = x + 'px'; root.style.top = y + 'px';
+    root.style.transform = `perspective(2400px) rotateY(${rot}deg)`;
+    if (cfg.z) root.style.zIndex = cfg.z;
+    st.appendChild(root);
+    return root;
+  };
+  const cw = p.centerWidth || 1100, sw = p.sideWidth || 720;
+  const gap = p.gap ?? -40;
+  const sideY = p.sideY ?? (H * 0.30), cY = p.centerY ?? (H * 0.16);
+  if (p.left) mk(p.left, sw, (W - cw) / 2 - sw + gap + 180, sideY, 12).style.opacity = 0.92;
+  if (p.right) mk(p.right, sw, (W + cw) / 2 - gap - 180, sideY, -12).style.opacity = 0.92;
+  if (p.center) mk(p.center, cw, (W - cw) / 2, cY, 0).style.zIndex = 2;
+  for (const c of p.chips || []) {
+    const e = chip(c.text, c.cls || '');
+    e.style.cssText = `position:absolute;left:${c.x}px;top:${c.y}px;font-size:${c.size || 24}px;z-index:4`;
+    st.appendChild(e);
+  }
+  if (p.kicker) {
+    const k = kicker(p.kicker, 28);
+    k.style.cssText = `position:absolute;left:${(W - cw) / 2}px;top:${p.kickerY ?? 70}px;z-index:4`;
+    st.appendChild(k);
+  }
+};
+</script></body></html>
