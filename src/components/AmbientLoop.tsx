@@ -18,6 +18,8 @@ export const AmbientLoop = ({
   playLabel?: string;
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const inView = useRef(false);
+  const userPaused = useRef(false);
   const [loadVideo, setLoadVideo] = useState(false);
   const [paused, setPaused] = useState(false);
   const noMotion = useRef(
@@ -39,27 +41,46 @@ export const AmbientLoop = ({
   useEffect(() => {
     const v = videoRef.current;
     if (!v || !loadVideo) return;
+    const tryPlay = () => {
+      if (inView.current && !userPaused.current) void v.play().catch(() => {});
+    };
     const io = new IntersectionObserver(
       (e) => {
-        if (paused) return;
-        if (e[0].isIntersecting) void v.play().catch(() => {});
+        inView.current = e[0].isIntersecting;
+        if (e[0].isIntersecting) tryPlay();
         else v.pause();
       },
       { threshold: 0.15 },
     );
     io.observe(v);
-    return () => io.disconnect();
-  }, [loadVideo, paused]);
+    // Retry whenever the browser pauses/stalls the video while it should be
+    // playing (autoplay deferral, decode hiccups, background tab returning).
+    const retry = () => {
+      if (inView.current && !userPaused.current && v.paused && !v.ended) tryPlay();
+    };
+    v.addEventListener('pause', retry);
+    v.addEventListener('stalled', retry);
+    const id = setInterval(retry, 2000);
+    return () => {
+      io.disconnect();
+      clearInterval(id);
+      v.removeEventListener('pause', retry);
+      v.removeEventListener('stalled', retry);
+    };
+  }, [loadVideo]);
 
   const toggle = () => {
     const v = videoRef.current;
     if (!v) return;
     if (paused) {
-      void v.play().catch(() => {});
+      userPaused.current = false;
       setPaused(false);
+      inView.current = true;
+      void v.play().catch(() => {});
     } else {
-      v.pause();
+      userPaused.current = true;
       setPaused(true);
+      v.pause();
     }
   };
 
@@ -93,8 +114,8 @@ export const AmbientLoop = ({
             transition: 'opacity 0.4s',
           }}
         >
-          <source src={loop.webm} type="video/webm" />
           <source src={loop.mp4} type="video/mp4" />
+          <source src={loop.webm} type="video/webm" />
         </video>
       )}
       {loadVideo && (
