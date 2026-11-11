@@ -90,21 +90,6 @@ export const Projects = () => {
       </div>
       {grouped ? (
         <>
-          {osList.length > 0 && (
-            <section id="open-source" className={s.groupSection}>
-              <Reveal>
-                <SplitHeadline
-                  title={dict.projectsPage.openSourceA}
-                  accent={dict.projectsPage.openSourceB}
-                  size="clamp(1.6rem, 3.6vw, 2.4rem)"
-                />
-                <p style={{ color: 'var(--muted)', maxWidth: '60ch', marginTop: '0.7rem' }}>
-                  {dict.projectsPage.openSourceSub}
-                </p>
-              </Reveal>
-              <div className={`${s.grid} ${s.cv}`}>{osList.map(card)}</div>
-            </section>
-          )}
           {odList.length > 0 && (
             <section id="on-demand" className={s.groupSection}>
               <Reveal>
@@ -118,6 +103,21 @@ export const Projects = () => {
                 </p>
               </Reveal>
               <div className={`${s.grid} ${s.cv}`}>{odList.map(card)}</div>
+            </section>
+          )}
+          {osList.length > 0 && (
+            <section id="open-source" className={s.groupSection}>
+              <Reveal>
+                <SplitHeadline
+                  title={dict.projectsPage.openSourceA}
+                  accent={dict.projectsPage.openSourceB}
+                  size="clamp(1.6rem, 3.6vw, 2.4rem)"
+                />
+                <p style={{ color: 'var(--muted)', maxWidth: '60ch', marginTop: '0.7rem' }}>
+                  {dict.projectsPage.openSourceSub}
+                </p>
+              </Reveal>
+              <div className={`${s.grid} ${s.cv}`}>{osList.map(card)}</div>
             </section>
           )}
         </>

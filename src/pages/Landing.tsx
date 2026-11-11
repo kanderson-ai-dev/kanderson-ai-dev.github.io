@@ -122,6 +122,24 @@ export const Landing = () => {
           .replace('{priv}', String(totals.testsPrivate))
       : 'pytest · vitest · browser e2e';
 
+  /* Counter strip — measured, not claimed. Sits between the two acts (proof
+     right after the product); without on-demand projects it keeps its old
+     spot right after the hero. */
+  const counterStrip = (
+    <section className={`${s.wrap} ${s.cv}`} aria-label="aggregate figures">
+      <Reveal>
+        <div style={{ textAlign: 'center', marginBottom: '1.6rem' }}>
+          <SplitHeadline title={dict.strip.headlineA} accent={dict.strip.headlineB} size="clamp(1.6rem,3.5vw,2.4rem)" />
+        </div>
+        <div className={s.strip}>
+          <Counter value={String(totals.projects)} label={dict.strip.projects} note={projectsNote} />
+          <Counter value={String(totals.tests)} label={dict.strip.tests} note={testsNote} />
+          <Counter value={totals.topCoverage} label={dict.strip.coverage} note="line coverage, measured in CI" />
+        </div>
+      </Reveal>
+    </section>
+  );
+
   return (
     <>
       {/* 1 — Hero / cold open */}
@@ -160,47 +178,49 @@ export const Landing = () => {
               {dict.hero.getInTouch}
             </Button>
           </div>
+          {onDemandProjects.length > 0 && (
+            <a href="#on-demand" className={s.heroTeaser}>
+              <span className={s.heroTeaserKicker}>{dict.nav.onDemand}</span>
+              <AccessBadge label={dict.project.private} />
+              <span className={s.heroTeaserTitle}>{onDemandProjects[0].copy.en!.title}</span>
+              <span className={s.heroTeaserArrow} aria-hidden="true">
+                ↓
+              </span>
+            </a>
+          )}
         </div>
         <div className={s.scrollCue}>{dict.hero.scroll} ↓</div>
       </section>
 
-      {/* Counter strip — measured, not claimed */}
-      <section className={`${s.wrap} ${s.cv}`} aria-label="aggregate figures">
-        <Reveal>
-          <div style={{ textAlign: 'center', marginBottom: '1.6rem' }}>
-            <SplitHeadline title={dict.strip.headlineA} accent={dict.strip.headlineB} size="clamp(1.6rem,3.5vw,2.4rem)" />
-          </div>
-          <div className={s.strip}>
-            <Counter value={String(totals.projects)} label={dict.strip.projects} note={projectsNote} />
-            <Counter value={String(totals.tests)} label={dict.strip.tests} note={testsNote} />
-            <Counter value={totals.topCoverage} label={dict.strip.coverage} note="line coverage, measured in CI" />
-          </div>
-        </Reveal>
-      </section>
-
-      {/* 2 — The work: open source, then on demand */}
-      <div ref={zzRef}>
-        <ActCard>{dict.showcase.act}</ActCard>
-        <section id="work" className={`${s.wrap} ${s.cv}`} aria-label="open-source projects">
+      {/* 2 — The work: on demand first, proof, then open source */}
+      {onDemandProjects.length === 0 && counterStrip}
+      <div ref={zzRef} id="work">
+        {onDemandProjects.length > 0 ? (
+          <>
+            <div id="on-demand">
+              <ActCard>{dict.showcase.actOnDemand}</ActCard>
+              <section className={`${s.wrap} ${s.cv}`} aria-label="on-demand projects">
+                <Reveal>
+                  <p style={{ color: 'var(--muted)', maxWidth: '60ch', fontSize: '1.02rem' }}>
+                    {dict.showcase.onDemandIntro}
+                  </p>
+                </Reveal>
+                {onDemandProjects.map((p, i) => (
+                  <ShowcaseCard key={p.slug} p={p} index={i} num={i + 1} />
+                ))}
+              </section>
+            </div>
+            {counterStrip}
+            <ActCard>{dict.showcase.actOpenSource}</ActCard>
+          </>
+        ) : (
+          <ActCard>{dict.showcase.act}</ActCard>
+        )}
+        <section id="open-source" className={`${s.wrap} ${s.cv}`} aria-label="open-source projects">
           {openSourceProjects.map((p, i) => (
-            <ShowcaseCard key={p.slug} p={p} index={i} num={i + 1} />
+            <ShowcaseCard key={p.slug} p={p} index={onDemandProjects.length + i} num={i + 1} />
           ))}
         </section>
-        {onDemandProjects.length > 0 && (
-          <>
-            <ActCard>{dict.showcase.actOnDemand}</ActCard>
-            <section id="on-demand" className={`${s.wrap} ${s.cv}`} aria-label="on-demand projects">
-              <Reveal>
-                <p style={{ color: 'var(--muted)', maxWidth: '60ch', fontSize: '1.02rem' }}>
-                  {dict.showcase.onDemandIntro}
-                </p>
-              </Reveal>
-              {onDemandProjects.map((p, i) => (
-                <ShowcaseCard key={p.slug} p={p} index={openSourceProjects.length + i} num={i + 1} />
-              ))}
-            </section>
-          </>
-        )}
       </div>
 
       {/* 3 — About / thesis */}

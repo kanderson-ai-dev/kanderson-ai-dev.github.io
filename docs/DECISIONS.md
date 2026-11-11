@@ -39,12 +39,11 @@ URLs stay `/projects/<slug>`.
 ## D-OD2 — The same split everywhere a project list appears
 
 `/projects` has two sections (`#open-source`, `#on-demand`); the technology
-filter spans both and an empty section hides. The landing shows `THE WORK`
-(open source) then `ON DEMAND` before About. On-demand cards carry a
-"Private" lock badge and no GitHub affordance; `ContactBand` hides its
-GitHub button on on-demand pages; the hero button slot shows "Private
-project · Get in touch" → `#contact`. Prev/next follow the global order
-(open source, then on demand).
+filter spans both and an empty section hides. The landing shows both groups
+as separate acts before About. On-demand cards carry a "Private" lock badge
+and no GitHub affordance; `ContactBand` hides its GitHub button on
+on-demand pages; the hero button slot shows "Private project · Get in
+touch" → `#contact`. Group order (landing, prev/next): see D-OD6.
 
 ## D-OD3 — Landing counters include on-demand projects, split shown
 
@@ -69,3 +68,12 @@ Performance & Cost) — prefer frames from the live-run film clips so costs
 are real, never the stub's `$0.00`. Forbidden: prompt text/diffs/editor,
 status page metadata, terminals/logs/API responses, tokens, env vars, file
 paths, dashboards, real personal data.
+
+## D-OD6 — On demand leads
+
+Owner decision 2026-11-11: the on-demand group comes first in every project
+list — landing acts, mega-menu, `/projects` sections, prev/next and the
+counter notes. On the landing it sits right after the hero, before the
+counter strip, and a teaser link under the hero CTAs points to `#on-demand`.
+Supersedes the ordering sentences of D-OD2; the same-split-everywhere rule
+of D-OD2 stands.

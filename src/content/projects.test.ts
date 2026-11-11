@@ -18,22 +18,26 @@ const shape = (obj: unknown): unknown =>
       : typeof obj;
 
 describe('project registry', () => {
-  it('contains the published projects: open-source group first, then on-demand, each by order', () => {
+  it('contains the published projects: on-demand group first, then open-source, each by order', () => {
     expect(projects.map((p) => p.slug)).toEqual([
+      'ecommerce-support-returns-copilot',
       'langgraph-multiagent-orchestrator',
       'mcp-agent-toolkit-py',
       'agentic-rag-system',
       'agentic-api',
-      'ecommerce-support-returns-copilot',
     ]);
     const access = projects.map((p) => p.access);
-    const firstOd = access.indexOf('on-demand');
-    expect(firstOd === -1 || access.slice(firstOd).every((a) => a === 'on-demand')).toBe(true);
+    const firstOs = access.indexOf('open-source');
+    expect(firstOs === -1 || access.slice(firstOs).every((a) => a === 'open-source')).toBe(true);
     for (const list of [openSourceProjects, onDemandProjects]) {
       const orders = list.map((p) => p.order);
       expect([...orders].sort((a, b) => a - b)).toEqual(orders);
     }
     expect(openSourceProjects.length + onDemandProjects.length).toBe(visibleProjects.length);
+  });
+
+  it('leads prev/next order with an on-demand project when any exists', () => {
+    if (onDemandProjects.length > 0) expect(visibleProjects[0].access).toBe('on-demand');
   });
 
   it('resolves every project by slug', () => {

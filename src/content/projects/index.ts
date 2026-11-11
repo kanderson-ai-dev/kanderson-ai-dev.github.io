@@ -7,7 +7,7 @@ import { project as ecom } from './ecommerce-support-returns-copilot';
 
 export const projects: Project[] = [langgraph, mcp, rag, api, ecom].sort(
   (a, b) =>
-    (a.access === 'open-source' ? 0 : 1) - (b.access === 'open-source' ? 0 : 1) ||
+    (a.access === 'on-demand' ? 0 : 1) - (b.access === 'on-demand' ? 0 : 1) ||
     a.order - b.order,
 );
 

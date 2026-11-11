@@ -83,6 +83,30 @@
   .scrollCue { animation: cue 2.2s var(--ease) infinite; }
   @keyframes cue { 50% { transform: translate(-50%, 8px); opacity: 0.5; } }
 }
+.heroTeaser {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  margin-top: 1.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.heroTeaser:hover { text-decoration: none; }
+.heroTeaserKicker {
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.heroTeaserTitle { color: var(--text); }
+.heroTeaser:hover .heroTeaserTitle,
+.heroTeaser:focus-visible .heroTeaserTitle { color: var(--accent); }
+.heroTeaserArrow { color: var(--accent); }
 
 /* ---------- Counter strip ---------- */
 .strip {

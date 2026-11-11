@@ -120,16 +120,6 @@ const MegaMenu = ({ dict, l }: { dict: Dict; l: (p: string) => string }) => {
           {grouped ? (
             <div className={s.megaGroups}>
               <MegaGroup
-                id="mega-open-source"
-                name={dict.nav.openSource}
-                sub={dict.nav.openSourceSub}
-                to={l('/projects#open-source')}
-                items={openSourceProjects}
-                l={l}
-                dict={dict}
-                onNavigate={close}
-              />
-              <MegaGroup
                 id="mega-on-demand"
                 name={dict.nav.onDemand}
                 sub={dict.nav.onDemandSub}
@@ -143,6 +133,16 @@ const MegaMenu = ({ dict, l }: { dict: Dict; l: (p: string) => string }) => {
                   {dict.nav.evalAccess} →
                 </Link>
               </MegaGroup>
+              <MegaGroup
+                id="mega-open-source"
+                name={dict.nav.openSource}
+                sub={dict.nav.openSourceSub}
+                to={l('/projects#open-source')}
+                items={openSourceProjects}
+                l={l}
+                dict={dict}
+                onNavigate={close}
+              />
             </div>
           ) : (
             visibleProjects.map((p, i) => (
