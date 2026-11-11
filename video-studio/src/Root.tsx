@@ -5,6 +5,7 @@ import { PromoTeaser } from "./PromoTeaser";
 import { Thumbnail } from "./Thumbnail";
 import { Styleframes } from "./upgrade/Styleframes";
 import { PromoUpgrade } from "./upgrade/PromoUpgrade";
+import { UpgradeLoop } from "./upgrade/UpgradeLoop";
 import { PromoUpgradeVertical } from "./upgrade/PromoUpgradeVertical";
 import { ThumbUpgrade } from "./upgrade/ThumbUpgrade";
 import { OStyleframes } from "./orchestrator/OStyleframes";
@@ -97,6 +98,14 @@ export const Root: React.FC = () => (
         fps: props.fps,
         durationInFrames: Math.max(60, Math.round(props.scenes.reduce((a, s) => a + s.durationSec, 0) * props.fps)),
       })}
+    />
+    <Composition
+      id="UpgradeLoop"
+      component={UpgradeLoop}
+      width={1280}
+      height={720}
+      fps={60}
+      durationInFrames={600}
     />
     <Composition
       id="UpgradeStyleframes"

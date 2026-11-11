@@ -275,7 +275,7 @@ export const ProjectPage = () => {
           <Reveal>
             <SplitHeadline title={dict.project.architecture} size="clamp(1.5rem,3.4vw,2.4rem)" />
             <figure className={s.archWrap}>
-              <img src={project.architecture.src} alt={project.architecture.alt} width="1600" height="900" loading="lazy" />
+              <img src={project.architecture.src} alt={project.architecture.alt} width={project.architecture.width ?? 1600} height={project.architecture.height ?? 900} loading="lazy" />
               <figcaption className={s.archCaption}>
                 {project.access === 'on-demand' ? dict.project.archSourcePrivate : dict.project.archSource}
               </figcaption>

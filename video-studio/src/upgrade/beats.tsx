@@ -212,7 +212,7 @@ export const GuardrailBeat: React.FC<{ t: number }> = ({ t }) => {
 };
 
 // ---- Beat 6: supervisor routes to workers --------------------------------
-export const NodeGraph: React.FC<{ t: number }> = ({ t }) => {
+export const NodeGraph: React.FC<{ t: number; headline?: boolean }> = ({ t, headline = true }) => {
   const f = useCurrentFrame();
   const sup = seg(t, 0, 0.2);
   const workers = [
@@ -289,9 +289,11 @@ export const NodeGraph: React.FC<{ t: number }> = ({ t }) => {
           </div>
         );
       })}
-      <div style={{ position: "absolute", top: 80, left: 0, right: 0, textAlign: "center", fontFamily: titleFont, fontWeight: 700, fontSize: 48, color: C.text }}>
-        One router, <span style={{ color: C.accent }}>five specialists</span>
-      </div>
+      {headline && (
+        <div style={{ position: "absolute", top: 80, left: 0, right: 0, textAlign: "center", fontFamily: titleFont, fontWeight: 700, fontSize: 48, color: C.text }}>
+          One router, <span style={{ color: C.accent }}>five specialists</span>
+        </div>
+      )}
     </div>
   );
 };

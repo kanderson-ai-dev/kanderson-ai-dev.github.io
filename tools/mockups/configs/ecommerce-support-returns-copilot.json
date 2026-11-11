@@ -1,0 +1,271 @@
+{
+ "jobs": [
+  {
+   "name": "hero-1600",
+   "template": "hero-trio",
+   "size": [1600, 1000],
+   "out": "hero-1600.webp",
+   "params": {
+    "kicker": "SUPPORT COPILOT · LIVE CONSOLE",
+    "center": { "image": "_raw/ecommerce-support-returns-copilot/pick-02-4.5.png", "imgSize": [1440, 810], "tag": "REAL APP · LIVE RUN" },
+    "left": { "image": "_raw/ecommerce-support-returns-copilot/widget-tablet-768.png", "imgSize": [1536, 2048], "crop": [0, 120, 1536, 1120], "tag": "WIDGET · TABLET" },
+    "right": { "image": "_raw/ecommerce-support-returns-copilot/widget-mobile-390.png", "imgSize": [780, 1688], "crop": [0, 130, 780, 1250], "tag": "WIDGET · MOBILE" },
+    "centerWidth": 1050,
+    "sideWidth": 640,
+    "sideY": 330,
+    "centerY": 150
+   }
+  },
+  {
+   "name": "card-800",
+   "template": "card-thumb",
+   "size": [800, 500],
+   "out": "card-800.webp",
+   "params": {
+    "chrome": true,
+    "image": "_raw/ecommerce-support-returns-copilot/pick-02-4.5.png",
+    "imgSize": [1440, 810],
+    "crop": [300, 120, 1140, 430],
+    "winWidth": 820,
+    "lift": 10,
+    "kickerY": 16,
+    "kicker": "SUPPORT COPILOT"
+   }
+  },
+  {
+   "name": "og",
+   "template": "og-card",
+   "size": [1200, 630],
+   "out": "og.png",
+   "params": {
+    "image": "_raw/ecommerce-support-returns-copilot/pick-02-4.5.png",
+    "imgSize": [1440, 810],
+    "crop": [150, 90, 1050, 640],
+    "winWidth": 560,
+    "imgX": 40,
+    "kicker": "PRIVATE · ON DEMAND",
+    "title": "Support & Returns Copilot",
+    "titleSize": 42,
+    "tagline": "A deterministic policy engine for post-purchase tickets. Large refunds wait for a human.",
+    "taglineSize": 21
+   }
+  },
+  {
+   "name": "video-poster-1920",
+   "template": "video-poster",
+   "size": [1920, 1080],
+   "out": "video-poster-1920.webp",
+   "params": {
+    "image": "_raw/ecommerce-support-returns-copilot/stills/title.png",
+    "imgSize": [3840, 2160]
+   }
+  },
+  {
+   "name": "hook-1920",
+   "template": "card-thumb",
+   "size": [1920, 1080],
+   "out": "hook-1920.webp",
+   "params": {
+    "image": "_raw/ecommerce-support-returns-copilot/stills/hook.png",
+    "imgSize": [3840, 2160]
+   }
+  },
+  {
+   "name": "feature-6-1600",
+   "template": "detail-zoom",
+   "size": [1600, 900],
+   "out": "feature-6-1600.webp",
+   "params": {
+    "image": "_raw/ecommerce-support-returns-copilot/widget-blocked-1440.png",
+    "imgSize": [2880, 1800],
+    "crop": [800, 545, 1320, 400],
+    "zoomPos": [160, 300],
+    "zoomW": 1100,
+    "label": "BLOCKED BEFORE ANY MODEL RUNS",
+    "tag": "WIDGET · BLOCKED",
+    "bgScale": 0.5
+   }
+  },
+  {
+   "name": "feature-1-1600",
+   "template": "detail-zoom",
+   "size": [1600, 900],
+   "out": "feature-1-1600.webp",
+   "params": {
+    "image": "_raw/ecommerce-support-returns-copilot/pick-02-4.5.png",
+    "imgSize": [1440, 810],
+    "crop": [555, 252, 660, 122],
+    "zoomPos": [520, 330],
+    "zoomW": 1000,
+    "label": "POLICY CITATIONS IN THE TRACE",
+    "tag": "CONSOLE · TRACE",
+    "bgScale": 1.0
+   }
+  },
+  {
+   "name": "feature-2-1600",
+   "template": "feature-browser",
+   "size": [1600, 900],
+   "out": "feature-2-1600.webp",
+   "params": {
+    "image": "_raw/ecommerce-support-returns-copilot/pick-03-8.png",
+    "imgSize": [1440, 810],
+    "winWidth": 1360,
+    "tag": "REAL APP · LIVE RUN"
+   }
+  },
+  {
+   "name": "feature-3-1600",
+   "template": "feature-browser",
+   "size": [1600, 900],
+   "out": "feature-3-1600.webp",
+   "params": {
+    "image": "_raw/ecommerce-support-returns-copilot/console-duplicate-1440.png",
+    "imgSize": [2880, 1800],
+    "crop": [0, 0, 2880, 1320],
+    "winWidth": 1360,
+    "tag": "CONSOLE · TICKET QUEUE"
+   }
+  },
+  {
+   "name": "feature-4-1600",
+   "template": "phone-pair",
+   "size": [1600, 900],
+   "out": "feature-4-1600.webp",
+   "params": {
+    "image": "_raw/ecommerce-support-returns-copilot/widget-resolved-1440.png",
+    "imgSize": [2880, 1800],
+    "crop": [640, 190, 1600, 950],
+    "winWidth": 1060,
+    "tag": "WIDGET · CUSTOMER CHAT",
+    "shiftX": 90,
+    "phone": {
+     "image": "_raw/ecommerce-support-returns-copilot/widget-mobile-390.png",
+     "imgSize": [780, 1688],
+     "crop": [20, 250, 740, 1300],
+     "w": 240
+    },
+    "phonePos": [1180, 240],
+    "kicker": "DESKTOP + MOBILE"
+   }
+  },
+  {
+   "name": "feature-5-1600",
+   "template": "feature-browser",
+   "size": [1600, 900],
+   "out": "feature-5-1600.webp",
+   "params": {
+    "image": "_raw/ecommerce-support-returns-copilot/pick-05-5.png",
+    "imgSize": [1440, 810],
+    "winWidth": 1360,
+    "tag": "REAL APP · LIVE RUN"
+   }
+  },
+  {
+   "name": "gallery-1-1200",
+   "template": "feature-browser",
+   "size": [1200, 750],
+   "out": "gallery-1-1200.webp",
+   "params": {
+    "image": "_raw/ecommerce-support-returns-copilot/widget-requires-approval-1440.png",
+    "imgSize": [2880, 1800],
+    "crop": [640, 190, 1600, 1400],
+    "winWidth": 1060,
+    "tag": "WIDGET · REVIEW QUEUE"
+   }
+  },
+  {
+   "name": "gallery-2-1200",
+   "template": "contain",
+   "size": [1200, 750],
+   "out": "gallery-2-1200.webp",
+   "params": {
+    "image": "_raw/ecommerce-support-returns-copilot/widget-tablet-768.png",
+    "imgSize": [1536, 2048],
+    "pad": 46,
+    "chrome": true,
+    "tag": "WIDGET · TABLET"
+   }
+  },
+  {
+   "name": "gallery-3-1200",
+   "template": "feature-browser",
+   "size": [1200, 750],
+   "out": "gallery-3-1200.webp",
+   "params": {
+    "image": "_raw/ecommerce-support-returns-copilot/console-registry-1440.png",
+    "imgSize": [2880, 1800],
+    "crop": [170, 140, 2400, 1480],
+    "winWidth": 1100,
+    "tag": "CONSOLE · PROMPT REGISTRY"
+   }
+  },
+  {
+   "name": "gallery-4-1200",
+   "template": "feature-browser",
+   "size": [1200, 750],
+   "out": "gallery-4-1200.webp",
+   "params": {
+    "image": "_raw/ecommerce-support-returns-copilot/widget-duplicate-1440.png",
+    "imgSize": [2880, 1800],
+    "crop": [640, 190, 1600, 1400],
+    "winWidth": 1060,
+    "tag": "WIDGET · DUPLICATE"
+   }
+  },
+  {
+   "name": "architecture",
+   "template": "architecture",
+   "size": [1920, 960],
+   "out": "architecture.webp",
+   "params": {
+    "unit": 100,
+    "nodeW": 230,
+    "nodeH": 96,
+    "edgeLabelSize": 18,
+    "labelSize": 22,
+    "kicker": "SUPERVISOR + POLICY GATE",
+    "kickerX": 40,
+    "kickerY": 40,
+    "nodes": [
+     { "id": "T", "label": "Ticket in", "sub": "widget · sandbox · API", "type": "dim", "x": 0.4, "y": 4.1 },
+     { "id": "G", "label": "Input guardrail", "sub": "injection screen · rate limit", "type": "code", "x": 3.4, "y": 4.1, "w": 290, "h": 110 },
+     { "id": "REJ", "label": "Rejected / needs info", "type": "danger", "x": 3.4, "y": 6.7, "w": 230 },
+     { "id": "S", "label": "Supervisor", "sub": "model router", "type": "model", "x": 7.0, "y": 4.1, "w": 260, "h": 110 },
+     { "id": "OL", "label": "Order lookup", "sub": "verified record", "type": "model", "x": 10.2, "y": 0.9, "w": 235, "h": 92 },
+     { "id": "PE", "label": "Policy eligibility", "sub": "deterministic · no model", "type": "code", "x": 10.2, "y": 2.1, "w": 235, "h": 92 },
+     { "id": "RD", "label": "Refund decision", "sub": "drafts the reply", "type": "model", "x": 10.2, "y": 3.3, "w": 235, "h": 92 },
+     { "id": "ST", "label": "Shipping tracker", "sub": "carrier status", "type": "model", "x": 10.2, "y": 4.5, "w": 235, "h": 92 },
+     { "id": "ES", "label": "Escalation", "sub": "to a human", "type": "model", "x": 10.2, "y": 5.7, "w": 235, "h": 92 },
+     { "id": "E", "label": "Deterministic policy engine", "sub": "the only decider", "type": "code", "x": 13.0, "y": 1.7, "w": 275, "h": 120, "shape": "cyl" },
+     { "id": "CAP", "label": "Amount over the cap?", "sub": "auto-approve limit", "type": "code", "x": 13.0, "y": 3.5, "w": 275, "h": 140, "shape": "shield" },
+     { "id": "AUTO", "label": "Approved — refund written", "type": "code", "x": 15.9, "y": 1.4, "w": 210, "h": 100 },
+     { "id": "RES", "label": "Resolution", "type": "code", "x": 15.9, "y": 3.7, "w": 210, "h": 95 },
+     { "id": "HITL", "label": "Human approval queue", "type": "human", "x": 15.9, "y": 5.9, "w": 210, "h": 100 }
+    ],
+    "edges": [
+     { "from": "T", "to": "G" },
+     { "from": "G", "to": "REJ", "label": "blocked", "kind": "gate" },
+     { "from": "G", "to": "S", "label": "safe" },
+     { "from": "S", "to": "OL", "kind": "bi" },
+     { "from": "S", "to": "PE", "kind": "bi" },
+     { "from": "S", "to": "RD", "label": "next step", "kind": "bi" },
+     { "from": "S", "to": "ST", "kind": "bi" },
+     { "from": "S", "to": "ES", "kind": "bi" },
+     { "from": "PE", "to": "E" },
+     { "from": "RD", "to": "CAP" },
+     { "from": "CAP", "to": "AUTO", "label": "≤ cap" },
+     { "from": "CAP", "to": "HITL", "label": "> cap", "kind": "gate" },
+     { "from": "AUTO", "to": "RES" },
+     { "from": "HITL", "to": "RES", "label": "approve · edit · reject" }
+    ],
+    "legend": [
+     { "text": "violet = model", "x": 70, "y": 890 },
+     { "text": "turquoise = code / deterministic", "x": 340, "y": 890 },
+     { "text": "amber = human", "x": 750, "y": 890 },
+     { "text": "red = blocked path", "x": 1040, "y": 890 }
+    ]
+   }
+  }
+ ]
+}

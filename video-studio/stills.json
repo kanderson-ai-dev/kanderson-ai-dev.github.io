@@ -37,5 +37,16 @@
       { "name": "title", "composition": "PromoAgenticApi", "frame": 1260, "scene": "reveal" },
       { "name": "thumb", "composition": "ThumbAgenticApi", "frame": 30, "inlineProps": { "variant": "brand", "brackets": false, "url": false } }
     ]
+  },
+  "ecommerce-support-returns-copilot": {
+    "props": "projects/ecommerce-support-returns-copilot-upgrade.json",
+    "stills": [
+      { "name": "hook", "composition": "PromoUpgrade", "frame": 179, "scene": "hook ticket wall" },
+      { "name": "title", "composition": "PromoUpgrade", "frame": 1354, "scene": "reveal" },
+      { "name": "gate", "composition": "PromoUpgrade", "frame": 3820, "scene": "gate REFUSED" },
+      { "name": "human", "composition": "PromoUpgrade", "frame": 4237, "scene": "approval replica" },
+      { "name": "proof", "composition": "PromoUpgrade", "frame": 4943, "scene": "proof counters" },
+      { "name": "loop-poster", "composition": "UpgradeLoop", "frame": 330, "note": "hold phase, all five edges drawn" }
+    ]
   }
 }

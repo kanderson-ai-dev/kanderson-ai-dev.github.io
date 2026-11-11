@@ -56,7 +56,7 @@ export interface Project {
   ogImage: string; // 1200x630
   video: { youtubeId: string | null; poster: Img; captionsLang: Lang[] } | null;
   loop?: { webm: string; mp4: string; poster: Img };
-  architecture?: { src: string; alt: string; description: string };
+  architecture?: { src: string; alt: string; description: string; width?: number; height?: number };
   gallery?: Img[];
   copy: Record<Lang, ProjectCopy | undefined>; // 'en' required, 'es' optional
 }

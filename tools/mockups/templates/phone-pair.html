@@ -1,0 +1,46 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../stage.css"></head>
+<body><script src="tpl.js"></script><script>
+/* phone-pair — desktop browser window + phone inset overlapping its corner,
+   for products that ship both surfaces. params: image, imgSize, crop?,
+   winWidth?, tag?, phone {image,imgSize,crop?,w?}, phonePos [x,y], kicker? */
+window.render = (p) => {
+  const st = stage({ brackets: !!p.brackets });
+  const W = innerWidth, H = innerHeight;
+  const winW = p.winWidth || 1180;
+  const { root } = chrome({
+    width: winW, imgSrc: p.image, imgNatural: p.imgSize, crop: p.crop,
+    tag: p.tag, url: p.url,
+  });
+  const [cx, cy, cw, ch] = p.crop || [0, 0, p.imgSize[0], p.imgSize[1]];
+  const chh = 46 + ch * (winW / cw);
+  root.style.position = 'absolute';
+  root.style.left = ((W - winW) / 2 - (p.shiftX ?? 60)) + 'px';
+  root.style.top = ((H - chh) / 2) + 'px';
+  st.appendChild(root);
+  if (p.phone) {
+    const pw = p.phone.w || 252;
+    const [piw, pih] = p.phone.imgSize;
+    const crop = p.phone.crop || [0, 0, piw, pih];
+    const s = pw / crop[2];
+    const ph = Math.round(crop[3] * s);
+    const bezel = 10;
+    const frame = document.createElement('div');
+    frame.style.cssText = `position:absolute;left:${p.phonePos[0]}px;top:${p.phonePos[1]}px;width:${pw + bezel * 2}px;
+      padding:${bezel}px;border-radius:34px;background:#0b0f12;border:2.5px solid #2a3f3a;
+      box-shadow:0 34px 90px #000000e0,0 0 0 1px #00F5D42e,0 0 60px #00F5D422;z-index:4`;
+    const scr = document.createElement('div');
+    scr.style.cssText = `position:relative;width:${pw}px;height:${ph}px;border-radius:24px;overflow:hidden;background:#fff`;
+    const img = document.createElement('img');
+    img.src = p.phone.image;
+    img.style.cssText = `position:absolute;left:${-crop[0] * s}px;top:${-crop[1] * s}px;width:${piw * s}px;height:${pih * s}px;display:block`;
+    scr.appendChild(img);
+    frame.appendChild(scr);
+    st.appendChild(frame);
+  }
+  if (p.kicker) {
+    const k = kicker(p.kicker, 24);
+    k.style.cssText = `position:absolute;left:${p.kickerX ?? 70}px;top:${p.kickerY ?? 66}px;z-index:4`;
+    st.appendChild(k);
+  }
+};
+</script></body></html>

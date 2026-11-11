@@ -9,8 +9,9 @@ window.render = (p) => {
     const w = p.winWidth || Math.round(W * 1.04);
     const { root } = chrome({ width: w, imgSrc: p.image, imgNatural: p.imgSize, crop: p.crop, tag: '', url: '' });
     root.style.position = 'absolute';
-    const cw = w, chh = root.offsetHeight;
-    root.style.left = ((W - cw) / 2) + 'px';
+    const [cx, cy, cw, ch] = p.crop ?? [0, 0, p.imgSize[0], p.imgSize[1]];
+    const chh = 46 + ch * (w / cw);
+    root.style.left = ((W - w) / 2) + 'px';
     root.style.top = ((H - chh) / 2 - (p.lift || 0)) + 'px';
     st.appendChild(root);
   } else {

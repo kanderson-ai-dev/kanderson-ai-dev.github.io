@@ -43,15 +43,17 @@ export type UpgradeProps = {
   subtitles?: CaptionCue[];
   burnSubtitles?: boolean;
   fadeOutSec?: number;
+  brackets?: boolean;
+  hookOverlay?: boolean;
 };
 
-const Beat: React.FC<{ s: UpgradeScene }> = ({ s }) => {
+const Beat: React.FC<{ s: UpgradeScene; hookOverlay?: boolean }> = ({ s, hookOverlay = true }) => {
   const f = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
   const t = durationInFrames > 1 ? f / (durationInFrames - 1) : 1;
   switch (s.kind) {
     case "hook":
-      return <HookWall progress={Math.min(1, t * 1.2)} />;
+      return <HookWall progress={Math.min(1, t * 1.2)} overlay={hookOverlay} />;
     case "tension":
       return <TensionBeat t={t} />;
     case "reveal":
@@ -174,7 +176,7 @@ export const Captions: React.FC<{ cues: CaptionCue[] }> = ({ cues }) => {
   );
 };
 
-export const PromoUpgrade: React.FC<UpgradeProps> = ({ scenes, subtitles, burnSubtitles = true, fadeOutSec = 1.2 }) => {
+export const PromoUpgrade: React.FC<UpgradeProps> = ({ scenes, subtitles, burnSubtitles = true, fadeOutSec = 1.2, brackets = true, hookOverlay = true }) => {
   const { fps, durationInFrames } = useVideoConfig();
   const frame = useCurrentFrame();
   let start = 0;
@@ -186,9 +188,9 @@ export const PromoUpgrade: React.FC<UpgradeProps> = ({ scenes, subtitles, burnSu
         start += dur;
         return (
           <Sequence key={s.id} from={from} durationInFrames={dur} name={s.id}>
-            <Stage dim={s.kind === "proof" || s.kind === "cta" ? 0.7 : 1} brackets={s.kind !== "human"}>
+            <Stage dim={s.kind === "proof" || s.kind === "cta" ? 0.7 : 1} brackets={brackets && s.kind !== "human"}>
               <Camera idx={i}>
-                <Beat s={s} />
+                <Beat s={s} hookOverlay={hookOverlay} />
               </Camera>
             </Stage>
             {i > 0 && <GlitchSweep frames={10} />}

@@ -1,0 +1,76 @@
+1
+00:00:00,900 --> 00:00:04,070
+Tu bandeja de soporte. Todos los días.
+
+2
+00:00:04,720 --> 00:00:12,950
+Más humanos, más costo. Un chatbot genérico es más barato —
+hasta que aprueba un reembolso que tu política no permitía.
+
+3
+00:00:17,520 --> 00:00:24,490
+Este es el E-commerce Support & Returns Copilot.
+Agentes de IA que resuelven tickets — bajo tus reglas.
+
+4
+00:00:25,390 --> 00:00:26,870
+Sigue un ticket.
+
+5
+00:00:29,790 --> 00:00:36,590
+Cada mensaje se filtra primero. Veintidós técnicas de
+ataque se bloquean antes de que actúe la IA.
+
+6
+00:00:37,290 --> 00:00:43,940
+Un agente supervisor lo deriva a especialistas:
+pedidos, políticas, reembolsos, envíos, escalación.
+
+7
+00:00:45,290 --> 00:00:49,400
+El pedido se verifica contra los registros
+de la tienda — nunca se adivina.
+
+8
+00:00:50,050 --> 00:00:57,050
+Luego, código simple aplica tu política de devoluciones.
+Misma entrada, misma decisión — siempre.
+
+9
+00:00:57,700 --> 00:01:05,530
+$240 supera el tope de $75. Ningún agente puede
+aprobarlo. La propia base de datos lo rechaza.
+
+10
+00:01:06,180 --> 00:01:12,490
+Espera a una persona — verificación de política y
+respuesta redactada, lado a lado. Un clic.
+
+11
+00:01:13,140 --> 00:01:17,220
+La IA redacta las palabras. Nunca decide el dinero.
+
+12
+00:01:17,870 --> 00:01:24,280
+Treinta y seis tickets de prueba. Acertó cada
+decisión. ¿Un prompt simple? Once por ciento.
+
+13
+00:01:24,930 --> 00:01:31,820
+Costo medido: menos de una décima de centavo por
+ticket. Cuatro de cinco resueltos sin humanos.
+
+14
+00:01:32,470 --> 00:01:39,050
+Y es un producto real: consola de soporte, cola de
+aprobaciones, rendimiento y costo en vivo.
+
+15
+00:01:39,700 --> 00:01:46,240
+Tu política. Tus límites. Tu marca. Tus datos.
+Adaptado a tu tienda.
+
+16
+00:01:47,900 --> 00:01:52,850
+¿Lo quieres funcionando en tu tienda?
+Escríbeme en kaarstenanderson.com

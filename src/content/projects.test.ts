@@ -24,6 +24,7 @@ describe('project registry', () => {
       'mcp-agent-toolkit-py',
       'agentic-rag-system',
       'agentic-api',
+      'ecommerce-support-returns-copilot',
     ]);
     const access = projects.map((p) => p.access);
     const firstOd = access.indexOf('on-demand');
