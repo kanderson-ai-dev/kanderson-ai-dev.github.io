@@ -38,7 +38,11 @@ try {
     mkdirSync(dirname(out), { recursive: true });
     writeFileSync(out, html);
   }
-  console.log(`postbuild: wrote dist/404.html + prerendered ${routes.length} routes`);
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${routes
+    .map((r) => `  <url><loc>https://kaarstenanderson.com${r.path}</loc></url>`)
+    .join('\n')}\n</urlset>\n`;
+  writeFileSync(resolve(dist, 'sitemap.xml'), sitemap);
+  console.log(`postbuild: wrote dist/404.html + sitemap.xml + prerendered ${routes.length} routes`);
 } finally {
   await vite.close();
 }
