@@ -34,7 +34,7 @@ window.render = (p) => {
   // edges
   for (const e of p.edges) {
     const a = nodes[e.from], b = nodes[e.to];
-    const c = e.kind === 'gate' ? 'var(--danger)' : e.kind === 'dotted' ? 'var(--muted)' : 'var(--accent)';
+    const c = (e.color && (COLORS[e.color] || e.color)) || (e.kind === 'gate' ? 'var(--danger)' : e.kind === 'dotted' ? 'var(--muted)' : 'var(--accent)');
     const ax = a.x * U + a.w / 2, ay = a.y * U + a.h / 2;
     const bx = b.x * U + b.w / 2, by = b.y * U + b.h / 2;
     const dx = bx - ax, dy = by - ay;

@@ -42,7 +42,7 @@ const MegaItem = ({
   <Link to={l(`/projects/${p.slug}`)} className={s.megaItem} onClick={onNavigate}>
     <span className={s.megaNum}>{String(num).padStart(2, '0')}</span>
     <img className={s.megaThumb} src={p.cardImage.src} alt="" width={64} height={40} loading="lazy" />
-    <span>
+    <span className={s.megaTxt}>
       <span className={s.megaName}>
         {p.copy.en!.title}
         {p.access === 'on-demand' && <AccessBadge label={dict.project.private} />}

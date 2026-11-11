@@ -249,12 +249,15 @@
   border: 1px solid var(--line);
   flex-shrink: 0;
 }
+.megaTxt {
+  min-width: 0;
+  flex: 1;
+}
 .megaName {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 0.92rem;
   color: var(--text);
-  white-space: nowrap;
   display: flex;
   align-items: center;
   gap: 0.55rem;
