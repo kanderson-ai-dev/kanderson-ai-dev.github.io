@@ -10,11 +10,14 @@ const img = (n: number, alt: string) => ({
 
 export const project: Project = {
   slug: 'agentic-api',
+  access: 'open-source',
   order: 4,
   category: 'python',
   status: 'live',
   year: 2026,
   repoUrl: 'https://github.com/kanderson-ai-dev/agentic-api',
+  tests: 179,
+  coverage: 98,
   stack: ['Python', 'FastAPI', 'LangGraph', 'Pydantic', 'SQLite', 'Langfuse', 'Prometheus', 'Docker'],
   languages: ['en'],
   cardImage: {

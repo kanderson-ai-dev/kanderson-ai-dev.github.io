@@ -16,11 +16,14 @@ const ui = (name: string, alt: string) => ({
 
 export const project: Project = {
   slug: 'langgraph-multiagent-orchestrator',
+  access: 'open-source',
   order: 1,
   category: 'python',
   status: 'live',
   year: 2026,
   repoUrl: 'https://github.com/kanderson-ai-dev/langgraph-multiagent-orchestrator',
+  tests: 572,
+  coverage: 92,
   stack: ['Python', 'LangGraph', 'FastAPI', 'SQLite', 'Langfuse', 'Docker'],
   languages: ['en'],
   cardImage: {

@@ -3,6 +3,7 @@
 export type Lang = 'en' | 'es';
 export type Status = 'live' | 'in-development' | 'planned';
 export type Category = 'python' | 'node';
+export type Access = 'open-source' | 'on-demand';
 
 export interface Img {
   src: string;
@@ -38,11 +39,14 @@ export interface ProjectCopy {
 
 export interface Project {
   slug: string;
-  order: number; // landing/menu order
+  access: Access; // 'on-demand' ⇒ repoUrl: null and copy.en.cta required
+  order: number; // landing/menu order within its access group
   category: Category;
   status: Status;
   year: number;
   repoUrl: string | null;
+  tests: number; // automated tests, from the project's README verification block
+  coverage?: number; // line coverage %, measured in CI
   stack: string[];
   languages: Lang[];
   defaultLang?: Lang;

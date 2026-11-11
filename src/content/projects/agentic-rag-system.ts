@@ -16,11 +16,14 @@ const ui = (name: string, alt: string) => ({
 
 export const project: Project = {
   slug: 'agentic-rag-system',
+  access: 'open-source',
   order: 3,
   category: 'python',
   status: 'live',
   year: 2026,
   repoUrl: 'https://github.com/kanderson-ai-dev/agentic-rag-system',
+  tests: 394,
+  coverage: 95,
   stack: ['Python', 'LangGraph', 'FastAPI', 'Pinecone', 'Chroma', 'Neo4j', 'Langfuse', 'Docker'],
   languages: ['en'],
   cardImage: {

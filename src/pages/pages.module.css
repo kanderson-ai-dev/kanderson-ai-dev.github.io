@@ -214,6 +214,10 @@
   border-color: var(--accent);
 }
 .filterBtn:not([aria-pressed='true']):hover { color: var(--accent); border-color: rgba(0,245,212,0.4); }
+.groupSection {
+  margin-top: 2.8rem;
+  scroll-margin-top: calc(var(--nav-h) + 24px);
+}
 
 /* ---------- Project page ---------- */
 .hookBand {

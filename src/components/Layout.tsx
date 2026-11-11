@@ -1,9 +1,9 @@
 // Layout: navbar with mega-menu, footer, contact band (Plan.md §4, §5.4).
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { visibleProjects } from '../content/projects';
+import { onDemandProjects, openSourceProjects, visibleProjects } from '../content/projects';
 import { useLang, switchPath } from '../i18n';
-import { Button, StatusPill, GlassPanel, Kicker, SplitHeadline, EndCard } from './primitives';
+import { AccessBadge, Button, StatusPill, GlassPanel, Kicker, SplitHeadline, EndCard } from './primitives';
 import s from './layout.module.css';
 
 const GithubIcon = () => (
@@ -24,10 +24,74 @@ export const EMAIL = 'contact@kaarstenanderson.com';
 
 /* ---------------- Mega menu ---------------- */
 
-const MegaMenu = ({ dict, l }: { dict: ReturnType<typeof useLang>['dict']; l: (p: string) => string }) => {
+type Dict = ReturnType<typeof useLang>['dict'];
+
+const MegaItem = ({
+  p,
+  num,
+  l,
+  dict,
+  onNavigate,
+}: {
+  p: (typeof visibleProjects)[number];
+  num: number;
+  l: (p: string) => string;
+  dict: Dict;
+  onNavigate: () => void;
+}) => (
+  <Link to={l(`/projects/${p.slug}`)} className={s.megaItem} onClick={onNavigate}>
+    <span className={s.megaNum}>{String(num).padStart(2, '0')}</span>
+    <img className={s.megaThumb} src={p.cardImage.src} alt="" width={64} height={40} loading="lazy" />
+    <span>
+      <span className={s.megaName}>
+        {p.copy.en!.title}
+        {p.access === 'on-demand' && <AccessBadge label={dict.project.private} />}
+      </span>
+      <span className={s.megaBlurb} style={{ display: 'block' }}>
+        {p.copy.en!.cardBlurb}
+      </span>
+    </span>
+  </Link>
+);
+
+const MegaGroup = ({
+  id,
+  name,
+  sub,
+  to,
+  items,
+  l,
+  dict,
+  onNavigate,
+  children,
+}: {
+  id: string;
+  name: string;
+  sub: string;
+  to: string;
+  items: typeof visibleProjects;
+  l: (p: string) => string;
+  dict: Dict;
+  onNavigate: () => void;
+  children?: React.ReactNode;
+}) => (
+  <div className={s.megaGroup} role="group" aria-labelledby={id}>
+    <Link id={id} to={to} className={s.megaGroupHead} onClick={onNavigate}>
+      <span className={s.megaGroupName}>{name}</span>
+      <span className={s.megaGroupSub}>{sub}</span>
+    </Link>
+    {items.map((p, i) => (
+      <MegaItem key={p.slug} p={p} num={i + 1} l={l} dict={dict} onNavigate={onNavigate} />
+    ))}
+    {children}
+  </div>
+);
+
+const MegaMenu = ({ dict, l }: { dict: Dict; l: (p: string) => string }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const close = () => setOpen(false);
 
   const enter = () => {
     clearTimeout(timer.current);
@@ -44,26 +108,48 @@ const MegaMenu = ({ dict, l }: { dict: ReturnType<typeof useLang>['dict']; l: (p
     return () => document.removeEventListener('keydown', onKey);
   }, []);
 
+  const grouped = onDemandProjects.length > 0;
+
   return (
     <div ref={ref} className={`${s.mega} ${open ? s.open : ''}`} onMouseEnter={enter} onMouseLeave={leave}>
       <button type="button" className={s.navLink} aria-expanded={open} aria-haspopup="true" onClick={() => setOpen((v) => !v)}>
         {dict.nav.projects} ▾
       </button>
-      <div className={s.megaPanel}>
+      <div className={`${s.megaPanel} ${grouped ? s.megaPanelWide : ''}`}>
         <GlassPanel style={{ padding: '0.6rem' }}>
-          {visibleProjects.map((p, i) => (
-            <Link key={p.slug} to={l(`/projects/${p.slug}`)} className={s.megaItem} onClick={() => setOpen(false)}>
-              <span className={s.megaNum}>{String(i + 1).padStart(2, '0')}</span>
-              <img className={s.megaThumb} src={p.cardImage.src} alt="" width={64} height={40} loading="lazy" />
-              <span>
-                <span className={s.megaName}>{p.copy.en!.title}</span>
-                <span className={s.megaBlurb} style={{ display: 'block' }}>
-                  {p.copy.en!.cardBlurb}
-                </span>
-              </span>
-            </Link>
-          ))}
-          <Link to={l('/projects')} className={s.megaAll} onClick={() => setOpen(false)}>
+          {grouped ? (
+            <div className={s.megaGroups}>
+              <MegaGroup
+                id="mega-open-source"
+                name={dict.nav.openSource}
+                sub={dict.nav.openSourceSub}
+                to={l('/projects#open-source')}
+                items={openSourceProjects}
+                l={l}
+                dict={dict}
+                onNavigate={close}
+              />
+              <MegaGroup
+                id="mega-on-demand"
+                name={dict.nav.onDemand}
+                sub={dict.nav.onDemandSub}
+                to={l('/projects#on-demand')}
+                items={onDemandProjects}
+                l={l}
+                dict={dict}
+                onNavigate={close}
+              >
+                <Link to={`${l('/')}#contact`} className={s.megaEval} onClick={close}>
+                  {dict.nav.evalAccess} →
+                </Link>
+              </MegaGroup>
+            </div>
+          ) : (
+            visibleProjects.map((p, i) => (
+              <MegaItem key={p.slug} p={p} num={i + 1} l={l} dict={dict} onNavigate={close} />
+            ))
+          )}
+          <Link to={l('/projects')} className={s.megaAll} onClick={close}>
             {dict.nav.viewAll} →
           </Link>
         </GlassPanel>
@@ -166,12 +252,14 @@ export const ContactBand = ({
   titleB,
   text,
   showWork = false,
+  showGithub = true,
 }: {
   kicker?: string;
   titleA: string;
   titleB?: string;
   text: string;
   showWork?: boolean;
+  showGithub?: boolean;
 }) => {
   const { dict } = useLang();
   return (
@@ -195,9 +283,11 @@ export const ContactBand = ({
               {dict.contact.secondary}
             </Button>
           )}
-          <Button href={GITHUB} variant="ghost" external>
-            <GithubIcon /> GitHub
-          </Button>
+          {showGithub && (
+            <Button href={GITHUB} variant="ghost" external>
+              <GithubIcon /> GitHub
+            </Button>
+          )}
           <Button href={LINKEDIN} variant="ghost" external>
             <LinkedinIcon /> LinkedIn
           </Button>

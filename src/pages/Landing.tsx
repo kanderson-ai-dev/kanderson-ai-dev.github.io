@@ -2,9 +2,10 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useLang } from '../i18n';
-import { totals, visibleProjects } from '../content/projects';
+import { onDemandProjects, openSourceProjects, totals } from '../content/projects';
 import type { Project } from '../content/types';
 import {
+  AccessBadge,
   ActCard,
   Badge,
   Button,
@@ -63,7 +64,7 @@ const useFocusRows = () => {
   return ref;
 };
 
-const ShowcaseCard = ({ p, index }: { p: Project; index: number }) => {
+const ShowcaseCard = ({ p, index, num }: { p: Project; index: number; num: number }) => {
   const { dict, l } = useLang();
   const copy = p.copy.en!;
   const flip = index % 2 === 1;
@@ -77,12 +78,15 @@ const ShowcaseCard = ({ p, index }: { p: Project; index: number }) => {
       </div>
       <div>
         <Kicker>
-          {String(index + 1).padStart(2, '0')} / {p.category.toUpperCase()}
+          {String(num).padStart(2, '0')} / {p.category.toUpperCase()}
         </Kicker>
         <div style={{ margin: '0.7rem 0 0.6rem' }}>
           <SplitHeadline title={copy.title} as="h3" size="clamp(1.5rem, 3.2vw, 2.2rem)" />
         </div>
-        <Badge status={p.status} />
+        <span style={{ display: 'inline-flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+          <Badge status={p.status} />
+          {p.access === 'on-demand' && <AccessBadge label={dict.project.private} />}
+        </span>
         <p style={{ color: 'var(--muted)', marginTop: '0.9rem', maxWidth: '46ch' }}>{copy.cardBlurb}</p>
         <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap', margin: '0.9rem 0 1.1rem' }}>
           {p.stack.slice(0, 4).map((t) => (
@@ -104,7 +108,19 @@ const ShowcaseCard = ({ p, index }: { p: Project; index: number }) => {
 export const Landing = () => {
   const { dict, l } = useLang();
   const zzRef = useFocusRows();
-  const flagship = visibleProjects.find((p) => p.slug === 'langgraph-multiagent-orchestrator');
+  const flagship = openSourceProjects.find((p) => p.slug === 'langgraph-multiagent-orchestrator');
+  const projectsNote =
+    totals.onDemand > 0
+      ? dict.strip.projectsNote
+          .replace('{open}', String(totals.openSource))
+          .replace('{demand}', String(totals.onDemand))
+      : 'github.com/kanderson-ai-dev';
+  const testsNote =
+    totals.testsPrivate > 0
+      ? dict.strip.testsNote
+          .replace('{pub}', String(totals.testsPublic))
+          .replace('{priv}', String(totals.testsPrivate))
+      : 'pytest · vitest · browser e2e';
 
   return (
     <>
@@ -155,20 +171,37 @@ export const Landing = () => {
             <SplitHeadline title={dict.strip.headlineA} accent={dict.strip.headlineB} size="clamp(1.6rem,3.5vw,2.4rem)" />
           </div>
           <div className={s.strip}>
-            <Counter value={String(totals.projects)} label={dict.strip.projects} note="github.com/kanderson-ai-dev" />
-            <Counter value={String(totals.tests)} label={dict.strip.tests} note="pytest · vitest · browser e2e" />
+            <Counter value={String(totals.projects)} label={dict.strip.projects} note={projectsNote} />
+            <Counter value={String(totals.tests)} label={dict.strip.tests} note={testsNote} />
             <Counter value={totals.topCoverage} label={dict.strip.coverage} note="line coverage, measured in CI" />
           </div>
         </Reveal>
       </section>
 
-      {/* 2 — The work */}
-      <ActCard>{dict.showcase.act}</ActCard>
-      <section id="work" className={`${s.wrap} ${s.cv}`} ref={zzRef} aria-label="projects">
-        {visibleProjects.map((p, i) => (
-          <ShowcaseCard key={p.slug} p={p} index={i} />
-        ))}
-      </section>
+      {/* 2 — The work: open source, then on demand */}
+      <div ref={zzRef}>
+        <ActCard>{dict.showcase.act}</ActCard>
+        <section id="work" className={`${s.wrap} ${s.cv}`} aria-label="open-source projects">
+          {openSourceProjects.map((p, i) => (
+            <ShowcaseCard key={p.slug} p={p} index={i} num={i + 1} />
+          ))}
+        </section>
+        {onDemandProjects.length > 0 && (
+          <>
+            <ActCard>{dict.showcase.actOnDemand}</ActCard>
+            <section id="on-demand" className={`${s.wrap} ${s.cv}`} aria-label="on-demand projects">
+              <Reveal>
+                <p style={{ color: 'var(--muted)', maxWidth: '60ch', fontSize: '1.02rem' }}>
+                  {dict.showcase.onDemandIntro}
+                </p>
+              </Reveal>
+              {onDemandProjects.map((p, i) => (
+                <ShowcaseCard key={p.slug} p={p} index={openSourceProjects.length + i} num={i + 1} />
+              ))}
+            </section>
+          </>
+        )}
+      </div>
 
       {/* 3 — About / thesis */}
       <section id="about" className={`${s.section} ${s.cv}`}>

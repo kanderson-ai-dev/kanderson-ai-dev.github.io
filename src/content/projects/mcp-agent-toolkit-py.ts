@@ -16,11 +16,14 @@ const ui = (name: string, alt: string) => ({
 
 export const project: Project = {
   slug: 'mcp-agent-toolkit-py',
+  access: 'open-source',
   order: 2,
   category: 'python',
   status: 'live',
   year: 2026,
   repoUrl: 'https://github.com/kanderson-ai-dev/mcp-agent-toolkit',
+  tests: 517,
+  coverage: 93,
   stack: ['Python', 'MCP SDK', 'FastAPI', 'OpenAI', 'SQLite', 'React', 'Docker'],
   languages: ['en'],
   cardImage: {

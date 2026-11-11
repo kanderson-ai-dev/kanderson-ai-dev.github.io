@@ -4,7 +4,7 @@
 // project, no orphan files under public/projects/<slug>/, and film-derived
 // assets carry no burned caption text in their bottom band.
 // Run: npm run validate:content
-import { existsSync, readdirSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import sharp from 'sharp';
 import { projects } from '../src/content/projects';
@@ -88,9 +88,65 @@ const captionGuard = async (src: string, where: string) => {
 // legitimately fills the frame.
 const FILM_DERIVED = /(feature-\d|hook-|video-poster|loop-poster|card-800|hero-1600|og\.png$)/;
 
+// Confidentiality scan (D-OD4): on-demand projects sell the product without
+// publishing the private codebase, so no public copy, alt, diagram label or
+// description may leak implementation identifiers.
+const CONFIDENTIAL: [RegExp, string][] = [
+  [/github\.com/i, 'repository URL'],
+  [/\bsrc\//i, 'source path (src/)'],
+  [/\b[\w.-]+\.(ts|py)\b/, 'source file name (.ts/.py)'],
+  [/\/api\/|\b(GET|POST|PUT|PATCH|DELETE)\s+\//, 'API route'],
+  [/\b[A-Z][A-Z0-9]*_[A-Z0-9_]{3,}\b/, 'env-var-like token'],
+  [/\b[A-Z][A-Za-z0-9]*(?:Error|Violation|Repo)\b/, 'class/error name'],
+  [/langfuse|langsmith/i, 'third-party dashboard name'],
+];
+
+// Per-project allow-list for false positives: slug -> additional allowed strings.
+const CONFIDENTIAL_ALLOW: Record<string, string[]> = {};
+
+const copyStrings = (v: unknown, out: string[] = []): string[] => {
+  if (typeof v === 'string') out.push(v);
+  else if (Array.isArray(v)) v.forEach((x) => copyStrings(x, out));
+  else if (v && typeof v === 'object') Object.values(v).forEach((x) => copyStrings(x, out));
+  return out;
+};
+
+const confidentialScan = (p: Project) => {
+  const allow = new Set(CONFIDENTIAL_ALLOW[p.slug] ?? []);
+  const texts: [string, string][] = [];
+  for (const str of copyStrings(p.copy)) texts.push([str, 'copy']);
+  texts.push([p.cardImage.alt, 'cardImage.alt'], [p.heroImage.alt, 'heroImage.alt']);
+  for (const g of p.gallery ?? []) texts.push([g.alt, 'gallery alt']);
+  if (p.video) texts.push([p.video.poster.alt, 'video poster alt']);
+  if (p.loop) texts.push([p.loop.poster.alt, 'loop poster alt']);
+  if (p.architecture) {
+    texts.push([p.architecture.alt, 'architecture.alt'], [p.architecture.description, 'architecture.description']);
+    const svgPath = pubPath(p.architecture.src);
+    if (p.architecture.src.endsWith('.svg') && existsSync(svgPath)) {
+      const svg = readFileSync(svgPath, 'utf8');
+      for (const m of svg.matchAll(/>([^<]{2,})</g)) texts.push([m[1], 'architecture.svg text']);
+    }
+  }
+  for (const [text, where] of texts) {
+    for (const [re, what] of CONFIDENTIAL) {
+      const m = re.exec(text);
+      if (m && !allow.has(m[0])) {
+        errors.push(`${p.slug}: ${where} leaks ${what} — "${m[0]}" in "${text.slice(0, 90)}"`);
+      }
+    }
+  }
+};
+
 const checkProject = async (p: Project) => {
   ok(!!p.slug && /^[a-z0-9-]+$/.test(p.slug), `${p.slug}: invalid slug`);
   ok(!!p.copy.en?.title, `${p.slug}: missing English copy/title`);
+  ok(p.access === 'open-source' || p.access === 'on-demand', `${p.slug}: missing/invalid access group`);
+  ok(Number.isFinite(p.tests) && p.tests > 0, `${p.slug}: needs a real automated-test count`);
+  if (p.access === 'on-demand') {
+    ok(p.repoUrl === null, `${p.slug}: on-demand projects must keep repoUrl null`);
+    ok(!!p.copy.en?.cta, `${p.slug}: on-demand projects need a copy.en.cta (get-in-touch band)`);
+    confidentialScan(p);
+  }
   ok(!!p.copy.en?.problem && !!p.copy.en?.solution, `${p.slug}: missing problem/solution`);
   ok((p.copy.en?.howItWorks?.length ?? 0) >= 3, `${p.slug}: needs >=3 how-it-works steps`);
   ok((p.copy.en?.features?.length ?? 0) >= 3, `${p.slug}: needs >=3 features`);
@@ -172,8 +228,10 @@ const checkProject = async (p: Project) => {
   }
 };
 
-const orders = projects.map((p) => p.order);
-ok(new Set(orders).size === orders.length, `duplicate order values: ${orders}`);
+for (const acc of ['open-source', 'on-demand'] as const) {
+  const orders = projects.filter((p) => p.access === acc).map((p) => p.order);
+  ok(new Set(orders).size === orders.length, `duplicate order values in ${acc}: ${orders}`);
+}
 for (const p of projects) await checkProject(p);
 
 if (errors.length) {

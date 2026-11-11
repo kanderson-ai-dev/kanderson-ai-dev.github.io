@@ -5,6 +5,7 @@ import { useLang } from '../i18n';
 import { getProject, visibleProjects } from '../content/projects';
 import type { Img } from '../content/types';
 import {
+  AccessBadge,
   ActCard,
   Badge,
   Button,
@@ -157,6 +158,7 @@ export const ProjectPage = () => {
           <p style={{ color: 'var(--muted)', fontSize: '1.06rem', maxWidth: '52ch' }}>{copy.tagline}</p>
           <div style={{ display: 'flex', gap: '0.55rem', flexWrap: 'wrap', margin: '1.2rem 0 1.6rem' }}>
             <Badge status={project.status} />
+            {project.access === 'on-demand' && <AccessBadge label={dict.project.private} />}
             {project.stack.slice(0, 5).map((t) => (
               <Chip key={t} muted>
                 {t}
@@ -169,11 +171,15 @@ export const ProjectPage = () => {
                 {dict.project.watchFilm} →
               </Button>
             )}
-            {project.repoUrl && (
+            {project.repoUrl ? (
               <Button href={project.repoUrl} variant="ghost" external>
                 {dict.project.viewGithub}
               </Button>
-            )}
+            ) : project.access === 'on-demand' ? (
+              <Button href="#contact" variant="ghost">
+                {dict.project.privateCta}
+              </Button>
+            ) : null}
           </div>
           {missingEs && <div className={s.enNotice}>{dict.project.enOnly}</div>}
         </div>
@@ -270,7 +276,9 @@ export const ProjectPage = () => {
             <SplitHeadline title={dict.project.architecture} size="clamp(1.5rem,3.4vw,2.4rem)" />
             <figure className={s.archWrap}>
               <img src={project.architecture.src} alt={project.architecture.alt} width="1600" height="900" loading="lazy" />
-              <figcaption className={s.archCaption}>{dict.project.archSource}</figcaption>
+              <figcaption className={s.archCaption}>
+                {project.access === 'on-demand' ? dict.project.archSourcePrivate : dict.project.archSource}
+              </figcaption>
             </figure>
             <details className={s.archDetails}>
               <summary>{dict.project.archDetails}</summary>
@@ -394,6 +402,7 @@ export const ProjectPage = () => {
         titleA={copy.cta?.headline ?? dict.contact.titleA}
         titleB={copy.cta ? undefined : dict.contact.titleB}
         text={copy.cta?.text ?? dict.contact.text}
+        showGithub={project.access === 'open-source'}
       />
 
       {zoom && <Lightbox img={zoom} onClose={onClose} />}
