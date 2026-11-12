@@ -62,15 +62,15 @@ export const project: Project = {
   architecture: {
     src: `${dir}/architecture.webp`,
     width: 1920,
-    height: 960,
-    alt: 'Simplified architecture of E-commerce Support & Returns Copilot: input guardrail, supervisor, five specialist workers, deterministic policy engine, amount cap and human approval queue',
+    height: 1080,
+    alt: 'Simplified architecture of E-commerce Support & Returns Copilot: input guardrail, supervisor, five specialist workers, deterministic policy engine, amount cap, human approval queue, and a prompt registry feeding the model steps',
     description:
-      'A ticket arrives from the widget, the public sandbox or the API and passes the input guardrail (injection screen and rate limit). Blocked messages are rejected or sent back for more information; safe tickets reach the supervisor, a model router that dispatches specialist workers one step at a time — order lookup against the verified record, deterministic policy eligibility, refund decision drafting, shipping tracking and escalation — each returning to the supervisor. Eligibility and amounts come only from the deterministic policy engine; the model drafts the reply. If the refund amount is at or under the auto-approve cap, it is written and resolved; above the cap it waits in a human approval queue, and the human can approve, edit or reject before resolution.',
+      'A ticket arrives from the widget, the public sandbox or the API and passes the input guardrail (injection screen and rate limit). Blocked messages are rejected or sent back for more information; safe tickets reach the supervisor, a model router that dispatches specialist workers one step at a time — order lookup against the verified record, deterministic policy eligibility, refund decision drafting, shipping tracking and escalation — each returning to the supervisor. Eligibility and amounts come only from the deterministic policy engine; the model drafts the reply. If the refund amount is at or under the auto-approve cap, it is written and resolved; above the cap it waits in a human approval queue, and the human can approve, edit or reject before resolution. The supervisor and the four model workers each run the prompt version currently promoted in a prompt registry; policy eligibility has no prompt because it never calls a model. New prompt versions are authored in the console and only promoted after an A/B evaluation gate, with every promotion and rollback recorded in a tamper-evident audit trail. Each resolution is stored in the ticket history with the exact prompt versions that produced it.',
   },
   gallery: [
     gal(1, 'The customer widget holding a refund for review — the reply is drafted, a human decides'),
     gal(2, 'The same support widget on a tablet — states designed explicitly at every size'),
-    gal(3, 'The prompt registry listing versioned worker prompts with lifecycle stages, no prompt text'),
+    gal(3, 'The prompt registry listing versioned prompts for the router and every model worker, with lifecycle stages, no prompt text'),
     gal(4, 'A duplicate refund request rejected deterministically in the customer widget'),
   ],
   copy: {

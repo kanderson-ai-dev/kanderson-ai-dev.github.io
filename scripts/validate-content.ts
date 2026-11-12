@@ -94,9 +94,10 @@ const FILM_DERIVED = /(feature-\d|hook-|video-poster|loop-poster|card-800|hero-1
 const CONFIDENTIAL: [RegExp, string][] = [
   [/github\.com/i, 'repository URL'],
   [/\bsrc\//i, 'source path (src/)'],
-  [/\b[\w.-]+\.(ts|py)\b/, 'source file name (.ts/.py)'],
+  [/\b[\w.-]+\.(ts|py|ya?ml|jsonl?|env|sql|sqlite|db|toml|ini|log|sh|pem|key)\b/, 'source/config file name'],
   [/\/api\/|\b(GET|POST|PUT|PATCH|DELETE)\s+\//, 'API route'],
   [/\b[A-Z][A-Z0-9]*_[A-Z0-9_]{3,}\b/, 'env-var-like token'],
+  [/\b[a-z][a-z0-9]*(?:_[a-z0-9]+)+\b/, 'snake_case identifier'],
   [/\b[A-Z][A-Za-z0-9]*(?:Error|Violation|Repo)\b/, 'class/error name'],
   [/langfuse|langsmith/i, 'third-party dashboard name'],
 ];
@@ -125,6 +126,19 @@ const confidentialScan = (p: Project) => {
     if (p.architecture.src.endsWith('.svg') && existsSync(svgPath)) {
       const svg = readFileSync(svgPath, 'utf8');
       for (const m of svg.matchAll(/>([^<]{2,})</g)) texts.push([m[1], 'architecture.svg text']);
+    } else if (!p.architecture.src.endsWith('.svg')) {
+      // Raster diagrams carry no machine-readable text — scan the mockup
+      // config that produced them instead (label/sub/edge label strings).
+      const cfgPath = resolve('tools/mockups/configs', `${p.slug}.json`);
+      if (existsSync(cfgPath)) {
+        const cfg = JSON.parse(readFileSync(cfgPath, 'utf8')) as {
+          jobs?: { template?: string; params?: unknown }[];
+        };
+        for (const job of cfg.jobs ?? []) {
+          if (job.template !== 'architecture') continue;
+          for (const str of copyStrings(job.params)) texts.push([str, 'architecture config text']);
+        }
+      }
     }
   }
   for (const [text, where] of texts) {

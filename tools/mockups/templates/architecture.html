@@ -5,7 +5,14 @@
    params: nodes [{id,label,sub?,type,x,y,w?,h?,shape?}],
            edges [{from,to,label?,kind?}], kind: gate(red)|plain(no arrow)|bi|dotted
            groups? [{x,y,w,h,label?}] cluster frames (grid units),
-           unit? (px per grid unit), nodeW?, nodeH?, legend?, kicker?            */
+           unit? (px per grid unit), nodeW?, nodeH?, legend?, kicker?
+   edges may also carry via? [[x,y],...] (grid units): an orthogonal polyline
+   with rounded corners routed through the waypoints instead of the default
+   center-to-center Bezier. Optional fromSide?/toSide? (l|r|t|b) pick which
+   node border the endpoints leave/enter (defaults: inferred from the first/
+   last waypoint direction). Consecutive waypoints should share x or y —
+   non-orthogonal segments are drawn straight. Same stroke/marker/dash/glow
+   rules; edge labels anchor at the polyline length-midpoint (+ loff).       */
 const COLORS = { model: 'var(--model)', code: 'var(--accent)', human: 'var(--human)',
                  danger: 'var(--danger)', dim: 'var(--dim)', store: 'var(--muted)' };
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -43,9 +50,17 @@ window.render = (p) => {
     let [sx, sy] = horiz ? [ax + Math.sign(dx) * a.w / 2, ay + off] : [ax + off, ay + Math.sign(dy) * a.h / 2];
     let [tx2, ty2] = horiz ? [bx - Math.sign(dx) * b.w / 2, by + off] : [bx + off, by - Math.sign(dy) * b.h / 2];
     const mx = (sx + tx2) / 2, my = (sy + ty2) / 2;
-    const d = horiz
-      ? `M${sx} ${sy} C ${mx} ${sy}, ${mx} ${ty2}, ${tx2} ${ty2}`
-      : `M${sx} ${sy} C ${sx} ${my}, ${tx2} ${my}, ${tx2} ${ty2}`;
+    let d;
+    let viaMid = null;
+    if (e.via) {
+      const pts = viaPoints(e, a, b, U);
+      d = roundedPath(pts, 14);
+      viaMid = pathMidpoint(pts);
+    } else {
+      d = horiz
+        ? `M${sx} ${sy} C ${mx} ${sy}, ${mx} ${ty2}, ${tx2} ${ty2}`
+        : `M${sx} ${sy} C ${sx} ${my}, ${tx2} ${my}, ${tx2} ${ty2}`;
+    }
     const sw = e.kind === 'gate' ? 5 : 3.5;
     const dash = e.kind === 'dotted' ? 'stroke-dasharray="4 9" stroke-linecap="round"' : e.dash ? `stroke-dasharray="${e.dash}"` : '';
     const mEnd = e.kind === 'plain' ? '' : 'marker-end="url(#ar)"';
@@ -54,8 +69,8 @@ window.render = (p) => {
     const lines = Array.isArray(e.label) ? e.label : e.label ? [e.label] : [];
     const [lox, loy] = e.loff || [0, 0];
     lines.forEach((l, i) => {
-      const lx = (horiz ? mx : (sx + tx2) / 2 + 14) + lox;
-      const ly = (horiz ? (sy + ty2) / 2 - 14 : my) + (i - (lines.length - 1) / 2) * 22 + loy;
+      const lx = (viaMid ? viaMid[0] : horiz ? mx : (sx + tx2) / 2 + 14) + lox;
+      const ly = (viaMid ? viaMid[1] : horiz ? (sy + ty2) / 2 - 14 : my) + (i - (lines.length - 1) / 2) * 22 + loy;
       html += `<text x="${lx}" y="${ly}" text-anchor="middle" font-family="Consolas,monospace" font-size="${e.fs || p.edgeLabelSize || 20}" font-weight="600" fill="${c}" opacity="0.95">${esc(l)}</text>`;
     });
   }
@@ -113,4 +128,58 @@ window.render = (p) => {
     st.appendChild(k);
   }
 };
+
+// via-routed edges: node border endpoints (fromSide/toSide, default inferred
+// from the first/last waypoint direction) + the waypoints in px.
+function viaPoints(e, a, b, U) {
+  const via = e.via.map(([x, y]) => [x * U, y * U]);
+  const sideOf = (n, pt) => {
+    const cx = n.x * U + (n.w ?? 0) / 2, cy = n.y * U + (n.h ?? 0) / 2;
+    return Math.abs(pt[0] - cx) > Math.abs(pt[1] - cy)
+      ? (pt[0] > cx ? 'r' : 'l')
+      : (pt[1] > cy ? 'b' : 't');
+  };
+  const fs = e.fromSide || sideOf(a, via[0]);
+  const ts = e.toSide || sideOf(b, via[via.length - 1]);
+  const ax = a.x * U, ay = a.y * U, bx = b.x * U, by = b.y * U;
+  const border = (n, x, y, w, h, side, ref) =>
+    side === 'l' ? [x, ref[1]] : side === 'r' ? [x + w, ref[1]]
+    : side === 't' ? [ref[0], y] : [ref[0], y + h];
+  const pts = [border(a, ax, ay, a.w, a.h, fs, via[0]),
+               ...via,
+               border(b, bx, by, b.w, b.h, ts, via[via.length - 1])];
+  return pts.filter((p, i) => i === 0 || Math.hypot(p[0] - pts[i - 1][0], p[1] - pts[i - 1][1]) > 0.5);
+}
+
+// Orthogonal-ish polyline with rounded corners (radius clamped to half the
+// shortest adjacent segment).
+function roundedPath(pts, r) {
+  let d = `M${pts[0][0]} ${pts[0][1]}`;
+  for (let i = 1; i < pts.length - 1; i++) {
+    const [px, py] = pts[i - 1], [cx, cy] = pts[i], [nx, ny] = pts[i + 1];
+    const l1 = Math.hypot(cx - px, cy - py), l2 = Math.hypot(nx - cx, ny - cy);
+    const r1 = Math.min(r, l1 / 2), r2 = Math.min(r, l2 / 2);
+    const u1 = [(cx - px) / l1, (cy - py) / l1], u2 = [(nx - cx) / l2, (ny - cy) / l2];
+    d += ` L${cx - u1[0] * r1} ${cy - u1[1] * r1} Q${cx} ${cy} ${cx + u2[0] * r2} ${cy + u2[1] * r2}`;
+  }
+  return d + ` L${pts[pts.length - 1][0]} ${pts[pts.length - 1][1]}`;
+}
+
+// Point at half the polyline's total length (edge-label anchor for via edges).
+function pathMidpoint(pts) {
+  const seg = [], total = pts.reduce((s, p, i) => {
+    if (i === 0) return 0;
+    const l = Math.hypot(p[0] - pts[i - 1][0], p[1] - pts[i - 1][1]);
+    seg.push(l); return s + l;
+  }, 0);
+  let acc = 0;
+  for (let i = 0; i < seg.length; i++) {
+    if (acc + seg[i] >= total / 2) {
+      const t = (total / 2 - acc) / seg[i];
+      return [pts[i][0] + (pts[i + 1][0] - pts[i][0]) * t, pts[i][1] + (pts[i + 1][1] - pts[i][1]) * t];
+    }
+    acc += seg[i];
+  }
+  return pts[pts.length - 1];
+}
 </script></body></html>

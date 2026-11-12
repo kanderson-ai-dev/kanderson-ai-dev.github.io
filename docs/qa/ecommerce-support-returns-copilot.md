@@ -153,3 +153,60 @@ confidentiality scan).
 - YouTube upload (unlisted) + ID → set `video.youtubeId`, verify via oEmbed.
 - Watch-and-listen review of the film master.
 - `git push` / deploy authorization.
+
+## Update 2026-11-12 — Prompt Registry in architecture + gallery 3
+
+Source of truth moved to README `@1874415`: the supervisor's routing prompt is
+now a versioned registry artifact (console shows it as **Router**) and the
+graph gained `RES -->|prompt_versions| TEL`, a `prompt lifecycle` subgraph
+(console admin → registry → audit) and `PR -.->|active prompt|` to the five
+model steps (policy eligibility excluded by design).
+
+**Frozen test figures (owner decision 2026-11-12):** the site keeps 486 tests
+(442 backend + 26 frontend + 18 browser E2E) and 97.1% coverage even though
+the repo now reports 446 backend tests — the published numbers were true when
+the film and page were made; counter strip stays `2148 · 486 private`.
+
+**Raw capture (Step 1b, same keyless method as "Keyless run"/"Raw captures"
+above):**
+
+| File | Source | Content | Review |
+|---|---|---|---|
+| console-registry-1440.png (2880×2200) | keyless console, 1440×1100 @2x | Prompt Registry list with all **five** panels: Escalation, Order lookup, Refund decision, Shipping tracker, **Router** | ✓ seed data only; Model column masked (vendor, film rule); no prompt bodies/diffs/editor |
+| console-registry-1440.prev.png | previous capture | kept for before/after evidence | — |
+
+Copilot repo: `data/app.sqlite` backed up and restored, WAL sidecars removed,
+`nul` removed, `git status` clean. Capture script kept:
+`_raw/ecommerce-support-returns-copilot/capture-registry.mjs`.
+
+**Diagram (`architecture.webp`, now 1920×1080):** transcribed node-for-node —
+Ticket history (store cyl, *prompt versions* edge routed down the right
+margin), PROMPT LIFECYCLE group frame wrapping Prompt authoring (amber) →
+Prompt registry (turquoise cyl) → Audit trail (turquoise cyl), five dotted
+violet *active prompt* edges on a shared trunk (registry → supervisor bottom
++ the four model workers' left edges; Policy eligibility visibly has none).
+Worker/engine/right columns moved +0.4 units to open the trunk lane. The
+`architecture` template gained `via` (orthogonal waypoint routing) +
+`fromSide`/`toSide`; the other four architecture jobs re-rendered
+**byte-identical** (backward compatible). Three label defects fixed (legend
+chip spacing, *next step* clipping, *≤ cap* off its edge) plus the
+*> cap* / *approve · edit · reject* crowding.
+
+**Validator:** raster diagrams now scanned through the mockup config text
+(label/sub/edge label of `template === "architecture"` jobs, reported as
+`architecture config text`); rules extended to config/data file names and
+snake_case identifiers — `prompt_versions` and `prompts/x.yaml` injections
+both fail, clean state passes (5 projects).
+
+**Step 6 results:** `lint` ✓ `typecheck` ✓ `test` 10/10 ✓ `build` ✓
+`validate:content` ✓. Page at 375/768/1280/1920: aspect ratio preserved
+(1920×1080 declared+natural), no layout shift, `loading="lazy"` intact,
+caption "Simplified from the private codebase", `<details>` carries the full
+description incl. the prompt lifecycle. Gallery tile 3 shows the Router card;
+lightbox opens from the button element and Esc closes; new alt in use.
+Counter strips EN/ES unchanged (`2148` · `486 private`/`privados` ·
+`1662 in public repos`/`en repos públicos`). Lighthouse: desktop
+0.96/1.00/0.96/1.00 · mobile 1.00/1.00/0.96/1.00 (LCP 1.9 s, CLS 0.002).
+Confidentiality pass by eye on both new assets: no identifiers anywhere.
+Before/after evidence: `update-architecture/` (before webps + section and
+gallery/lightbox screenshots at 1280 and 375).

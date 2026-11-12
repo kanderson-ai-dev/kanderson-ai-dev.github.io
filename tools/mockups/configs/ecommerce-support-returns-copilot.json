@@ -359,13 +359,13 @@
         "image": "_raw/ecommerce-support-returns-copilot/console-registry-1440.png",
         "imgSize": [
           2880,
-          1800
+          2200
         ],
         "crop": [
-          170,
-          140,
-          2400,
-          1480
+          40,
+          150,
+          2800,
+          1750
         ],
         "winWidth": 1100,
         "tag": "CONSOLE · PROMPT REGISTRY"
@@ -400,7 +400,7 @@
       "template": "architecture",
       "size": [
         1920,
-        960
+        1080
       ],
       "out": "architecture.webp",
       "params": {
@@ -412,6 +412,15 @@
         "kicker": "SUPERVISOR + POLICY GATE",
         "kickerX": 40,
         "kickerY": 40,
+        "groups": [
+          {
+            "x": 0.3,
+            "y": 7.6,
+            "w": 9.9,
+            "h": 1.9,
+            "label": "PROMPT LIFECYCLE"
+          }
+        ],
         "nodes": [
           {
             "id": "T",
@@ -436,7 +445,7 @@
             "label": "Rejected / needs info",
             "type": "danger",
             "x": 3.4,
-            "y": 6.7,
+            "y": 6.2,
             "w": 230
           },
           {
@@ -454,7 +463,7 @@
             "label": "Order lookup",
             "sub": "verified record",
             "type": "model",
-            "x": 10.2,
+            "x": 10.6,
             "y": 0.9,
             "w": 235,
             "h": 92
@@ -464,7 +473,7 @@
             "label": "Policy eligibility",
             "sub": "deterministic · no model",
             "type": "code",
-            "x": 10.2,
+            "x": 10.6,
             "y": 2.1,
             "w": 235,
             "h": 92
@@ -474,7 +483,7 @@
             "label": "Refund decision",
             "sub": "drafts the reply",
             "type": "model",
-            "x": 10.2,
+            "x": 10.6,
             "y": 3.3,
             "w": 235,
             "h": 92
@@ -484,7 +493,7 @@
             "label": "Shipping tracker",
             "sub": "carrier status",
             "type": "model",
-            "x": 10.2,
+            "x": 10.6,
             "y": 4.5,
             "w": 235,
             "h": 92
@@ -494,7 +503,7 @@
             "label": "Escalation",
             "sub": "to a human",
             "type": "model",
-            "x": 10.2,
+            "x": 10.6,
             "y": 5.7,
             "w": 235,
             "h": 92
@@ -504,7 +513,7 @@
             "label": "Deterministic policy engine",
             "sub": "the only decider",
             "type": "code",
-            "x": 13,
+            "x": 13.4,
             "y": 1.7,
             "w": 275,
             "h": 120,
@@ -515,7 +524,7 @@
             "label": "Amount over the cap?",
             "sub": "auto-approve limit",
             "type": "code",
-            "x": 13,
+            "x": 13.4,
             "y": 3.5,
             "w": 275,
             "h": 140,
@@ -525,7 +534,7 @@
             "id": "AUTO",
             "label": "Approved — refund written",
             "type": "code",
-            "x": 15.9,
+            "x": 16.3,
             "y": 1.4,
             "w": 210,
             "h": 100
@@ -534,7 +543,7 @@
             "id": "RES",
             "label": "Resolution",
             "type": "code",
-            "x": 15.9,
+            "x": 16.3,
             "y": 3.7,
             "w": 210,
             "h": 95
@@ -543,11 +552,57 @@
             "id": "HITL",
             "label": "Human approval queue",
             "type": "human",
-            "x": 15.9,
+            "x": 16.3,
             "y": 5.9,
             "w": 210,
             "h": 100,
             "sub": "person decides"
+          },
+          {
+            "id": "TEL",
+            "label": "Ticket history",
+            "sub": "events · cost · latency",
+            "type": "store",
+            "x": 13.4,
+            "y": 7.9,
+            "w": 275,
+            "h": 96,
+            "shape": "cyl"
+          },
+          {
+            "id": "ADM",
+            "label": "Prompt authoring",
+            "sub": [
+              "candidate → A/B gate →",
+              "promote / rollback"
+            ],
+            "type": "human",
+            "x": 0.7,
+            "y": 8.05,
+            "w": 270,
+            "h": 110
+          },
+          {
+            "id": "PR",
+            "label": "Prompt registry",
+            "sub": "versioned prompts",
+            "type": "code",
+            "x": 4.1,
+            "y": 8.1,
+            "w": 250,
+            "h": 96,
+            "shape": "cyl"
+          },
+          {
+            "id": "AUD",
+            "label": "Audit trail",
+            "sub": "tamper-evident",
+            "type": "code",
+            "x": 7.4,
+            "y": 8.1,
+            "w": 230,
+            "h": 96,
+            "shape": "cyl"
           }
         ],
         "edges": [
@@ -580,7 +635,8 @@
             "from": "S",
             "to": "RD",
             "label": "next step",
-            "kind": "bi"
+            "kind": "bi",
+            "loff": [-75, -9]
           },
           {
             "from": "S",
@@ -603,13 +659,15 @@
           {
             "from": "CAP",
             "to": "AUTO",
-            "label": "≤ cap"
+            "label": "≤ cap",
+            "loff": [67, 9]
           },
           {
             "from": "CAP",
             "to": "HITL",
             "label": "> cap",
-            "color": "human"
+            "color": "human",
+            "loff": [37, -26]
           },
           {
             "from": "AUTO",
@@ -619,29 +677,99 @@
             "from": "HITL",
             "to": "RES",
             "label": "approve · edit · reject",
-            "color": "human"
+            "color": "human",
+            "loff": [-40, 0]
+          },
+          {
+            "from": "RES",
+            "to": "TEL",
+            "label": "prompt versions",
+            "via": [[18.7, 4.17], [18.7, 8.38]],
+            "fromSide": "r",
+            "toSide": "r",
+            "loff": [-90, 10]
+          },
+          {
+            "from": "ADM",
+            "to": "PR"
+          },
+          {
+            "from": "PR",
+            "to": "AUD"
+          },
+          {
+            "from": "PR",
+            "to": "S",
+            "kind": "dotted",
+            "color": "model",
+            "via": [[5.35, 7.3], [10.1, 7.3], [10.1, 5.55], [8.3, 5.55]],
+            "fromSide": "t",
+            "toSide": "b"
+          },
+          {
+            "from": "PR",
+            "to": "OL",
+            "kind": "dotted",
+            "color": "model",
+            "via": [[5.35, 7.3], [10.1, 7.3], [10.1, 1.36]],
+            "fromSide": "t",
+            "toSide": "l"
+          },
+          {
+            "from": "PR",
+            "to": "RD",
+            "kind": "dotted",
+            "color": "model",
+            "via": [[5.35, 7.3], [10.1, 7.3], [10.1, 3.76]],
+            "fromSide": "t",
+            "toSide": "l",
+            "label": "active prompt",
+            "loff": [-165, -25]
+          },
+          {
+            "from": "PR",
+            "to": "ST",
+            "kind": "dotted",
+            "color": "model",
+            "via": [[5.35, 7.3], [10.1, 7.3], [10.1, 4.96]],
+            "fromSide": "t",
+            "toSide": "l"
+          },
+          {
+            "from": "PR",
+            "to": "ES",
+            "kind": "dotted",
+            "color": "model",
+            "via": [[5.35, 7.3], [10.1, 7.3], [10.1, 6.16]],
+            "fromSide": "t",
+            "toSide": "l"
           }
         ],
         "legend": [
           {
             "text": "violet = model",
             "x": 70,
-            "y": 890
+            "y": 1000
           },
           {
             "text": "turquoise = code / deterministic",
-            "x": 340,
-            "y": 890
+            "x": 334,
+            "y": 1000
           },
           {
             "text": "amber = human",
-            "x": 750,
-            "y": 890
+            "x": 814,
+            "y": 1000
           },
           {
             "text": "red = blocked path",
-            "x": 1040,
-            "y": 890
+            "x": 1066,
+            "y": 1000
+          },
+          {
+            "text": "dotted = prompt from the registry",
+            "x": 1378,
+            "y": 1000
           }
         ]
       }

@@ -59,7 +59,8 @@ with humanized labels. Never publish: source paths, class/error/env-var
 names, API routes, prompt text, detector patterns, dataset items, commit
 SHAs, or third-party dashboards. Caption: "Simplified from the private
 codebase". Enforced by `scripts/validate-content.ts` (confidentiality scan,
-per-project allow-list) for every on-demand project.
+per-project allow-list) for every on-demand project. Raster diagrams are
+scanned through their mockup config; edges may route through waypoints.
 
 ## D-OD5 — On-demand real UI images: live runs, product surfaces only
 
