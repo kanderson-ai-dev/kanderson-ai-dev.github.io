@@ -66,6 +66,7 @@ describe('project registry', () => {
   });
 
   it('embeds the published films', () => {
+    expect(getProject('ecommerce-support-returns-copilot')?.video?.youtubeId).toBe('Btnuw-aMXtA');
     expect(getProject('langgraph-multiagent-orchestrator')?.video?.youtubeId).toBe('4rsN0tXLVS4');
     expect(getProject('mcp-agent-toolkit-py')?.video?.youtubeId).toBe('3UZH518sOVg');
     expect(getProject('agentic-rag-system')?.video?.youtubeId).toBe('EWf5Oz8u7Xg');
