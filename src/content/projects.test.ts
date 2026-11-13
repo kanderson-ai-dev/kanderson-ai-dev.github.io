@@ -65,6 +65,21 @@ describe('project registry', () => {
         expect(['measured', 'simulated']).toContain(r.kind);
   });
 
+  it('supports a single architecture view or a list of views; the orchestrator ships two', () => {
+    const orc = getProject('langgraph-multiagent-orchestrator');
+    expect(Array.isArray(orc?.architecture)).toBe(true);
+    expect(orc?.architecture).toHaveLength(2);
+    for (const p of projects) {
+      const a = p.architecture;
+      if (!a) continue;
+      for (const v of Array.isArray(a) ? a : [a]) {
+        expect(v.src.startsWith(`/projects/${p.slug}/`)).toBe(true);
+        expect(v.alt.length).toBeGreaterThan(0);
+        expect(v.description.length).toBeGreaterThan(0);
+      }
+    }
+  });
+
   it('embeds the published films', () => {
     expect(getProject('ecommerce-support-returns-copilot')?.video?.youtubeId).toBe('Btnuw-aMXtA');
     expect(getProject('langgraph-multiagent-orchestrator')?.video?.youtubeId).toBe('4rsN0tXLVS4');

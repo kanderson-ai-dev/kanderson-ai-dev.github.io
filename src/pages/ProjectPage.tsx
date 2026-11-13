@@ -1,5 +1,5 @@
 // /projects/:slug — "the film, scrollable" (Plan.md §6).
-import { useCallback, useEffect, useState } from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useLang } from '../i18n';
 import { getProject, visibleProjects } from '../content/projects';
@@ -94,6 +94,11 @@ export const ProjectPage = () => {
   if (!project) return null;
   const copy = (lang === 'es' ? project.copy.es : undefined) ?? project.copy.en!;
   const missingEs = lang === 'es' && !project.copy.es;
+  const archViews = project.architecture
+    ? Array.isArray(project.architecture)
+      ? project.architecture
+      : [project.architecture]
+    : [];
 
   const idx = visibleProjects.findIndex((p) => p.slug === project.slug);
   const prev = visibleProjects[idx - 1];
@@ -270,20 +275,25 @@ export const ProjectPage = () => {
       </section>
 
       {/* Architecture */}
-      {project.architecture && (
+      {archViews.length > 0 && (
         <section id="architecture" className={`${s.wrap} ${s.cv}`}>
           <Reveal>
             <SplitHeadline title={dict.project.architecture} size="clamp(1.5rem,3.4vw,2.4rem)" />
-            <figure className={s.archWrap}>
-              <img src={project.architecture.src} alt={project.architecture.alt} width={project.architecture.width ?? 1600} height={project.architecture.height ?? 900} loading="lazy" />
-              <figcaption className={s.archCaption}>
-                {project.access === 'on-demand' ? dict.project.archSourcePrivate : dict.project.archSource}
-              </figcaption>
-            </figure>
-            <details className={s.archDetails}>
-              <summary>{dict.project.archDetails}</summary>
-              <p>{project.architecture.description}</p>
-            </details>
+            {archViews.map((v) => (
+              <Fragment key={v.src}>
+                {v.title && <h3 className={s.archTitle}>{v.title}</h3>}
+                <figure className={s.archWrap}>
+                  <img src={v.src} alt={v.alt} width={v.width ?? 1600} height={v.height ?? 900} loading="lazy" />
+                  <figcaption className={s.archCaption}>
+                    {project.access === 'on-demand' ? dict.project.archSourcePrivate : dict.project.archSource}
+                  </figcaption>
+                </figure>
+                <details className={s.archDetails}>
+                  <summary>{dict.project.archDetails}</summary>
+                  <p>{v.description}</p>
+                </details>
+              </Fragment>
+            ))}
           </Reveal>
         </section>
       )}

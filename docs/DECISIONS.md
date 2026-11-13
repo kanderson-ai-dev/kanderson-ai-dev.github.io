@@ -78,3 +78,8 @@ counter notes. On the landing it sits right after the hero, before the
 counter strip, and a teaser link under the hero CTAs points to `#on-demand`.
 Supersedes the ordering sentences of D-OD2; the same-split-everywhere rule
 of D-OD2 stands.
+
+## D-OD7 — Several architecture views per project
+
+A project may publish several architecture views (e.g. runtime flow +
+system view); each is transcribed from its own README diagram.

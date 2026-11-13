@@ -15,6 +15,17 @@ export interface Img {
 // Semantic accent (§3.1): code/verified, model, human, blocked
 export type Tone = 'accent' | 'model' | 'human' | 'danger';
 
+// One architecture view (diagram) of a project, transcribed from its README.
+// `title` renders a small heading above the figure when present.
+export interface ArchView {
+  src: string;
+  alt: string;
+  description: string;
+  width?: number;
+  height?: number;
+  title?: string;
+}
+
 export interface ProjectCopy {
   title: string;
   tagline: string; // <= 140 chars
@@ -56,7 +67,7 @@ export interface Project {
   ogImage: string; // 1200x630
   video: { youtubeId: string | null; poster: Img; captionsLang: Lang[] } | null;
   loop?: { webm: string; mp4: string; poster: Img };
-  architecture?: { src: string; alt: string; description: string; width?: number; height?: number };
+  architecture?: ArchView | ArchView[];
   gallery?: Img[];
   copy: Record<Lang, ProjectCopy | undefined>; // 'en' required, 'es' optional
 }

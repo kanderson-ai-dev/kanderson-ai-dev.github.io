@@ -46,7 +46,7 @@ they are resolved to `file://` URLs automatically.
 | `card-thumb` | 16:10 card/mega-menu art (cover image or oversized chrome). `params: {image,imgSize,crop,chrome,winWidth,kicker}` |
 | `og-card` | 1200×630 social card: subject + title/tagline/brand. `params: {image,imgSize,crop,title,tagline,brand,kicker}` |
 | `video-poster` | 1920×1080 still + play button. `params: {image,imgSize,title,tagline}` |
-| `architecture` | JSON graph -> SVG diagram: `{nodes:[{id,label,sub,type,x,y,w,h}],edges:[{from,to,label,kind,dash,via,fromSide,toSide}],groups,unit,legend,kicker}` — `type` ∈ `model/code/human/danger/warn`, `kind:"gate"` = red hard-gate edge. `via:[[x,y],…]` (grid units) routes an orthogonal rounded polyline through waypoints instead of the default Bézier; `fromSide`/`toSide` (`l|r|t|b`) pick the border each endpoint uses |
+| `architecture` | JSON graph -> SVG diagram: `{nodes:[{id,label,sub,type,x,y,w,h,prominent}],edges:[{from,to,label,kind,dash,via,fromSide,toSide,color}],groups:[{x,y,w,h,label,sub}],unit,legend,kicker}` — `type` ∈ `model/code/human/danger/warn`, `kind:"gate"` = red hard-gate edge, `kind:"bi"` = arrowheads both ends, `kind:"dotted"` = muted dotted. `via:[[x,y],…]` (grid units) routes an orthogonal rounded polyline through waypoints instead of the default Bézier; `fromSide`/`toSide` (`l|r|t|b`) pick the border each endpoint uses. `prominent:true` on a node = stronger border glow; `groups[].sub` = second line under the frame label |
 
 ## Conventions
 

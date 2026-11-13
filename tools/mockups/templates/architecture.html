@@ -2,9 +2,9 @@
 <body><script src="tpl.js"></script><script>
 /* architecture — JSON graph -> diagram on stage. Deterministic layout:
    every node carries explicit x,y (grid units, see config).
-   params: nodes [{id,label,sub?,type,x,y,w?,h?,shape?}],
+   params: nodes [{id,label,sub?,type,x,y,w?,h?,shape?,prominent?}],
            edges [{from,to,label?,kind?}], kind: gate(red)|plain(no arrow)|bi|dotted
-           groups? [{x,y,w,h,label?}] cluster frames (grid units),
+           groups? [{x,y,w,h,label?,sub?}] cluster frames (grid units),
            unit? (px per grid unit), nodeW?, nodeH?, legend?, kicker?
    edges may also carry via? [[x,y],...] (grid units): an orthogonal polyline
    with rounded corners routed through the waypoints instead of the default
@@ -37,6 +37,7 @@ window.render = (p) => {
   for (const g of p.groups || []) {
     html += `<rect x="${g.x * U}" y="${g.y * U}" width="${g.w * U}" height="${g.h * U}" rx="20" fill="#00F5D407" stroke="var(--accent)" stroke-width="2" stroke-dasharray="10 8" opacity="0.7"/>`;
     if (g.label) html += `<text x="${g.x * U + 18}" y="${g.y * U + 34}" font-family="Consolas,monospace" font-size="20" font-weight="700" fill="var(--accent)" letter-spacing="0.12em">${esc(g.label)}</text>`;
+    if (g.sub) html += `<text x="${g.x * U + 18}" y="${g.y * U + 58}" font-family="Consolas,monospace" font-size="15" font-weight="400" fill="var(--muted)" letter-spacing="0.1em">${esc(g.sub)}</text>`;
   }
   // edges
   for (const e of p.edges) {
@@ -111,7 +112,7 @@ window.render = (p) => {
     const subs = Array.isArray(n.sub) ? n.sub : n.sub ? [n.sub] : [];
     const d = document.createElement('div');
     d.className = 'glass';
-    d.style.cssText = `position:absolute;left:${n.x * U}px;top:${n.y * U}px;width:${nodes[n.id].w}px;height:${nodes[n.id].h}px;border-color:${c}88;box-shadow:0 24px 60px #000000d9,0 0 0 1px ${c}22,0 0 44px ${c}30;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;z-index:2;padding:6px 4px;box-sizing:border-box`;
+    d.style.cssText = `position:absolute;left:${n.x * U}px;top:${n.y * U}px;width:${nodes[n.id].w}px;height:${nodes[n.id].h}px;border-color:${c}88;box-shadow:${n.prominent ? `0 24px 60px #000000d9,0 0 0 2px ${c}cc,0 0 80px ${c}80` : `0 24px 60px #000000d9,0 0 0 1px ${c}22,0 0 44px ${c}30`};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;z-index:2;padding:6px 4px;box-sizing:border-box`;
     d.innerHTML = `<div style="font-family:var(--disp);font-weight:700;font-size:${p.labelSize || 24}px;color:var(--text);text-align:center;line-height:1.12">${esc(n.label)}</div>` +
       subs.map((s) => `<div style="font-family:var(--mono);font-size:17px;color:${c};text-align:center;line-height:1.25">${esc(s)}</div>`).join('');
     st.appendChild(d);

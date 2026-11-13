@@ -8,7 +8,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import sharp from 'sharp';
 import { projects } from '../src/content/projects';
-import type { Project } from '../src/content/types';
+import type { ArchView, Project } from '../src/content/types';
 
 const errors: string[] = [];
 const ok = (cond: boolean, msg: string) => {
@@ -112,6 +112,12 @@ const copyStrings = (v: unknown, out: string[] = []): string[] => {
   return out;
 };
 
+const archViewsOf = (p: Project): ArchView[] => {
+  const a = p.architecture;
+  if (!a) return [];
+  return Array.isArray(a) ? a : [a];
+};
+
 const confidentialScan = (p: Project) => {
   const allow = new Set(CONFIDENTIAL_ALLOW[p.slug] ?? []);
   const texts: [string, string][] = [];
@@ -120,13 +126,17 @@ const confidentialScan = (p: Project) => {
   for (const g of p.gallery ?? []) texts.push([g.alt, 'gallery alt']);
   if (p.video) texts.push([p.video.poster.alt, 'video poster alt']);
   if (p.loop) texts.push([p.loop.poster.alt, 'loop poster alt']);
-  if (p.architecture) {
-    texts.push([p.architecture.alt, 'architecture.alt'], [p.architecture.description, 'architecture.description']);
-    const svgPath = pubPath(p.architecture.src);
-    if (p.architecture.src.endsWith('.svg') && existsSync(svgPath)) {
-      const svg = readFileSync(svgPath, 'utf8');
-      for (const m of svg.matchAll(/>([^<]{2,})</g)) texts.push([m[1], 'architecture.svg text']);
-    } else if (!p.architecture.src.endsWith('.svg')) {
+  const views = archViewsOf(p);
+  if (views.length) {
+    for (const v of views) {
+      texts.push([v.alt, 'architecture.alt'], [v.description, 'architecture.description']);
+      const svgPath = pubPath(v.src);
+      if (v.src.endsWith('.svg') && existsSync(svgPath)) {
+        const svg = readFileSync(svgPath, 'utf8');
+        for (const m of svg.matchAll(/>([^<]{2,})</g)) texts.push([m[1], 'architecture.svg text']);
+      }
+    }
+    if (views.some((v) => !v.src.endsWith('.svg'))) {
       // Raster diagrams carry no machine-readable text — scan the mockup
       // config that produced them instead (label/sub/edge label strings).
       const cfgPath = resolve('tools/mockups/configs', `${p.slug}.json`);
@@ -217,9 +227,9 @@ const checkProject = async (p: Project) => {
       `${p.slug}: suspicious youtubeId ${p.video.youtubeId}`,
     );
   }
-  if (p.architecture) {
-    assetExists(p.architecture.src, p.slug);
-    track(p.architecture.src);
+  for (const v of archViewsOf(p)) {
+    assetExists(v.src, p.slug);
+    track(v.src);
   }
   const hookSrc = `/projects/${p.slug}/hook-1920.webp`;
   if (p.copy.en?.hook) {

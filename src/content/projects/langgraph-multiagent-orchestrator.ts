@@ -59,12 +59,26 @@ export const project: Project = {
       height: 582,
     },
   },
-  architecture: {
-    src: `${dir}/architecture.webp`,
-    alt: 'Architecture of the LangGraph Multi-Agent Orchestrator: input guardrail, supervisor LLM router, Send() fan-out to specialist workers, human review interrupt and sealed report assembly',
-    description:
-      'START enters the input_guardrail. Blocked input goes to rejection_output and END; safe input reaches the Supervisor, an LLM router. The Supervisor fans out parallel mandates to workers via Send() and receives their results, then dispatches each specialist — researcher, financial_analyst/compliance_analyst, writer, reviewer — through next_worker edges. Every worker returns to the Supervisor, and the reviewer may bounce back for a revise round. When budget or rounds are exhausted, control passes to human_review (interrupt): edit/fund returns to the Supervisor, approve goes to report_assembler, reject goes to rejection_output. On approval, report_assembler ends the run with citations re-verified and an audit seal.',
-  },
+  architecture: [
+    {
+      src: `${dir}/architecture.webp`,
+      alt: 'Runtime flow of the LangGraph Multi-Agent Orchestrator: input guardrail, supervisor LLM router, Send() fan-out and five specialist workers, human review interrupt, report assembly and output guardrail',
+      description:
+        'START enters input_guardrail. Blocked input goes to rejection_output and END; safe input reaches the Supervisor, an LLM router. Dashed edges are routing decisions, solid edges are fixed wiring. The Supervisor dispatches each specialist — researcher, financial_analyst, compliance_analyst, writer, reviewer — through next_worker, or fans out parallel mandates via Send(); every worker returns to the Supervisor, which decides whether the reviewer\'s verdict needs another revision round. When budget or rounds are exhausted, control passes to human_review (interrupt()): fund returns to the Supervisor with a topped-up budget, edit sends the reviewer\'s feedback plus the human\'s note straight to the writer, approve goes to report_assembler and reject to rejection_output. Once approved, report_assembler re-verifies every citation and seals the transcript, and output_guardrail screens the finished report for prompt leakage before END.',
+      width: 1920,
+      height: 1080,
+      title: 'Runtime flow',
+    },
+    {
+      src: `${dir}/architecture-system.webp`,
+      alt: 'System view of the LangGraph Multi-Agent Orchestrator: console and job runner feeding the agent graph, every agent resolving its prompt from a versioned prompt registry with a metric-gated lifecycle, and prompt provenance flowing to traces and the audit chain',
+      description:
+        'Prompts are injected, not routed: the Prompt Registry is a dependency of every agent, not a graph node, which is why the runtime flow shows no edges to it. The console and REST API submit jobs to the job runner, which drives the LangGraph orchestration. The supervisor, researcher, financial_analyst, compliance_analyst, writer and reviewer each call render(role) on the registry to get their promoted template. The registry reads and writes a PromptStore (SQLite or Postgres) seeded from committed YAML files. New versions come in through the prompts API and the console Registry tab and move through draft → candidate → A/B → promoted → retired, gated by run_ab_eval against the EDD thresholds. Every generation carries the prompt name, version and SHA-256 into trace metadata (LangSmith or Langfuse) and the audit hash-chain.',
+      width: 1920,
+      height: 1080,
+      title: 'System view',
+    },
+  ],
   gallery: [
     {
       src: `${dir}/gallery-1-1200.webp`,
