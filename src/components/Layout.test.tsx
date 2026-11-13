@@ -2,8 +2,11 @@
 import '@testing-library/jest-dom/vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { scrollToId } from '../hooks/useHashScroll';
 import { Navbar } from './Layout';
+
+vi.mock('../hooks/useHashScroll', () => ({ scrollToId: vi.fn() }));
 
 afterEach(cleanup);
 
@@ -51,5 +54,32 @@ describe('Navbar burger', () => {
     expect(btn).toHaveAttribute('aria-expanded', 'false');
     expect(burger).toHaveAttribute('aria-expanded', 'false');
     expect(burger).toHaveFocus();
+  });
+});
+
+describe('Navbar anchors', () => {
+  it('About/Contact point back to the landing from /projects', () => {
+    renderNav('/projects');
+    expect(screen.getByRole('link', { name: 'About' })).toHaveAttribute('href', '/#about');
+    expect(screen.getByRole('link', { name: 'Contact' })).toHaveAttribute('href', '/#contact');
+  });
+
+  it('About/Contact stay local on the landing', () => {
+    renderNav('/');
+    expect(screen.getByRole('link', { name: 'About' })).toHaveAttribute('href', '/#about');
+    expect(screen.getByRole('link', { name: 'Contact' })).toHaveAttribute('href', '/#contact');
+  });
+
+  it('same-hash About click scrolls directly and closes the burger', () => {
+    document.body.insertAdjacentHTML('beforeend', '<div id="about"></div>');
+    renderNav('/#about');
+    const burger = screen.getByRole('button', { name: 'Menu' });
+    fireEvent.click(burger);
+    expect(burger).toHaveAttribute('aria-expanded', 'true');
+
+    fireEvent.click(screen.getByRole('link', { name: 'About' }));
+    expect(scrollToId).toHaveBeenCalledWith('about');
+    expect(burger).toHaveAttribute('aria-expanded', 'false');
+    document.getElementById('about')!.remove();
   });
 });

@@ -7,6 +7,7 @@ import { Projects } from './pages/Projects';
 import { ProjectPage } from './pages/ProjectPage';
 import { NotFound } from './pages/NotFound';
 import { langFromPath, titleForPath } from './i18n';
+import { scrollToId } from './hooks/useHashScroll';
 import layout from './components/layout.module.css';
 
 const ScrollManager = () => {
@@ -15,8 +16,7 @@ const ScrollManager = () => {
     document.documentElement.lang = langFromPath(pathname);
     document.title = titleForPath(pathname);
     if (hash) {
-      const el = document.querySelector(hash);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      scrollToId(hash.slice(1));
       return;
     }
     window.scrollTo(0, 0);

@@ -4,6 +4,7 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { onDemandProjects, openSourceProjects, visibleProjects } from '../content/projects';
 import { copyFor, useLang, switchPath } from '../i18n';
 import { AccessBadge, Button, StatusPill, GlassPanel, Kicker, SplitHeadline, EndCard } from './primitives';
+import { HashLink } from './HashLink';
 import s from './layout.module.css';
 
 const GithubIcon = () => (
@@ -72,10 +73,10 @@ const MegaGroup = ({
   children?: React.ReactNode;
 }) => (
   <div className={s.megaGroup} role="group" aria-labelledby={id}>
-    <Link id={id} to={to} className={s.megaGroupHead} onClick={onNavigate}>
+    <HashLink id={id} to={to} className={s.megaGroupHead} onNavigate={onNavigate}>
       <span className={s.megaGroupName}>{name}</span>
       <span className={s.megaGroupSub}>{sub}</span>
-    </Link>
+    </HashLink>
     {items.map((p, i) => (
       <MegaItem key={p.slug} p={p} num={i + 1} onNavigate={onNavigate} />
     ))}
@@ -83,12 +84,23 @@ const MegaGroup = ({
   </div>
 );
 
-const MegaMenu = ({ dict, l }: { dict: Dict; l: (p: string) => string }) => {
+const MegaMenu = ({
+  dict,
+  l,
+  onNavigate,
+}: {
+  dict: Dict;
+  l: (p: string) => string;
+  onNavigate?: () => void;
+}) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const { pathname } = useLocation();
-  const close = () => setOpen(false);
+  const close = () => {
+    setOpen(false);
+    onNavigate?.();
+  };
 
   // Hover only on devices with a real pointer — on touch the click toggle is
   // the single way in, so emulated mouse events can't race it.
@@ -141,9 +153,9 @@ const MegaMenu = ({ dict, l }: { dict: Dict; l: (p: string) => string }) => {
                 items={onDemandProjects}
                 onNavigate={close}
               >
-                <Link to={`${l('/')}#contact`} className={s.megaEval} onClick={close}>
+                <HashLink to={`${l('/')}#contact`} className={s.megaEval} onNavigate={close}>
                   {dict.nav.evalAccess} →
-                </Link>
+                </HashLink>
               </MegaGroup>
               <MegaGroup
                 id="mega-open-source"
@@ -178,6 +190,13 @@ export const Navbar = () => {
   const burgerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => setMenuOpen(false), [pathname]);
+  const closeMenu = () => setMenuOpen(false);
+
+  // About lives on the landing from every route; Contact uses the local
+  // #contact band when the page renders one (landing, project pages).
+  const stripped = lang === 'es' ? pathname.replace(/^\/es(?=\/|$)/, '') || '/' : pathname;
+  const contactTo =
+    stripped === '/' || stripped.startsWith('/projects/') ? '#contact' : `${l('/')}#contact`;
 
   // Escape closes the burger menu and returns focus to its button.
   useEffect(() => {
@@ -198,16 +217,16 @@ export const Navbar = () => {
           KA<i>_</i>
         </Link>
         <nav id="primary-nav" className={`${s.navLinks} ${menuOpen ? s.open : ''}`} aria-label={dict.a11y.mainNav}>
-          <NavLink to={l('/')} end className={s.navLink}>
+          <NavLink to={l('/')} end className={s.navLink} onClick={closeMenu}>
             {dict.nav.home}
           </NavLink>
-          <MegaMenu dict={dict} l={l} />
-          <a href="#about" className={s.navLink}>
+          <MegaMenu dict={dict} l={l} onNavigate={closeMenu} />
+          <HashLink to={`${l('/')}#about`} className={s.navLink} onNavigate={closeMenu}>
             {dict.nav.about}
-          </a>
-          <a href="#contact" className={s.navLink}>
+          </HashLink>
+          <HashLink to={contactTo} className={s.navLink} onNavigate={closeMenu}>
             {dict.nav.contact}
-          </a>
+          </HashLink>
           <div className={s.langToggle} role="group" aria-label={dict.a11y.language}>
             {(['en', 'es'] as const).map((lg) => (
               <button
@@ -304,7 +323,7 @@ export const ContactBand = ({
             {dict.contact.primary} →
           </Button>
           {showWork && (
-            <Button href="#work" variant="ghost">
+            <Button to="#work" variant="ghost">
               {dict.contact.secondary}
             </Button>
           )}

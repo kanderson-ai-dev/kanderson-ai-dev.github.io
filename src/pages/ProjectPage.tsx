@@ -23,6 +23,7 @@ import {
 } from '../components/primitives';
 import { LiteYouTube } from '../components/LiteYouTube';
 import { ContactBand } from '../components/Layout';
+import { HashLink } from '../components/HashLink';
 import layout from '../components/layout.module.css';
 import s from './pages.module.css';
 
@@ -55,9 +56,9 @@ const SubNav = ({
     <nav className={layout.subnav} aria-label={ariaLabel}>
       <div className={layout.subnavInner}>
         {visible.map((id) => (
-          <a key={id} href={`#${id}`} className={active === id ? layout.active : ''}>
+          <HashLink key={id} to={`#${id}`} className={active === id ? layout.active : ''}>
             {labels[id]}
-          </a>
+          </HashLink>
         ))}
       </div>
     </nav>
@@ -96,10 +97,6 @@ export const ProjectPage = () => {
   const project = slug ? getProject(slug) : undefined;
   const [zoom, setZoom] = useState<Img | null>(null);
   const onClose = useCallback(() => setZoom(null), []);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [slug]);
 
   if (!project) return null;
   const copy = copyFor(project, lang);
@@ -182,7 +179,7 @@ export const ProjectPage = () => {
           </div>
           <div style={{ display: 'flex', gap: '0.9rem', flexWrap: 'wrap' }}>
             {project.video && (
-              <Button href="#demo" variant="primary">
+              <Button to="#demo" variant="primary">
                 {dict.project.watchFilm} →
               </Button>
             )}
@@ -191,7 +188,7 @@ export const ProjectPage = () => {
                 {dict.project.viewGithub}
               </Button>
             ) : project.access === 'on-demand' ? (
-              <Button href="#contact" variant="ghost">
+              <Button to="#contact" variant="ghost">
                 {dict.project.privateCta}
               </Button>
             ) : null}

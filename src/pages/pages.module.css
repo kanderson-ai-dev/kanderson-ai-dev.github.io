@@ -13,6 +13,20 @@
   content-visibility: auto;
   contain-intrinsic-size: auto 600px;
 }
+/* scrollToId sets html.cv-off for one frame so anchor targets lay out at
+   their real height before the offset is computed. */
+:global(.cv-off) .cv {
+  content-visibility: visible;
+}
+
+/* In-page anchor targets land under the sticky chrome without a margin.
+   (:global keeps the ids from being hashed by CSS modules.) */
+:global(:where(#about, #contact, #work, #on-demand, #open-source)) {
+  scroll-margin-top: calc(var(--nav-h) + 16px);
+}
+:global(:where(#overview, #demo, #features, #architecture, #results, #stack)) {
+  scroll-margin-top: calc(var(--nav-h) + var(--subnav-h) + 16px);
+}
 
 /* ---------- Hero ---------- */
 .hero {

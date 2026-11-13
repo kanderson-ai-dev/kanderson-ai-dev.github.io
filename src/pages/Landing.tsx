@@ -22,6 +22,7 @@ import {
 import { Particles } from '../components/Particles';
 import { AmbientLoop } from '../components/AmbientLoop';
 import { ContactBand } from '../components/Layout';
+import { HashLink } from '../components/HashLink';
 import s from './pages.module.css';
 
 const ICONS: Record<string, React.ReactNode> = {
@@ -179,19 +180,19 @@ export const Landing = () => {
             <Button href={l('/projects')} variant="primary">
               {dict.hero.viewProjects} →
             </Button>
-            <Button href="#contact" variant="ghost">
+            <Button to="#contact" variant="ghost">
               {dict.hero.getInTouch}
             </Button>
           </div>
           {onDemandProjects.length > 0 && (
-            <a href="#on-demand" className={s.heroTeaser}>
+            <HashLink to="#on-demand" className={s.heroTeaser}>
               <span className={s.heroTeaserKicker}>{dict.nav.onDemand}</span>
               <AccessBadge label={dict.project.private} />
               <span className={s.heroTeaserTitle}>{copyFor(onDemandProjects[0], lang).title}</span>
               <span className={s.heroTeaserArrow} aria-hidden="true">
                 ↓
               </span>
-            </a>
+            </HashLink>
           )}
         </div>
         <div className={s.scrollCue}>{dict.hero.scroll} ↓</div>

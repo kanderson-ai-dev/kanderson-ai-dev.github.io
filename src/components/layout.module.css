@@ -403,6 +403,9 @@
   content-visibility: auto;
   contain-intrinsic-size: auto 120px;
 }
+:global(.cv-off) .footer {
+  content-visibility: visible;
+}
 .footerInner {
   display: flex;
   align-items: center;
