@@ -5,6 +5,8 @@ import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { Shell } from './App';
 import { projects } from './content/projects';
+import { copyFor, dicts } from './i18n';
+import type { Lang } from './content/types';
 
 export const render = (url: string): string =>
   renderToString(
@@ -15,32 +17,53 @@ export const render = (url: string): string =>
 
 export interface PrerenderRoute {
   path: string;
+  lang: Lang;
   title: string;
+  description: string;
+  ogDescription?: string;
+  ogImage?: string;
   lcpImage?: string;
 }
 
+const SITE = 'https://kaarstenanderson.com';
+
 const flagship = projects.find((p) => p.slug === 'langgraph-multiagent-orchestrator');
 const loopPoster = flagship?.loop ? `/projects/${flagship.slug}/loop-poster.webp` : undefined;
+const siteOg = flagship ? `${SITE}${flagship.ogImage}` : undefined;
 
-const enRoutes: PrerenderRoute[] = [
-  {
-    path: '/',
-    title: 'Kaarsten Anderson — Agentic AI Developer',
-    lcpImage: loopPoster,
-  },
-  { path: '/projects', title: 'Projects — Kaarsten Anderson' },
-  ...projects.map((p) => ({
-    path: `/projects/${p.slug}`,
-    title: `${p.copy.en!.title} — Kaarsten Anderson`,
-    lcpImage: `/projects/${p.slug}/hook-1920.webp`,
-  })),
-];
+const routesFor = (lang: Lang): PrerenderRoute[] => {
+  const d = dicts[lang];
+  const p = (path: string) => (lang === 'es' ? (path === '/' ? '/es' : `/es${path}`) : path);
+  return [
+    {
+      path: p('/'),
+      lang,
+      title: d.meta.siteTitle,
+      description: d.meta.description,
+      ogDescription: d.meta.ogDescription,
+      ogImage: siteOg,
+      lcpImage: loopPoster,
+    },
+    {
+      path: p('/projects'),
+      lang,
+      title: d.meta.projectsTitle,
+      description: d.meta.description,
+      ogDescription: d.meta.ogDescription,
+      ogImage: siteOg,
+    },
+    ...projects.map((proj) => {
+      const copy = copyFor(proj, lang);
+      return {
+        path: p(`/projects/${proj.slug}`),
+        lang,
+        title: `${copy.title} — Kaarsten Anderson`,
+        description: copy.tagline,
+        ogImage: `${SITE}${proj.ogImage}`,
+        lcpImage: `/projects/${proj.slug}/hook-1920.webp`,
+      };
+    }),
+  ];
+};
 
-export const routes: PrerenderRoute[] = [
-  ...enRoutes,
-  ...enRoutes.map((r) => ({
-    path: r.path === '/' ? '/es' : `/es${r.path}`,
-    title: r.title,
-    lcpImage: r.lcpImage,
-  })),
-];
+export const routes: PrerenderRoute[] = [...routesFor('en'), ...routesFor('es')];
