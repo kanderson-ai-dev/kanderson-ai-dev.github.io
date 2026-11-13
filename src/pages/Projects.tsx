@@ -2,14 +2,14 @@
 // and On-demand groups (Plan.md §4, §5.2 + D-OD1/D-OD2).
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useLang } from '../i18n';
+import { copyFor, pick, useLang } from '../i18n';
 import { onDemandProjects, openSourceProjects, visibleProjects } from '../content/projects';
 import type { Project } from '../content/types';
 import { AccessBadge, Badge, Chip, GlassPanel, Reveal, SplitHeadline } from '../components/primitives';
 import s from './pages.module.css';
 
 export const Projects = () => {
-  const { dict, l } = useLang();
+  const { dict, l, lang } = useLang();
   const [tech, setTech] = useState<string | null>(null);
 
   const techs = useMemo(() => {
@@ -25,7 +25,7 @@ export const Projects = () => {
   const flat = visibleProjects.filter(match);
 
   const card = (p: Project) => {
-    const copy = p.copy.en!;
+    const copy = copyFor(p, lang);
     return (
       <Reveal key={p.slug}>
         <GlassPanel hover className={s.card}>
@@ -33,7 +33,7 @@ export const Projects = () => {
             <img
               className={s.cardImg}
               src={p.cardImage.src}
-              alt={p.cardImage.alt}
+              alt={pick(p.cardImage.alt, lang)}
               width={p.cardImage.width}
               height={p.cardImage.height}
               loading="lazy"
@@ -72,7 +72,7 @@ export const Projects = () => {
         />
         <p style={{ color: 'var(--muted)', maxWidth: '60ch', marginTop: '1rem' }}>{dict.projectsPage.subtitle}</p>
       </Reveal>
-      <div className={s.filterRow} role="group" aria-label="filter by technology">
+      <div className={s.filterRow} role="group" aria-label={dict.a11y.filterTech}>
         <button type="button" className={s.filterBtn} aria-pressed={tech === null} onClick={() => setTech(null)}>
           {dict.projectsPage.all}
         </button>

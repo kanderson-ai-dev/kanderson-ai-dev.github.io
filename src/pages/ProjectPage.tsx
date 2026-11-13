@@ -1,7 +1,7 @@
 // /projects/:slug — "the film, scrollable" (Plan.md §6).
 import { Fragment, useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useLang } from '../i18n';
+import { copyFor, pick, useLang } from '../i18n';
 import { getProject, visibleProjects } from '../content/projects';
 import type { Img } from '../content/types';
 import {
@@ -28,7 +28,15 @@ import s from './pages.module.css';
 
 /* ---------------- scroll-spy sub-nav ---------------- */
 
-const SubNav = ({ labels, visible }: { labels: Record<string, string>; visible: string[] }) => {
+const SubNav = ({
+  labels,
+  visible,
+  ariaLabel,
+}: {
+  labels: Record<string, string>;
+  visible: string[];
+  ariaLabel: string;
+}) => {
   const [active, setActive] = useState('overview');
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -44,7 +52,7 @@ const SubNav = ({ labels, visible }: { labels: Record<string, string>; visible: 
     return () => obs.disconnect();
   }, [visible]);
   return (
-    <nav className={layout.subnav} aria-label="sections">
+    <nav className={layout.subnav} aria-label={ariaLabel}>
       <div className={layout.subnavInner}>
         {visible.map((id) => (
           <a key={id} href={`#${id}`} className={active === id ? layout.active : ''}>
@@ -59,6 +67,8 @@ const SubNav = ({ labels, visible }: { labels: Record<string, string>; visible: 
 /* ---------------- Lightbox ---------------- */
 
 const Lightbox = ({ img, onClose }: { img: Img; onClose: () => void }) => {
+  const { dict, lang } = useLang();
+  const alt = pick(img.alt, lang);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
     document.addEventListener('keydown', onKey);
@@ -69,11 +79,11 @@ const Lightbox = ({ img, onClose }: { img: Img; onClose: () => void }) => {
     };
   }, [onClose]);
   return (
-    <div className={s.lightbox} role="dialog" aria-modal="true" aria-label={img.alt} onClick={onClose}>
+    <div className={s.lightbox} role="dialog" aria-modal="true" aria-label={alt} onClick={onClose}>
       <button type="button" className={s.lightboxClose} onClick={onClose} autoFocus>
-        Esc ✕
+        {dict.project.close}
       </button>
-      <img src={img.src} alt={img.alt} width={img.width} height={img.height} onClick={(e) => e.stopPropagation()} />
+      <img src={img.src} alt={alt} width={img.width} height={img.height} onClick={(e) => e.stopPropagation()} />
     </div>
   );
 };
@@ -92,7 +102,7 @@ export const ProjectPage = () => {
   }, [slug]);
 
   if (!project) return null;
-  const copy = (lang === 'es' ? project.copy.es : undefined) ?? project.copy.en!;
+  const copy = copyFor(project, lang);
   const missingEs = lang === 'es' && !project.copy.es;
   const archViews = project.architecture
     ? Array.isArray(project.architecture)
@@ -124,7 +134,7 @@ export const ProjectPage = () => {
 
   return (
     <>
-      <SubNav labels={navLabels} visible={visibleSections} />
+      <SubNav labels={navLabels} visible={visibleSections} ariaLabel={dict.project.sectionsLabel} />
 
       {/* Hook — cold open */}
       {copy.hook && (
@@ -192,7 +202,7 @@ export const ProjectPage = () => {
           <GlassPanel style={{ padding: 0 }}>
             <img
               src={project.heroImage.src}
-              alt={project.heroImage.alt}
+              alt={pick(project.heroImage.alt, lang)}
               width={project.heroImage.width}
               height={project.heroImage.height}
               loading="eager"
@@ -239,8 +249,8 @@ export const ProjectPage = () => {
             <Reveal>
               <LiteYouTube
                 youtubeId={project.video.youtubeId}
-                poster={project.video.poster}
-                title={`${copy.title} — film`}
+                poster={{ ...project.video.poster, alt: pick(project.video.poster.alt, lang) }}
+                title={`${copy.title} ${dict.project.film}`}
                 comingSoonText={dict.project.filmComingSoon}
               />
               {project.video.youtubeId && (
@@ -256,8 +266,13 @@ export const ProjectPage = () => {
         <ActCard>{dict.project.features}</ActCard>
         {copy.features.map((f, i) => (
           <Reveal key={f.title + i} className={`${s.zzRow} ${i % 2 ? s.flip : ''}`}>
-            <button type="button" className={s.featureImg} onClick={() => setZoom(f.image)} aria-label={`${f.image.alt} — enlarge`}>
-              <img src={f.image.src} alt={f.image.alt} width={f.image.width} height={f.image.height} loading="lazy" />
+            <button
+              type="button"
+              className={s.featureImg}
+              onClick={() => setZoom(f.image)}
+              aria-label={`${pick(f.image.alt, lang)} ${dict.project.enlarge}`}
+            >
+              <img src={f.image.src} alt={pick(f.image.alt, lang)} width={f.image.width} height={f.image.height} loading="lazy" />
               <FrameBrackets />
             </button>
             <div>
@@ -281,16 +296,16 @@ export const ProjectPage = () => {
             <SplitHeadline title={dict.project.architecture} size="clamp(1.5rem,3.4vw,2.4rem)" />
             {archViews.map((v) => (
               <Fragment key={v.src}>
-                {v.title && <h3 className={s.archTitle}>{v.title}</h3>}
+                {v.title && <h3 className={s.archTitle}>{pick(v.title, lang)}</h3>}
                 <figure className={s.archWrap}>
-                  <img src={v.src} alt={v.alt} width={v.width ?? 1600} height={v.height ?? 900} loading="lazy" />
+                  <img src={v.src} alt={pick(v.alt, lang)} width={v.width ?? 1600} height={v.height ?? 900} loading="lazy" />
                   <figcaption className={s.archCaption}>
                     {project.access === 'on-demand' ? dict.project.archSourcePrivate : dict.project.archSource}
                   </figcaption>
                 </figure>
                 <details className={s.archDetails}>
                   <summary>{dict.project.archDetails}</summary>
-                  <p>{v.description}</p>
+                  <p>{pick(v.description, lang)}</p>
                 </details>
               </Fragment>
             ))}
@@ -319,9 +334,9 @@ export const ProjectPage = () => {
               <GlassPanel className={s.panelPad}>
                 <Kicker>{copy.baseline.label}</Kicker>
                 <div style={{ display: 'flex', gap: '2.5rem', alignItems: 'baseline', marginTop: '0.9rem', flexWrap: 'wrap' }}>
-                  <Counter value={copy.baseline.pipeline} label="this system" />
+                  <Counter value={copy.baseline.pipeline} label={dict.project.thisSystem} />
                   <span style={{ color: 'var(--muted)', fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.6rem' }}>vs</span>
-                  <Counter value={copy.baseline.baseline} label="baseline" />
+                  <Counter value={copy.baseline.baseline} label={dict.project.baseline} />
                 </div>
                 <p style={{ color: 'var(--muted)', marginTop: '0.8rem', marginBottom: 0 }}>{copy.baseline.note}</p>
               </GlassPanel>
@@ -355,8 +370,8 @@ export const ProjectPage = () => {
             />
             <div className={s.gallery}>
               {project.gallery.map((g) => (
-                <button key={g.src} type="button" onClick={() => setZoom(g)} aria-label={g.alt}>
-                  <img src={g.src} alt={g.alt} width={g.width} height={g.height} loading="lazy" />
+                <button key={g.src} type="button" onClick={() => setZoom(g)} aria-label={pick(g.alt, lang)}>
+                  <img src={g.src} alt={pick(g.alt, lang)} width={g.width} height={g.height} loading="lazy" />
                 </button>
               ))}
             </div>
@@ -385,7 +400,7 @@ export const ProjectPage = () => {
                 <img src={prev.cardImage.src} alt="" width={110} height={69} loading="lazy" />
                 <span>
                   <span className={s.pnLabel}>← {dict.project.previous}</span>
-                  <span className={s.pnTitle} style={{ display: 'block' }}>{prev.copy.en!.title}</span>
+                  <span className={s.pnTitle} style={{ display: 'block' }}>{copyFor(prev, lang).title}</span>
                 </span>
               </GlassPanel>
             </Link>
@@ -397,7 +412,7 @@ export const ProjectPage = () => {
               <GlassPanel hover className={s.pnCard} style={{ justifyContent: 'flex-end', textAlign: 'right' }}>
                 <span>
                   <span className={s.pnLabel}>{dict.project.next} →</span>
-                  <span className={s.pnTitle} style={{ display: 'block' }}>{next.copy.en!.title}</span>
+                  <span className={s.pnTitle} style={{ display: 'block' }}>{copyFor(next, lang).title}</span>
                 </span>
                 <img src={next.cardImage.src} alt="" width={110} height={69} loading="lazy" />
               </GlassPanel>

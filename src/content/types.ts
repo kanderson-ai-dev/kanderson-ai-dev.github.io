@@ -5,9 +5,13 @@ export type Status = 'live' | 'in-development' | 'planned';
 export type Category = 'python' | 'node';
 export type Access = 'open-source' | 'on-demand';
 
+// A text that exists in both languages — or a plain string when it is
+// brand/shared or not translated yet (D-I18N1: all fields get an es value).
+export type Localized = string | Partial<Record<Lang, string>>;
+
 export interface Img {
   src: string;
-  alt: string;
+  alt: Localized;
   width: number;
   height: number;
 }
@@ -19,11 +23,11 @@ export type Tone = 'accent' | 'model' | 'human' | 'danger';
 // `title` renders a small heading above the figure when present.
 export interface ArchView {
   src: string;
-  alt: string;
-  description: string;
+  alt: Localized;
+  description: Localized;
   width?: number;
   height?: number;
-  title?: string;
+  title?: Localized;
 }
 
 export interface ProjectCopy {

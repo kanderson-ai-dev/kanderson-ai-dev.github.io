@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { onDemandProjects, openSourceProjects, visibleProjects } from '../content/projects';
-import { useLang, switchPath } from '../i18n';
+import { copyFor, useLang, switchPath } from '../i18n';
 import { AccessBadge, Button, StatusPill, GlassPanel, Kicker, SplitHeadline, EndCard } from './primitives';
 import s from './layout.module.css';
 
@@ -29,30 +29,30 @@ type Dict = ReturnType<typeof useLang>['dict'];
 const MegaItem = ({
   p,
   num,
-  l,
-  dict,
   onNavigate,
 }: {
   p: (typeof visibleProjects)[number];
   num: number;
-  l: (p: string) => string;
-  dict: Dict;
   onNavigate: () => void;
-}) => (
-  <Link to={l(`/projects/${p.slug}`)} className={s.megaItem} onClick={onNavigate}>
-    <span className={s.megaNum}>{String(num).padStart(2, '0')}</span>
-    <img className={s.megaThumb} src={p.cardImage.src} alt="" width={64} height={40} loading="lazy" />
-    <span className={s.megaTxt}>
-      <span className={s.megaName}>
-        {p.copy.en!.title}
-        {p.access === 'on-demand' && <AccessBadge label={dict.project.private} />}
+}) => {
+  const { dict, l, lang } = useLang();
+  const copy = copyFor(p, lang);
+  return (
+    <Link to={l(`/projects/${p.slug}`)} className={s.megaItem} onClick={onNavigate}>
+      <span className={s.megaNum}>{String(num).padStart(2, '0')}</span>
+      <img className={s.megaThumb} src={p.cardImage.src} alt="" width={64} height={40} loading="lazy" />
+      <span className={s.megaTxt}>
+        <span className={s.megaName}>
+          {copy.title}
+          {p.access === 'on-demand' && <AccessBadge label={dict.project.private} />}
+        </span>
+        <span className={s.megaBlurb} style={{ display: 'block' }}>
+          {copy.cardBlurb}
+        </span>
       </span>
-      <span className={s.megaBlurb} style={{ display: 'block' }}>
-        {p.copy.en!.cardBlurb}
-      </span>
-    </span>
-  </Link>
-);
+    </Link>
+  );
+};
 
 const MegaGroup = ({
   id,
@@ -60,8 +60,6 @@ const MegaGroup = ({
   sub,
   to,
   items,
-  l,
-  dict,
   onNavigate,
   children,
 }: {
@@ -70,8 +68,6 @@ const MegaGroup = ({
   sub: string;
   to: string;
   items: typeof visibleProjects;
-  l: (p: string) => string;
-  dict: Dict;
   onNavigate: () => void;
   children?: React.ReactNode;
 }) => (
@@ -81,7 +77,7 @@ const MegaGroup = ({
       <span className={s.megaGroupSub}>{sub}</span>
     </Link>
     {items.map((p, i) => (
-      <MegaItem key={p.slug} p={p} num={i + 1} l={l} dict={dict} onNavigate={onNavigate} />
+      <MegaItem key={p.slug} p={p} num={i + 1} onNavigate={onNavigate} />
     ))}
     {children}
   </div>
@@ -143,8 +139,6 @@ const MegaMenu = ({ dict, l }: { dict: Dict; l: (p: string) => string }) => {
                 sub={dict.nav.onDemandSub}
                 to={l('/projects#on-demand')}
                 items={onDemandProjects}
-                l={l}
-                dict={dict}
                 onNavigate={close}
               >
                 <Link to={`${l('/')}#contact`} className={s.megaEval} onClick={close}>
@@ -157,14 +151,12 @@ const MegaMenu = ({ dict, l }: { dict: Dict; l: (p: string) => string }) => {
                 sub={dict.nav.openSourceSub}
                 to={l('/projects#open-source')}
                 items={openSourceProjects}
-                l={l}
-                dict={dict}
                 onNavigate={close}
               />
             </div>
           ) : (
             visibleProjects.map((p, i) => (
-              <MegaItem key={p.slug} p={p} num={i + 1} l={l} dict={dict} onNavigate={close} />
+              <MegaItem key={p.slug} p={p} num={i + 1} onNavigate={close} />
             ))
           )}
           <Link to={l('/projects')} className={s.megaAll} onClick={close}>
@@ -202,10 +194,10 @@ export const Navbar = () => {
   return (
     <header className={s.nav}>
       <div className={s.navInner}>
-        <Link to={l('/')} className={s.logo} aria-label="kaarstenanderson.com — home">
+        <Link to={l('/')} className={s.logo} aria-label={dict.a11y.home}>
           KA<i>_</i>
         </Link>
-        <nav id="primary-nav" className={`${s.navLinks} ${menuOpen ? s.open : ''}`} aria-label="Main">
+        <nav id="primary-nav" className={`${s.navLinks} ${menuOpen ? s.open : ''}`} aria-label={dict.a11y.mainNav}>
           <NavLink to={l('/')} end className={s.navLink}>
             {dict.nav.home}
           </NavLink>
@@ -216,7 +208,7 @@ export const Navbar = () => {
           <a href="#contact" className={s.navLink}>
             {dict.nav.contact}
           </a>
-          <div className={s.langToggle} role="group" aria-label="Language">
+          <div className={s.langToggle} role="group" aria-label={dict.a11y.language}>
             {(['en', 'es'] as const).map((lg) => (
               <button
                 key={lg}
@@ -228,7 +220,7 @@ export const Navbar = () => {
               </button>
             ))}
           </div>
-          <a href={GITHUB} target="_blank" rel="noopener noreferrer" className={s.navIcon} aria-label="GitHub — kanderson-ai-dev">
+          <a href={GITHUB} target="_blank" rel="noopener noreferrer" className={s.navIcon} aria-label={dict.a11y.github}>
             <GithubIcon />
           </a>
           <StatusPill tone="accent">{dict.nav.openToWork}</StatusPill>
@@ -237,7 +229,7 @@ export const Navbar = () => {
           type="button"
           ref={burgerRef}
           className={s.burger}
-          aria-label="Menu"
+          aria-label={dict.a11y.menu}
           aria-expanded={menuOpen}
           aria-controls="primary-nav"
           onClick={() => setMenuOpen((v) => !v)}
@@ -262,13 +254,13 @@ export const Footer = () => {
           {dict.footer.developed} Kaarsten Anderson · 2026
         </span>
         <span className={s.footerLinks}>
-          <a href={GITHUB} target="_blank" rel="noopener noreferrer" aria-label="GitHub — kanderson-ai-dev">
+          <a href={GITHUB} target="_blank" rel="noopener noreferrer" aria-label={dict.a11y.github}>
             GitHub
           </a>
-          <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn — Kaarsten Anderson">
+          <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" aria-label={dict.a11y.linkedin}>
             LinkedIn
           </a>
-          <a href={`mailto:${EMAIL}`} aria-label="Email — contact@kaarstenanderson.com">
+          <a href={`mailto:${EMAIL}`} aria-label={dict.a11y.email}>
             Email
           </a>
         </span>

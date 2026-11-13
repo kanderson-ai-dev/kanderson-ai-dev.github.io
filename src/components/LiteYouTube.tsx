@@ -10,7 +10,7 @@ export const LiteYouTube = ({
   comingSoonText,
 }: {
   youtubeId: string | null;
-  poster: Img;
+  poster: Omit<Img, 'alt'> & { alt: string }; // alt arrives already localized
   title: string;
   comingSoonText: string;
 }) => {

@@ -2,6 +2,7 @@
 // Poster first (LCP), video loads after load/idle, never on Save-Data or
 // reduced motion (poster only), visible pause button (WCAG 2.2.2).
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { pick, useLang } from '../i18n';
 import type { Img } from '../content/types';
 
 export const AmbientLoop = ({
@@ -18,6 +19,7 @@ export const AmbientLoop = ({
   playLabel?: string;
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const { lang } = useLang();
   const inView = useRef(false);
   const userPaused = useRef(false);
   const [loadVideo, setLoadVideo] = useState(false);
@@ -88,7 +90,7 @@ export const AmbientLoop = ({
     <div className={className} style={{ position: 'relative', overflow: 'hidden', ...style }}>
       <img
         src={loop.poster.src}
-        alt={loop.poster.alt}
+        alt={pick(loop.poster.alt, lang)}
         width={loop.poster.width}
         height={loop.poster.height}
         loading="eager"

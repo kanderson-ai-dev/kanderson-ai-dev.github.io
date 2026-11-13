@@ -1,5 +1,6 @@
 // Design-system primitives (Plan.md §3.5) — the films' look as React components.
 import { useEffect, useRef, useState, type ReactNode, type CSSProperties } from 'react';
+import { useLang } from '../i18n';
 import type { Tone } from '../content/types';
 import s from './primitives.module.css';
 
@@ -131,14 +132,16 @@ export const StatusPill = ({
   tone?: 'accent' | 'human' | 'muted';
 }) => <span className={`${s.pill} ${tone === 'accent' ? s.pillAccent : tone === 'human' ? s.pillHuman : s.pillMuted}`}>{children}</span>;
 
-export const Badge = ({ status }: { status: 'live' | 'in-development' | 'planned' }) =>
-  status === 'live' ? (
-    <StatusPill tone="accent">live</StatusPill>
+export const Badge = ({ status }: { status: 'live' | 'in-development' | 'planned' }) => {
+  const { dict } = useLang();
+  return status === 'live' ? (
+    <StatusPill tone="accent">{dict.status.live}</StatusPill>
   ) : status === 'in-development' ? (
-    <StatusPill tone="human">in development</StatusPill>
+    <StatusPill tone="human">{dict.status.inDevelopment}</StatusPill>
   ) : (
-    <StatusPill tone="muted">planned</StatusPill>
+    <StatusPill tone="muted">{dict.status.planned}</StatusPill>
   );
+};
 
 // AccessBadge — "Private" lock chip shown wherever an on-demand project appears.
 export const AccessBadge = ({ label }: { label: string }) => (

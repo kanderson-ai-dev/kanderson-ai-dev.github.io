@@ -1,7 +1,7 @@
 // Landing (Plan.md §5): cold open → title → the work → thesis → proof → end card.
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { useLang } from '../i18n';
+import { copyFor, pick, useLang } from '../i18n';
 import { onDemandProjects, openSourceProjects, totals } from '../content/projects';
 import type { Project } from '../content/types';
 import {
@@ -65,14 +65,14 @@ const useFocusRows = () => {
 };
 
 const ShowcaseCard = ({ p, index, num }: { p: Project; index: number; num: number }) => {
-  const { dict, l } = useLang();
-  const copy = p.copy.en!;
+  const { dict, l, lang } = useLang();
+  const copy = copyFor(p, lang);
   const flip = index % 2 === 1;
   return (
     <div className={`${s.zzRow} ${flip ? s.flip : ''}`} data-zz>
       <div className={s.zzMedia}>
         <Link to={l(`/projects/${p.slug}`)} aria-label={copy.title} tabIndex={-1}>
-          <img src={p.cardImage.src} alt={p.cardImage.alt} width={p.cardImage.width} height={p.cardImage.height} loading="lazy" style={{ width: '100%', aspectRatio: '16/10', objectFit: 'cover' }} />
+          <img src={p.cardImage.src} alt={pick(p.cardImage.alt, lang)} width={p.cardImage.width} height={p.cardImage.height} loading="lazy" style={{ width: '100%', aspectRatio: '16/10', objectFit: 'cover' }} />
         </Link>
         <FrameBrackets />
       </div>
@@ -106,7 +106,7 @@ const ShowcaseCard = ({ p, index, num }: { p: Project; index: number; num: numbe
 };
 
 export const Landing = () => {
-  const { dict, l } = useLang();
+  const { dict, l, lang } = useLang();
   const zzRef = useFocusRows();
   const flagship = openSourceProjects.find((p) => p.slug === 'langgraph-multiagent-orchestrator');
   const projectsNote =
@@ -120,13 +120,13 @@ export const Landing = () => {
       ? dict.strip.testsNote
           .replace('{pub}', String(totals.testsPublic))
           .replace('{priv}', String(totals.testsPrivate))
-      : 'pytest · vitest · browser e2e';
+      : dict.strip.testsFallback;
 
   /* Counter strip — measured, not claimed. Sits between the two acts (proof
      right after the product); without on-demand projects it keeps its old
      spot right after the hero. */
   const counterStrip = (
-    <section className={`${s.wrap} ${s.cv}`} aria-label="aggregate figures">
+    <section className={`${s.wrap} ${s.cv}`} aria-label={dict.a11y.figures}>
       <Reveal>
         <div style={{ textAlign: 'center', marginBottom: '1.6rem' }}>
           <SplitHeadline title={dict.strip.headlineA} accent={dict.strip.headlineB} size="clamp(1.6rem,3.5vw,2.4rem)" />
@@ -134,7 +134,7 @@ export const Landing = () => {
         <div className={s.strip}>
           <Counter value={String(totals.projects)} label={dict.strip.projects} note={projectsNote} />
           <Counter value={String(totals.tests)} label={dict.strip.tests} note={testsNote} />
-          <Counter value={totals.topCoverage} label={dict.strip.coverage} note="line coverage, measured in CI" />
+          <Counter value={totals.topCoverage} label={dict.strip.coverage} note={dict.strip.coverageNote} />
         </div>
       </Reveal>
     </section>
@@ -146,7 +146,12 @@ export const Landing = () => {
       <section className={s.hero}>
         {flagship?.loop && (
           <div className={s.heroLoop}>
-            <AmbientLoop loop={flagship.loop} style={{ width: '100%', height: '100%' }} />
+            <AmbientLoop
+              loop={flagship.loop}
+              style={{ width: '100%', height: '100%' }}
+              label={dict.a11y.pauseLoop}
+              playLabel={dict.a11y.playLoop}
+            />
           </div>
         )}
         <GodRays />
@@ -182,7 +187,7 @@ export const Landing = () => {
             <a href="#on-demand" className={s.heroTeaser}>
               <span className={s.heroTeaserKicker}>{dict.nav.onDemand}</span>
               <AccessBadge label={dict.project.private} />
-              <span className={s.heroTeaserTitle}>{onDemandProjects[0].copy.en!.title}</span>
+              <span className={s.heroTeaserTitle}>{copyFor(onDemandProjects[0], lang).title}</span>
               <span className={s.heroTeaserArrow} aria-hidden="true">
                 ↓
               </span>
@@ -199,7 +204,7 @@ export const Landing = () => {
           <>
             <div id="on-demand">
               <ActCard>{dict.showcase.actOnDemand}</ActCard>
-              <section className={`${s.wrap} ${s.cv}`} aria-label="on-demand projects">
+              <section className={`${s.wrap} ${s.cv}`} aria-label={dict.a11y.onDemand}>
                 <Reveal>
                   <p style={{ color: 'var(--muted)', maxWidth: '60ch', fontSize: '1.02rem' }}>
                     {dict.showcase.onDemandIntro}
@@ -216,7 +221,7 @@ export const Landing = () => {
         ) : (
           <ActCard>{dict.showcase.act}</ActCard>
         )}
-        <section id="open-source" className={`${s.wrap} ${s.cv}`} aria-label="open-source projects">
+        <section id="open-source" className={`${s.wrap} ${s.cv}`} aria-label={dict.a11y.openSource}>
           {openSourceProjects.map((p, i) => (
             <ShowcaseCard key={p.slug} p={p} index={onDemandProjects.length + i} num={i + 1} />
           ))}
