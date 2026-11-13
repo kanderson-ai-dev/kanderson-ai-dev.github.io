@@ -43,14 +43,14 @@ export interface ProjectCopy {
   }[]; // 3-6 features; title + titleAccent render as a SplitHeadline
   results?: { label: string; value: string; note: string; kind: 'measured' | 'simulated' }[];
   baseline?: { label: string; pipeline: string; baseline: string; note: string };
-  limitations?: string | string[];
+  limitations?: string | string[]; // open-source only; forbidden on on-demand projects (D-OD8)
   galleryHeadline?: { title: string; accent: string }; // overrides the shared gallery headline
   cta?: { headline: string; text: string };
 }
 
 export interface Project {
   slug: string;
-  access: Access; // 'on-demand' ⇒ repoUrl: null and copy.en.cta required
+  access: Access; // 'on-demand' ⇒ repoUrl: null, copy.en.cta required, no limitations
   order: number; // landing/menu order within its access group
   category: Category;
   status: Status;

@@ -183,15 +183,10 @@ export const project: Project = {
         baseline: '0.11',
         note: 'Pipeline vs a single bare prompt · live scorecard · 36 synthetic tickets · one run · 2026-10-14',
       },
-      limitations: [
-        'The scorecard is a regression gate over 36 synthetic tickets from a single live run, not a capability claim.',
-        'The demo runs on a synthetic store. A real deployment connects to your order system and is validated on your own anonymized tickets before go-live.',
-        'The default store is single-node; a multi-operator deployment moves to a shared database.',
-      ],
       galleryHeadline: { title: 'And it\'s a real', accent: 'product.' },
       cta: {
         headline: 'Want this adapted to your store?',
-        text: 'Private project. I tailor the policy engine, order source and channels to your store. Tell me about your setup.',
+        text: 'Private project. I connect it to your order system, tune the policy engine and refund cap to your rules, validate it on your own anonymized tickets before go-live, and scale it to your whole support team. Tell me about your setup.',
       },
     },
     es: undefined,

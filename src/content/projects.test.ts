@@ -52,10 +52,15 @@ describe('project registry', () => {
     }
   });
 
-  it('on-demand projects have no repo URL and a get-in-touch CTA', () => {
+  it('on-demand projects have no repo URL, a get-in-touch CTA and no limitations (D-OD8)', () => {
     for (const p of projects.filter((p) => p.access === 'on-demand')) {
       expect(p.repoUrl).toBeNull();
       expect(p.copy.en?.cta).toBeTruthy();
+      expect(p.copy.en?.limitations).toBeUndefined();
+      expect(p.copy.es?.limitations).toBeUndefined();
+    }
+    for (const p of projects.filter((p) => p.access === 'open-source')) {
+      expect(p.copy.en?.limitations?.length ?? 0).toBeGreaterThanOrEqual(1);
     }
   });
 

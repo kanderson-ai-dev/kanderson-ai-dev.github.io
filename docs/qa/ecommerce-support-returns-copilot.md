@@ -210,3 +210,18 @@ Counter strips EN/ES unchanged (`2148` · `486 private`/`privados` ·
 Confidentiality pass by eye on both new assets: no identifiers anywhere.
 Before/after evidence: `update-architecture/` (before webps + section and
 gallery/lightbox screenshots at 1280 and 375).
+
+## Update 2026-11-13 — limitations block removed per D-OD8; CTA text updated
+
+On-demand pages no longer render the "Known limitations" panel (D-OD8): the
+scope gaps (synthetic store, single-node store, validation on client
+tickets) are rollout steps of a paid engagement, phrased as value in
+`cta.text`. The earlier "limitations block" note in the Step-9 rendered-page
+QA refers to the page as it was then and is kept as history. Evidence labels
+(`kind`, `EvidenceChip`, baseline caption) are unchanged.
+
+Evidence: `dod8/` — results strip → baseline panel → gallery at 1440 and 375
+(no amber panel, no leftover gap, `scrollWidth` == viewport width), CTA band
+with the new rollout text, and `agentic-rag-system` keeping its limitations
+panel. Negative check: re-adding one `limitations` item fails
+`validate:content` and `projects.test.ts` with the D-OD8 message.

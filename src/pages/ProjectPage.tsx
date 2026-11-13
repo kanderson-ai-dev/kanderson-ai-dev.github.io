@@ -327,7 +327,7 @@ export const ProjectPage = () => {
               </GlassPanel>
             </Reveal>
           )}
-          {copy.limitations && (
+          {project.access === 'open-source' && copy.limitations && (
             <Reveal>
               <div className={s.limitPanel} style={{ background: 'var(--panel)', borderRadius: 'var(--radius)' }}>
                 <strong style={{ color: 'var(--warn)', fontFamily: 'var(--font-mono)', fontSize: '0.8rem', letterSpacing: '0.12em' }}>

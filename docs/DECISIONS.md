@@ -83,3 +83,11 @@ of D-OD2 stands.
 
 A project may publish several architecture views (e.g. runtime flow +
 system view); each is transcribed from its own README diagram.
+
+## D-OD8 — On-demand pages show no limitations panel
+
+Owner decision 2026-11-13: on-demand projects are adapted to each client
+under contract, so scope gaps are rollout steps, not product limits. The
+page shows no "Known limitations" block. Metric evidence labels (`kind`,
+`EvidenceChip`, baseline caption) are unaffected and remain mandatory.
+Open-source pages keep their limitations block.

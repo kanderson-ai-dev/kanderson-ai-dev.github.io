@@ -169,13 +169,18 @@ const checkProject = async (p: Project) => {
   if (p.access === 'on-demand') {
     ok(p.repoUrl === null, `${p.slug}: on-demand projects must keep repoUrl null`);
     ok(!!p.copy.en?.cta, `${p.slug}: on-demand projects need a copy.en.cta (get-in-touch band)`);
+    ok(
+      !p.copy.en?.limitations && !p.copy.es?.limitations,
+      `${p.slug}: on-demand projects must not publish limitations (D-OD8)`,
+    );
     confidentialScan(p);
+  } else {
+    ok((p.copy.en?.limitations?.length ?? 0) >= 1, `${p.slug}: limitations must be stated honestly`);
   }
   ok(!!p.copy.en?.problem && !!p.copy.en?.solution, `${p.slug}: missing problem/solution`);
   ok((p.copy.en?.howItWorks?.length ?? 0) >= 3, `${p.slug}: needs >=3 how-it-works steps`);
   ok((p.copy.en?.features?.length ?? 0) >= 3, `${p.slug}: needs >=3 features`);
   ok((p.copy.en?.results?.length ?? 0) >= 3, `${p.slug}: needs >=3 measured results`);
-  ok((p.copy.en?.limitations?.length ?? 0) >= 1, `${p.slug}: limitations must be stated honestly`);
 
   const used = new Set<string>();
   const track = (src: string | undefined) => {
