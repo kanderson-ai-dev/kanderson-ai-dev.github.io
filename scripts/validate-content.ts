@@ -8,7 +8,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import sharp from 'sharp';
 import { projects } from '../src/content/projects';
-import type { ArchView, Project } from '../src/content/types';
+import type { ArchView, Localized, Project } from '../src/content/types';
 
 const errors: string[] = [];
 const ok = (cond: boolean, msg: string) => {
@@ -25,14 +25,24 @@ const WEBP_MAX = 250 * 1024;
 const WEBP_MAX_WIDE = 400 * 1024; // for 1600px-wide assets
 const RATIO_169 = 16 / 9;
 
+// Localized fields (D-I18N1): every object-form field must carry an es value;
+// a plain string is the brand/shared or decorative case and stays allowed.
+const locStrings = (l: Localized | undefined): string[] =>
+  typeof l === 'string' ? [l] : l ? Object.values(l).filter((s): s is string => typeof s === 'string') : [];
+
+const checkLoc = (l: Localized | undefined, where: string) => {
+  if (l !== undefined && typeof l !== 'string')
+    ok(typeof l.es === 'string', `${where}: localized text lacks an es value`);
+};
+
 const checkImg = async (
-  img: { src: string; alt: string; width: number; height: number } | undefined,
+  img: { src: string; alt: Localized; width: number; height: number } | undefined,
   where: string,
 ) => {
   if (!img) return;
   assetExists(img.src, where);
   ok(img.width > 0 && img.height > 0, `${where}: image needs explicit dimensions — ${img.src}`);
-  ok(typeof img.alt === 'string' && img.alt.length >= 0, `${where}: image needs an alt string — ${img.src}`);
+  checkLoc(img.alt, `${where} alt (${img.src})`);
   if (!existsSync(pubPath(img.src))) return;
   const meta = await sharp(pubPath(img.src)).metadata();
   ok(
@@ -121,15 +131,20 @@ const archViewsOf = (p: Project): ArchView[] => {
 const confidentialScan = (p: Project) => {
   const allow = new Set(CONFIDENTIAL_ALLOW[p.slug] ?? []);
   const texts: [string, string][] = [];
+  const pushLoc = (l: Localized | undefined, where: string) => {
+    for (const s of locStrings(l)) texts.push([s, where]);
+  };
   for (const str of copyStrings(p.copy)) texts.push([str, 'copy']);
-  texts.push([p.cardImage.alt, 'cardImage.alt'], [p.heroImage.alt, 'heroImage.alt']);
-  for (const g of p.gallery ?? []) texts.push([g.alt, 'gallery alt']);
-  if (p.video) texts.push([p.video.poster.alt, 'video poster alt']);
-  if (p.loop) texts.push([p.loop.poster.alt, 'loop poster alt']);
+  pushLoc(p.cardImage.alt, 'cardImage.alt');
+  pushLoc(p.heroImage.alt, 'heroImage.alt');
+  for (const g of p.gallery ?? []) pushLoc(g.alt, 'gallery alt');
+  if (p.video) pushLoc(p.video.poster.alt, 'video poster alt');
+  if (p.loop) pushLoc(p.loop.poster.alt, 'loop poster alt');
   const views = archViewsOf(p);
   if (views.length) {
     for (const v of views) {
-      texts.push([v.alt, 'architecture.alt'], [v.description, 'architecture.description']);
+      pushLoc(v.alt, 'architecture.alt');
+      pushLoc(v.description, 'architecture.description');
       const svgPath = pubPath(v.src);
       if (v.src.endsWith('.svg') && existsSync(svgPath)) {
         const svg = readFileSync(svgPath, 'utf8');
@@ -161,9 +176,96 @@ const confidentialScan = (p: Project) => {
   }
 };
 
+// Bilingual parity (D-I18N1): es mirrors the en shape — same counts, identical
+// metrics/image sources, product name unchanged, same length limits.
+const asList = (v: string | string[] | undefined) => (v === undefined ? [] : Array.isArray(v) ? v : [v]);
+
+const checkBilingual = (p: Project) => {
+  ok(p.languages.includes('en'), `${p.slug}: languages must list 'en'`);
+  ok(p.languages.includes('es'), `${p.slug}: languages must list 'es'`);
+  ok(!!p.copy.es, `${p.slug}: missing copy.es`);
+  const enC = p.copy.en;
+  const esC = p.copy.es;
+  if (!enC || !esC) return;
+
+  ok(esC.title === enC.title, `${p.slug}: copy.es.title must keep the product name unchanged — got "${esC.title}"`);
+  ok(enC.tagline.length <= 140, `${p.slug}: copy.en tagline > 140 chars (${enC.tagline.length})`);
+  ok(esC.tagline.length <= 140, `${p.slug}: copy.es tagline > 140 chars (${esC.tagline.length})`);
+  ok(enC.cardBlurb.length <= 120, `${p.slug}: copy.en cardBlurb > 120 chars (${enC.cardBlurb.length})`);
+  ok(esC.cardBlurb.length <= 120, `${p.slug}: copy.es cardBlurb > 120 chars (${esC.cardBlurb.length})`);
+
+  if (enC.hook || esC.hook) {
+    ok(!!esC.hook, `${p.slug}: copy.en has a hook but copy.es lacks one`);
+    for (const [lang, h] of [['en', enC.hook], ['es', esC.hook]] as const) {
+      if (h)
+        ok(
+          h.line.length + h.accent.length <= 70,
+          `${p.slug}: copy.${lang} hook line+accent > 70 chars (${h.line.length + h.accent.length})`,
+        );
+    }
+  }
+
+  ok(
+    esC.howItWorks.length === enC.howItWorks.length,
+    `${p.slug}: howItWorks count differs — en ${enC.howItWorks.length} vs es ${esC.howItWorks.length}`,
+  );
+  ok(
+    esC.features.length === enC.features.length,
+    `${p.slug}: features count differs — en ${enC.features.length} vs es ${esC.features.length}`,
+  );
+  for (const [i, eF] of enC.features.entries()) {
+    const sF = esC.features[i];
+    if (!sF) break;
+    const where = `${p.slug}/feature-${i + 1}`;
+    ok(sF.image.src === eF.image.src, `${where}: es image src differs from en (${sF.image.src} vs ${eF.image.src})`);
+    ok(
+      sF.image.width === eF.image.width && sF.image.height === eF.image.height,
+      `${where}: es image dimensions differ from en`,
+    );
+    const eT = eF.title.length + (eF.titleAccent?.length ?? 0);
+    const sT = sF.title.length + (sF.titleAccent?.length ?? 0);
+    ok(eT <= 60, `${where}: en title+accent > 60 chars (${eT})`);
+    ok(sT <= 60, `${where}: es title+accent > 60 chars (${sT})`);
+  }
+
+  ok(
+    (esC.results?.length ?? 0) === (enC.results?.length ?? 0),
+    `${p.slug}: results count differs — en ${enC.results?.length ?? 0} vs es ${esC.results?.length ?? 0}`,
+  );
+  for (const [i, eR] of (enC.results ?? []).entries()) {
+    const sR = esC.results?.[i];
+    if (!sR) break;
+    ok(
+      sR.value === eR.value && sR.kind === eR.kind,
+      `${p.slug}/result-${i + 1}: es value/kind must match en (${sR.value}/${sR.kind} vs ${eR.value}/${eR.kind})`,
+    );
+  }
+
+  if (enC.baseline || esC.baseline) {
+    ok(!!esC.baseline, `${p.slug}: copy.en has a baseline but copy.es lacks one`);
+    if (enC.baseline && esC.baseline) {
+      ok(
+        esC.baseline.pipeline === enC.baseline.pipeline && esC.baseline.baseline === enC.baseline.baseline,
+        `${p.slug}: copy.es baseline numbers must match en (${esC.baseline.pipeline}/${esC.baseline.baseline} vs ${enC.baseline.pipeline}/${enC.baseline.baseline})`,
+      );
+    }
+  }
+
+  ok(
+    asList(esC.limitations).length === asList(enC.limitations).length,
+    `${p.slug}: limitations count differs — en ${asList(enC.limitations).length} vs es ${asList(esC.limitations).length}`,
+  );
+  ok(!!enC.cta === !!esC.cta, `${p.slug}: cta presence differs between en and es`);
+  ok(
+    !!enC.galleryHeadline === !!esC.galleryHeadline,
+    `${p.slug}: galleryHeadline presence differs between en and es`,
+  );
+};
+
 const checkProject = async (p: Project) => {
   ok(!!p.slug && /^[a-z0-9-]+$/.test(p.slug), `${p.slug}: invalid slug`);
   ok(!!p.copy.en?.title, `${p.slug}: missing English copy/title`);
+  checkBilingual(p);
   ok(p.access === 'open-source' || p.access === 'on-demand', `${p.slug}: missing/invalid access group`);
   ok(Number.isFinite(p.tests) && p.tests > 0, `${p.slug}: needs a real automated-test count`);
   if (p.access === 'on-demand') {
@@ -235,6 +337,9 @@ const checkProject = async (p: Project) => {
   for (const v of archViewsOf(p)) {
     assetExists(v.src, p.slug);
     track(v.src);
+    checkLoc(v.alt, `${p.slug} architecture alt`);
+    checkLoc(v.description, `${p.slug} architecture description`);
+    checkLoc(v.title, `${p.slug} architecture title`);
   }
   const hookSrc = `/projects/${p.slug}/hook-1920.webp`;
   if (p.copy.en?.hook) {

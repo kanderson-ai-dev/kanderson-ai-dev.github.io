@@ -91,3 +91,20 @@ under contract, so scope gaps are rollout steps, not product limits. The
 page shows no "Known limitations" block. Metric evidence labels (`kind`,
 `EvidenceChip`, baseline caption) are unaffected and remain mandatory.
 Open-source pages keep their limitations block.
+
+## D-I18N1 — Every published project ships full Spanish copy
+
+All five published projects carry `copy.en` **and** `copy.es` and declare
+`languages: ['en', 'es']`. Product names stay in English; all prose, image
+`alt`s, architecture titles/descriptions and section copy are translated
+(fields typed `Localized` — a plain string is the brand/shared or decorative
+case). Numbers, `results[].value`/`kind`, baseline figures, feature image
+sources/dimensions and `measured`/`simulated` honesty labels are identical
+across languages — enforced by `scripts/validate-content.ts` parity checks
+and the registry tests in `src/content/projects.test.ts`. `copyFor` still
+falls back to English defensively. Neutral Spanish, informal "tú"; technical
+terms stay English (guardrail, prompt, scorecard, LangGraph, MCP, CI).
+Prerendered `/es/...` routes get Spanish title/description/OG tags,
+`og:locale`, canonical and `hreflang` en/es/x-default alternates plus
+sitemap `xhtml:link` entries; client navigation keeps `<html lang>` and
+`<title>` in sync via `titleForPath`.

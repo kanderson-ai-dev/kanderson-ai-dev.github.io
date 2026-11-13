@@ -9,6 +9,7 @@ import {
 } from './projects';
 import { en } from '../i18n/en';
 import { es } from '../i18n/es';
+import { copyFor, pick } from '../i18n';
 
 const shape = (obj: unknown): unknown =>
   Array.isArray(obj)
@@ -79,8 +80,8 @@ describe('project registry', () => {
       if (!a) continue;
       for (const v of Array.isArray(a) ? a : [a]) {
         expect(v.src.startsWith(`/projects/${p.slug}/`)).toBe(true);
-        expect(v.alt.length).toBeGreaterThan(0);
-        expect(v.description.length).toBeGreaterThan(0);
+        expect(pick(v.alt, 'en').length).toBeGreaterThan(0);
+        expect(pick(v.description, 'en').length).toBeGreaterThan(0);
       }
     }
   });
@@ -109,5 +110,80 @@ describe('project registry', () => {
 describe('i18n dictionaries', () => {
   it('es mirrors the en dictionary shape', () => {
     expect(shape(es)).toEqual(shape(en));
+  });
+});
+
+describe('bilingual project copy (D-I18N1)', () => {
+  it('declares en + es on every project', () => {
+    for (const p of projects) {
+      expect(p.languages).toContain('en');
+      expect(p.languages).toContain('es');
+    }
+  });
+
+  it('mirrors the en copy shape in es: same fields, same counts', () => {
+    for (const p of projects) {
+      expect(p.copy.es, p.slug).toBeDefined();
+      expect(shape(p.copy.es)).toEqual(shape(p.copy.en));
+    }
+  });
+
+  it('keeps product names, metric values and image sources identical across languages', () => {
+    for (const p of projects) {
+      const enC = p.copy.en!;
+      const esC = p.copy.es!;
+      expect(esC.title).toBe(enC.title);
+      expect(esC.features.map((f) => f.image.src)).toEqual(enC.features.map((f) => f.image.src));
+      for (const [i, r] of (enC.results ?? []).entries()) {
+        expect(esC.results?.[i]?.value).toBe(r.value);
+        expect(esC.results?.[i]?.kind).toBe(r.kind);
+      }
+      if (enC.baseline) {
+        expect(esC.baseline?.pipeline).toBe(enC.baseline.pipeline);
+        expect(esC.baseline?.baseline).toBe(enC.baseline.baseline);
+      }
+    }
+  });
+
+  it('resolves an es value for every localized image and architecture text', () => {
+    for (const p of projects) {
+      for (const [where, l] of [
+        ['cardImage.alt', p.cardImage.alt],
+        ['heroImage.alt', p.heroImage.alt],
+        ...((p.gallery ?? []).map((g, i) => [`gallery[${i}].alt`, g.alt] as const)),
+      ]) {
+        if (typeof l !== 'string') expect(l.es, `${p.slug} ${where}`).toBeDefined();
+      }
+      const views = p.architecture ? (Array.isArray(p.architecture) ? p.architecture : [p.architecture]) : [];
+      for (const v of views) {
+        for (const l of [v.alt, v.description, v.title]) {
+          if (l !== undefined && typeof l !== 'string') expect(l.es, p.slug).toBeDefined();
+        }
+      }
+    }
+  });
+
+  it('catches a broken es copy: dropping a how-it-works step changes the shape', () => {
+    const p = projects.find((x) => x.copy.es);
+    expect(p).toBeDefined();
+    const broken = { ...p!.copy.es!, howItWorks: p!.copy.es!.howItWorks.slice(1) };
+    expect(shape(broken)).not.toEqual(shape(p!.copy.en));
+  });
+});
+
+describe('i18n helpers', () => {
+  it('pick resolves localized strings per language with English fallback', () => {
+    expect(pick('plain', 'es')).toBe('plain');
+    expect(pick({ en: 'hello', es: 'hola' }, 'es')).toBe('hola');
+    expect(pick({ en: 'hello', es: 'hola' }, 'en')).toBe('hello');
+    expect(pick({ en: 'hello' }, 'es')).toBe('hello');
+    expect(pick(undefined, 'en')).toBe('');
+  });
+
+  it('copyFor returns the language copy and falls back to English', () => {
+    for (const p of projects) {
+      expect(copyFor(p, 'en')).toBe(p.copy.en);
+      expect(copyFor(p, 'es')).toBe(p.copy.es ?? p.copy.en);
+    }
   });
 });
