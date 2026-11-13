@@ -4,51 +4,54 @@
       "name": "architecture",
       "template": "architecture",
       "size": [
-        1600,
-        900
+        1920,
+        1080
       ],
       "out": "architecture.webp",
       "params": {
-        "unit": 90,
-        "nodeH": 96,
-        "edgeLabelSize": 18,
+        "unit": 100,
+        "nodeH": 95,
+        "edgeLabelSize": 16,
+        "labelSize": 22,
         "kicker": "SOURCE: PROJECT README · MERMAID TRANSCRIBED",
+        "kickerX": 40,
+        "kickerY": 38,
         "nodes": [
           {
             "id": "start",
             "label": "START",
             "shape": "pill",
             "type": "dim",
-            "x": 6.8,
-            "y": 0.2,
+            "x": 7.75,
+            "y": 0.15,
             "w": 150,
-            "h": 76
+            "h": 66
           },
           {
             "id": "guardrail",
             "label": "guardrail",
             "shape": "shield",
-            "x": 6.65,
-            "y": 1.2,
-            "w": 270,
+            "x": 7.05,
+            "y": 1.05,
+            "w": 290,
             "h": 105
           },
           {
             "id": "errorout",
             "label": "error_output",
             "type": "danger",
-            "x": 11.0,
+            "x": 13.6,
             "y": 1.2,
-            "w": 240,
+            "w": 260,
             "h": 90
           },
           {
             "id": "budget",
             "label": "budget_gate",
             "shape": "shield",
-            "x": 6.65,
-            "y": 2.7,
-            "w": 270,
+            "x": 7.05,
+            "y": 2.55,
+            "w": 290,
             "h": 105
           },
           {
@@ -58,26 +61,28 @@
               "vector · Pinecone/Chroma",
               "graph · Neo4j/NetworkX"
             ],
-            "x": 6.55,
-            "y": 4.15,
+            "x": 7.05,
+            "y": 4.05,
             "w": 290,
-            "h": 110
+            "h": 115
           },
           {
             "id": "grade",
             "label": "grade_documents",
             "type": "model",
-            "x": 6.65,
-            "y": 5.55,
-            "w": 270
+            "x": 7.1,
+            "y": 5.65,
+            "w": 280,
+            "h": 95
           },
           {
             "id": "transform",
             "label": "transform_query",
-            "x": 2.2,
+            "type": "model",
+            "x": 11.6,
             "y": 4.6,
-            "w": 240,
-            "h": 90
+            "w": 230,
+            "h": 92
           },
           {
             "id": "review",
@@ -92,26 +97,49 @@
             "id": "generate",
             "label": "generate",
             "type": "model",
-            "x": 6.65,
-            "y": 6.9,
-            "w": 270
+            "x": 7.1,
+            "y": 7.0,
+            "w": 280,
+            "h": 95
           },
           {
             "id": "outguard",
             "label": "output_guardrail",
             "shape": "shield",
-            "x": 6.65,
-            "y": 8.2,
-            "w": 270,
+            "x": 7.05,
+            "y": 8.4,
+            "w": 290,
             "h": 105
+          },
+          {
+            "id": "registry",
+            "label": "prompt_registry",
+            "sub": [
+              "promoted versions"
+            ],
+            "shape": "cyl",
+            "prominent": true,
+            "x": 12.5,
+            "y": 7.25,
+            "w": 260,
+            "h": 105
+          },
+          {
+            "id": "ab",
+            "label": "A/B gate + audit chain",
+            "shape": "shield",
+            "x": 15.55,
+            "y": 7.15,
+            "w": 280,
+            "h": 125
           },
           {
             "id": "end",
             "label": "END",
             "shape": "pill",
             "type": "dim",
-            "x": 11.0,
-            "y": 7.3,
+            "x": 11.1,
+            "y": 8.55,
             "w": 150,
             "h": 80
           }
@@ -128,19 +156,31 @@
             "kind": "gate",
             "loff": [
               0,
-              -36
+              -24
             ]
           },
           {
             "from": "errorout",
-            "to": "end"
+            "to": "end",
+            "via": [
+              [
+                18.9,
+                1.65
+              ],
+              [
+                18.9,
+                9.15
+              ]
+            ],
+            "fromSide": "r",
+            "toSide": "r"
           },
           {
             "from": "guardrail",
             "to": "budget",
             "label": "safe",
             "loff": [
-              28,
+              30,
               0
             ]
           },
@@ -149,9 +189,21 @@
             "to": "end",
             "label": "exhausted",
             "kind": "gate",
+            "via": [
+              [
+                18.5,
+                3.08
+              ],
+              [
+                18.5,
+                8.75
+              ]
+            ],
+            "fromSide": "r",
+            "toSide": "r",
             "loff": [
-              20,
-              -8
+              -350,
+              -123
             ]
           },
           {
@@ -159,7 +211,7 @@
             "to": "retrieve",
             "label": "ok",
             "loff": [
-              28,
+              30,
               0
             ]
           },
@@ -171,9 +223,8 @@
             "from": "grade",
             "to": "generate",
             "label": "enough docs",
-            "fs": 16,
             "loff": [
-              90,
+              60,
               0
             ]
           },
@@ -181,19 +232,42 @@
             "from": "grade",
             "to": "transform",
             "label": "retry available",
-            "fs": 13,
+            "via": [
+              [
+                10.35,
+                5.9
+              ],
+              [
+                10.35,
+                4.3
+              ],
+              [
+                12.7,
+                4.3
+              ]
+            ],
+            "fromSide": "r",
+            "toSide": "t",
             "loff": [
-              -8,
-              -56
+              20,
+              -14
             ]
           },
           {
             "from": "transform",
             "to": "retrieve",
-            "loff": [
-              -15,
-              -30
-            ]
+            "via": [
+              [
+                13.3,
+                3.9
+              ],
+              [
+                9.6,
+                3.9
+              ]
+            ],
+            "fromSide": "t",
+            "toSide": "t"
           },
           {
             "from": "grade",
@@ -202,32 +276,74 @@
               "retries",
               "exhausted"
             ],
-            "fs": 16
+            "fs": 15,
+            "via": [
+              [
+                3.9,
+                5.95
+              ]
+            ],
+            "toSide": "t",
+            "loff": [
+              0,
+              -26
+            ]
           },
           {
             "from": "review",
             "to": "generate",
             "label": "approve",
-            "fs": 16
+            "color": "human",
+            "loff": [
+              0,
+              -10
+            ]
           },
           {
             "from": "review",
             "to": "retrieve",
             "label": "retry",
-            "fs": 16,
+            "color": "human",
+            "via": [
+              [
+                1.5,
+                6.6
+              ],
+              [
+                1.5,
+                4.9
+              ],
+              [
+                6.9,
+                4.9
+              ]
+            ],
+            "fromSide": "l",
+            "toSide": "l",
             "loff": [
-              0,
-              8
+              195,
+              -16
             ]
           },
           {
             "from": "review",
             "to": "outguard",
             "label": "override",
-            "fs": 16,
+            "color": "human",
+            "via": [
+              [
+                3.45,
+                8.9
+              ],
+              [
+                6.95,
+                8.9
+              ]
+            ],
+            "toSide": "l",
             "loff": [
-              6,
-              8
+              80,
+              -16
             ]
           },
           {
@@ -237,6 +353,160 @@
           {
             "from": "outguard",
             "to": "end"
+          },
+          {
+            "from": "registry",
+            "to": "grade",
+            "label": "grade_documents",
+            "kind": "dotted",
+            "color": "model",
+            "fs": 15,
+            "via": [
+              [
+                10.9,
+                7.8
+              ],
+              [
+                10.9,
+                6.3
+              ]
+            ],
+            "fromSide": "l",
+            "toSide": "r",
+            "loff": [
+              90,
+              -125
+            ]
+          },
+          {
+            "from": "registry",
+            "to": "generate",
+            "label": "generate_answer",
+            "kind": "dotted",
+            "color": "model",
+            "fs": 15,
+            "via": [
+              [
+                10.9,
+                7.8
+              ],
+              [
+                10.9,
+                7.48
+              ]
+            ],
+            "fromSide": "l",
+            "toSide": "r",
+            "loff": [
+              66,
+              -68
+            ]
+          },
+          {
+            "from": "registry",
+            "to": "transform",
+            "label": "transform_query",
+            "kind": "dotted",
+            "color": "model",
+            "fs": 15,
+            "via": [
+              [
+                13.4,
+                6.15
+              ],
+              [
+                12.7,
+                6.15
+              ]
+            ],
+            "fromSide": "t",
+            "toSide": "b",
+            "loff": [
+              45,
+              -20
+            ]
+          },
+          {
+            "from": "registry",
+            "to": "outguard",
+            "label": "protected texts",
+            "kind": "dotted",
+            "color": "model",
+            "fs": 15,
+            "via": [
+              [
+                10.9,
+                7.8
+              ],
+              [
+                10.9,
+                8.6
+              ]
+            ],
+            "fromSide": "l",
+            "toSide": "r",
+            "loff": [
+              80,
+              42
+            ]
+          },
+          {
+            "from": "ab",
+            "to": "registry",
+            "label": "promote / rollback",
+            "fs": 15,
+            "via": [
+              [
+                16.6,
+                6.6
+              ],
+              [
+                13.8,
+                6.6
+              ]
+            ],
+            "fromSide": "t",
+            "toSide": "t",
+            "loff": [
+              0,
+              -18
+            ]
+          }
+        ],
+        "legend": [
+          {
+            "text": "dotted = prompt from the registry",
+            "cls": "model",
+            "x": 70,
+            "y": 1030,
+            "size": 16
+          },
+          {
+            "text": "turquoise = code / gate",
+            "x": 440,
+            "y": 1030,
+            "size": 16
+          },
+          {
+            "text": "violet = model",
+            "cls": "model",
+            "x": 720,
+            "y": 1030,
+            "size": 16
+          },
+          {
+            "text": "amber = human",
+            "cls": "human",
+            "x": 920,
+            "y": 1030,
+            "size": 16
+          },
+          {
+            "text": "red = hard gate",
+            "cls": "danger",
+            "x": 1110,
+            "y": 1030,
+            "size": 16
           }
         ]
       }

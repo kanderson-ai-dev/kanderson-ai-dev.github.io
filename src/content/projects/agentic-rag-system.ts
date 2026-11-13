@@ -51,9 +51,11 @@ export const project: Project = {
   },
   architecture: {
     src: `${dir}/architecture.webp`,
-    alt: 'Architecture of the Agentic RAG system: input guardrail, budget gate, hybrid vector and graph retrieval, document grading loop, human review and output guardrail',
+    alt: 'Architecture of the Agentic RAG system: input guardrail, budget gate, hybrid vector and graph retrieval, document grading loop, human review and output guardrail, with a versioned prompt registry feeding every model step',
     description:
-      'START enters the guardrail: blocked input goes to error_output and END; safe input continues to the budget_gate — an exhausted budget ends the run, ok reaches hybrid retrieve (vector · Pinecone/Chroma plus graph · Neo4j/NetworkX) then grade_documents. With enough docs the flow goes to generate; with retry available it rewrites via transform_query and retrieves again; retries exhausted escalates to human_review — approve generates, retry retrieves again, override goes straight to output_guardrail. Generated answers always pass the output_guardrail before END.',
+      'START enters the guardrail: blocked input goes to error_output and END; safe input continues to the budget_gate — an exhausted budget ends the run, ok reaches hybrid retrieve (vector · Pinecone/Chroma plus graph · Neo4j/NetworkX) then grade_documents. With enough docs the flow goes to generate; with retry available it rewrites via transform_query and retrieves again; retries exhausted escalates to human_review — approve generates, retry retrieves again, override goes straight to output_guardrail. Generated answers always pass the output_guardrail before END. Dotted edges are prompts injected from the prompt_registry, which holds the promoted version of each prompt: grade_documents, transform_query and generate resolve theirs at call time, and the output_guardrail reads the same protected texts to catch prompt leakage. New versions reach the registry only through the A/B gate and its hash-chained audit chain, which promote or roll back a version without a restart.',
+    width: 1920,
+    height: 1080,
   },
   copy: {
     en: {
