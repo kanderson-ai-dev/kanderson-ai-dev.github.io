@@ -131,7 +131,10 @@
     align-items: stretch;
     gap: 0.2rem;
     padding: 1rem;
-    background: rgba(5, 7, 9, 0.97);
+    max-height: calc(100dvh - var(--nav-h));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: var(--bg-deep);
     border-bottom: 1px solid var(--line);
   }
 }
@@ -143,25 +146,36 @@
 .megaBtn {
   composes: navLink;
 }
-.megaPanel {
-  position: absolute;
-  top: calc(100% + 10px);
-  left: 50%;
-  transform: translateX(-50%) translateY(8px);
-  min-width: 520px;
-  padding: 1rem;
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    opacity 0.22s var(--ease),
-    transform 0.22s var(--ease),
-    visibility 0.22s;
+.megaCaret {
+  display: inline-block;
 }
-.mega.open .megaPanel,
-.megaPanel:focus-within {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
+@media (prefers-reduced-motion: no-preference) {
+  .megaCaret { transition: transform 0.2s var(--ease); }
+}
+@media (min-width: 901px) {
+  .megaPanel {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    min-width: 520px;
+    padding: 1rem;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.22s var(--ease),
+      transform 0.22s var(--ease),
+      visibility 0.22s;
+  }
+  .mega.open .megaPanel,
+  .megaPanel:focus-within {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+.megaPanelInner {
+  padding: 0.6rem;
 }
 .megaItem {
   display: flex;
@@ -209,7 +223,7 @@
   display: block;
   margin-top: 0.25rem;
   font-size: 0.72rem;
-  color: var(--dim);
+  color: var(--muted);
   white-space: nowrap;
 }
 .megaEval {
@@ -219,6 +233,22 @@
   font-size: 0.74rem;
   letter-spacing: 0.08em;
   color: var(--accent);
+}
+/* Tablet: anchor the floating panel to the right edge of the full-width
+   nav (not the button) so it never overflows the viewport. */
+@media (min-width: 901px) and (max-width: 1023px) {
+  .mega { position: static; }
+  .megaPanel,
+  .mega.open .megaPanel,
+  .megaPanel:focus-within {
+    left: auto;
+    right: clamp(1rem, 3vw, 2rem);
+    transform: translateY(8px);
+  }
+  .mega.open .megaPanel,
+  .megaPanel:focus-within {
+    transform: translateY(0);
+  }
 }
 @media (min-width: 1024px) {
   .megaPanelWide { min-width: 780px; }
@@ -281,6 +311,88 @@
   letter-spacing: 0.12em;
   color: var(--accent);
   text-align: center;
+}
+
+/* Mobile: the mega menu becomes an inline accordion row in the burger
+   column, not a floating panel. Placed after the desktop rules so equal
+   specificity resolves for the mobile layout. */
+@media (max-width: 900px) {
+  .mega { width: 100%; }
+  .megaBtn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+  }
+  .mega.open .megaCaret { transform: rotate(180deg); }
+  .megaPanel,
+  .mega.open .megaPanel,
+  .megaPanel:focus-within {
+    position: static;
+    transform: none;
+    min-width: 0;
+    width: 100%;
+    padding: 0.25rem 0 0.5rem;
+    opacity: 1;
+    visibility: visible;
+    transition: none;
+  }
+  .megaPanel { display: none; }
+  .mega.open .megaPanel { display: block; }
+  .megaPanelInner {
+    background: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+  .megaGroups { gap: 0; }
+  .megaGroup + .megaGroup {
+    margin-top: 0.8rem;
+    padding-top: 0.8rem;
+  }
+  .megaGroupHead {
+    border-left: 2px solid var(--accent);
+    border-radius: 0;
+    background: rgba(0, 245, 212, 0.06);
+    padding: 0.6rem 0.8rem;
+    margin-bottom: 0.3rem;
+  }
+  .megaGroupName { font-size: 0.8rem; }
+  .megaGroupSub { white-space: normal; }
+  .megaItem {
+    min-height: 44px;
+    padding: 0.5rem 0.6rem;
+    gap: 0.7rem;
+  }
+  .megaThumb {
+    width: 48px;
+    height: 30px;
+  }
+  .megaBlurb {
+    max-width: none;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .megaEval {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    margin: 0.3rem 0.6rem 0;
+  }
+  .megaAll {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    margin-top: 0.8rem;
+  }
+}
+@media (max-width: 400px) {
+  .megaNum { display: none; }
 }
 
 /* ---------- Footer ---------- */

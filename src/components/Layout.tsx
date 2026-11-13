@@ -91,13 +91,21 @@ const MegaMenu = ({ dict, l }: { dict: Dict; l: (p: string) => string }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const { pathname } = useLocation();
   const close = () => setOpen(false);
 
+  // Hover only on devices with a real pointer — on touch the click toggle is
+  // the single way in, so emulated mouse events can't race it.
+  const canHover = () =>
+    typeof matchMedia !== 'undefined' && matchMedia('(hover: hover) and (pointer: fine)').matches;
+
   const enter = () => {
+    if (!canHover()) return;
     clearTimeout(timer.current);
     timer.current = setTimeout(() => setOpen(true), 120);
   };
   const leave = () => {
+    if (!canHover()) return;
     clearTimeout(timer.current);
     timer.current = setTimeout(() => setOpen(false), 200);
   };
@@ -108,15 +116,25 @@ const MegaMenu = ({ dict, l }: { dict: Dict; l: (p: string) => string }) => {
     return () => document.removeEventListener('keydown', onKey);
   }, []);
 
+  // Route changes (project links, group hash links) collapse the menu.
+  useEffect(() => setOpen(false), [pathname]);
+
   const grouped = onDemandProjects.length > 0;
 
   return (
     <div ref={ref} className={`${s.mega} ${open ? s.open : ''}`} onMouseEnter={enter} onMouseLeave={leave}>
-      <button type="button" className={s.navLink} aria-expanded={open} aria-haspopup="true" onClick={() => setOpen((v) => !v)}>
-        {dict.nav.projects} ▾
+      <button
+        type="button"
+        className={s.megaBtn}
+        aria-expanded={open}
+        aria-haspopup="true"
+        aria-controls="mega-panel"
+        onClick={() => setOpen((v) => !v)}
+      >
+        {dict.nav.projects} <span className={s.megaCaret} aria-hidden="true">▾</span>
       </button>
-      <div className={`${s.megaPanel} ${grouped ? s.megaPanelWide : ''}`}>
-        <GlassPanel style={{ padding: '0.6rem' }}>
+      <div id="mega-panel" className={`${s.megaPanel} ${grouped ? s.megaPanelWide : ''}`}>
+        <GlassPanel className={s.megaPanelInner}>
           {grouped ? (
             <div className={s.megaGroups}>
               <MegaGroup
@@ -165,8 +183,21 @@ export const Navbar = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const burgerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => setMenuOpen(false), [pathname]);
+
+  // Escape closes the burger menu and returns focus to its button.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      setMenuOpen(false);
+      burgerRef.current?.focus();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [menuOpen]);
 
   return (
     <header className={s.nav}>
@@ -174,7 +205,7 @@ export const Navbar = () => {
         <Link to={l('/')} className={s.logo} aria-label="kaarstenanderson.com — home">
           KA<i>_</i>
         </Link>
-        <nav className={`${s.navLinks} ${menuOpen ? s.open : ''}`} aria-label="Main">
+        <nav id="primary-nav" className={`${s.navLinks} ${menuOpen ? s.open : ''}`} aria-label="Main">
           <NavLink to={l('/')} end className={s.navLink}>
             {dict.nav.home}
           </NavLink>
@@ -204,9 +235,11 @@ export const Navbar = () => {
         </nav>
         <button
           type="button"
+          ref={burgerRef}
           className={s.burger}
           aria-label="Menu"
           aria-expanded={menuOpen}
+          aria-controls="primary-nav"
           onClick={() => setMenuOpen((v) => !v)}
         >
           <i />

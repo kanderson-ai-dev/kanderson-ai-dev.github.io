@@ -34,7 +34,7 @@ export default tseslint.config(
   },
   {
     // page.evaluate callbacks run in the browser context
-    files: ['scripts/qa-screens.mjs'],
+    files: ['scripts/qa-*.mjs'],
     languageOptions: {
       globals: { ...globals.node, ...globals.browser },
     },
