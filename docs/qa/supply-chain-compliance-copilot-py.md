@@ -249,6 +249,11 @@ The earlier architecture/results evidence above (`sec-arch.png`,
 - Lighthouse mobile (`fix-v2/lighthouse-mobile.json`): perf **98**,
   a11y **100**, best-practices **96**, SEO **100** — budgets pass
   (≥90 / ≥95).
+- `video-1280.png` / `video-playing-1280.png` — film embed live since
+  `youtubeId: 'ecESpjB2e54'`: poster + neon play button + captions note,
+  click swaps in the `youtube-nocookie` iframe (oEmbed title verified:
+  "Supply Chain Compliance Co-Pilot: Every Supplier Audit Finding,
+  Proven", 1:15, CC available).
 
 **Checks run:** `npm run lint` ✓ · `npm run typecheck` ✓ · `npm test`
 (38 tests, 6 files) ✓ · `npm run build` (prerender 16 routes + SEO guard) ✓ ·
@@ -256,8 +261,10 @@ The earlier architecture/results evidence above (`sec-arch.png`,
 
 ## Pending (owner actions — not doable from the repo)
 
-- YouTube upload of `promo-v2-master-1080p60.mp4` (unlisted) + EN/ES caption
-  files + `youtube-thumbnail.png`; then set `video.youtubeId`.
+- ~~YouTube upload of `promo-v2-master-1080p60.mp4` (unlisted) + EN/ES caption
+  files + `youtube-thumbnail.png`; then set `video.youtubeId`.~~ Done:
+  `youtubeId: 'ecESpjB2e54'` — oEmbed title verified 2026-11-16
+  ("Supply Chain Compliance Co-Pilot: Every Supplier Audit Finding, Proven").
 - User watch-and-listen review of the v2 film (PLAN_upgrade G6).
 - 2160p master, 30 s / 15 s cuts (PLAN_upgrade open items).
 - Search Console resubmission/indexing requests after deploy (Step 0.5 list).

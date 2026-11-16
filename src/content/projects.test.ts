@@ -101,6 +101,7 @@ describe('project registry', () => {
   });
 
   it('embeds the published films', () => {
+    expect(getProject('supply-chain-compliance-copilot-py')?.video?.youtubeId).toBe('ecESpjB2e54');
     expect(getProject('ecommerce-support-returns-copilot')?.video?.youtubeId).toBe('Btnuw-aMXtA');
     expect(getProject('langgraph-multiagent-orchestrator')?.video?.youtubeId).toBe('4rsN0tXLVS4');
     expect(getProject('mcp-agent-toolkit-py')?.video?.youtubeId).toBe('3UZH518sOVg');
