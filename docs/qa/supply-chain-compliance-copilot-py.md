@@ -317,7 +317,10 @@ percentage tiles and the baseline band as buyer proof; removed entirely per
   files + `youtube-thumbnail.png`; then set `video.youtubeId`.~~ Done:
   `youtubeId: 'ecESpjB2e54'` — oEmbed title verified 2026-11-16
   ("Supply Chain Compliance Co-Pilot: Every Supplier Audit Finding, Proven").
-- User watch-and-listen review of the v2 film (PLAN_upgrade G6).
-- 2160p master, 30 s / 15 s cuts (PLAN_upgrade open items).
+- ~~User watch-and-listen review of the v2 film (PLAN_upgrade G6).~~ Done
+  2026-11-16 (owner approved).
+- ~~2160p master, 30 s / 15 s cuts~~ — declined by the owner 2026-11-16;
+  the 1080p60 master is final.
 - Search Console resubmission/indexing requests after deploy (Step 0.5 list).
-- `git push` / deploy authorization.
+- ~~`git push` / deploy authorization.~~ Done 2026-11-16 — deployed and
+  verified live.
