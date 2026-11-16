@@ -48,5 +48,13 @@
       { "name": "proof", "composition": "PromoUpgrade", "frame": 4943, "scene": "proof counters" },
       { "name": "loop-poster", "composition": "UpgradeLoop", "frame": 330, "note": "hold phase, all five edges drawn" }
     ]
+  },
+  "supply-chain-compliance-copilot-py": {
+    "props": "projects/supply-chain-compliance-copilot-py-v2.json",
+    "stills": [
+      { "name": "hook", "composition": "PromoCompliance2", "frame": 1070, "scene": "page — audit excerpt, ~70%" },
+      { "name": "title", "composition": "PromoCompliance2", "frame": 1564, "scene": "reveal title card, ~70%" },
+      { "name": "loop-poster", "composition": "PromoCompliance2", "frame": 2500, "scene": "evidence — finding tied to its sentence" }
+    ]
   }
 }

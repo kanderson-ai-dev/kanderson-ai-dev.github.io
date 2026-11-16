@@ -4,8 +4,9 @@ import { project as mcp } from './mcp-agent-toolkit-py';
 import { project as rag } from './agentic-rag-system';
 import { project as api } from './agentic-api';
 import { project as ecom } from './ecommerce-support-returns-copilot';
+import { project as scc } from './supply-chain-compliance-copilot-py';
 
-export const projects: Project[] = [langgraph, mcp, rag, api, ecom].sort(
+export const projects: Project[] = [langgraph, mcp, rag, api, ecom, scc].sort(
   (a, b) =>
     (a.access === 'on-demand' ? 0 : 1) - (b.access === 'on-demand' ? 0 : 1) ||
     a.order - b.order,

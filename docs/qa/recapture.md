@@ -100,3 +100,34 @@ Scan: no paths, keys, real UUIDs, or foreign hostnames in rendered assets.
 `OPENAI_API_KEY` / `RATE_LIMIT_PER_MINUTE` appear verbatim because they are
 part of the real API's public contract (committed `.env.example`, readiness
 response body) — names only, no values.
+
+## supply-chain-compliance-copilot-py (comp `PromoCompliance2`, props `supply-chain-compliance-copilot-py-v2.json`)
+
+New page — no current assets. All product imagery comes from the
+fixture-backed demo run (`scc_demo_env.py`, token `demo-token`, captures in
+`_raw/supply-chain-compliance-copilot-py/`); film stills are Remotion
+renders at `--scale=2`, `burnSubtitles:false`.
+
+| Slot | File | Source | Status |
+|---|---|---|---|
+| hero 1600×1000 | `hero-1600.webp` | hero-trio: `07-overview` (laptop), `08-tablet-768`, `09-mobile-390` | done |
+| card 800×500 | `card-800.webp` | card-thumb on `07-overview` (case heading + five worker lanes) | done |
+| og 1200×630 | `og.png` | og-card on `07-overview` | done |
+| poster 1920×1080 | `video-poster-1920.webp` | Remotion still `title` @frame 1564 (reveal beat) | done |
+| hook 1920×1080 | `hook-1920.webp` | Remotion still `hook` @frame 1070 (page beat) | done |
+| loop 1280×720 | `loop.webm` / `loop.mp4` / `loop-poster.webp` | Remotion render frames 2430–2660 (evidence beat), forward+reverse seamless concat; poster = still @2500 | done |
+| feature 1 finding | `feature-1-1600.webp` | detail-zoom on `01-finding-evidence` (finding row + verbatim quote) | done |
+| feature 2 specialists | `feature-2-1600.webp` | feature-browser on `02-fanout-lanes` | done |
+| feature 3 risk | `feature-3-1600.webp` | feature-browser on `03-risk-panel` | done |
+| feature 4 CAPA gate | `feature-4-1600.webp` | feature-browser on `04-capa-modal` | done |
+| feature 5 report | `feature-5-1600.webp` | feature-browser on `05-report` | done |
+| feature 6 blocked | `feature-6-1600.webp` | detail-zoom on `06a-blocked` (guardrail rejection) | done |
+| gallery 1 event log | `gallery-1-1200.webp` | feature-browser on `10-gallery-eventlog` | done |
+| gallery 2 CAPA table | `gallery-2-1200.webp` | feature-browser on `11-gallery-capa` | done |
+| gallery 3 registry | `gallery-3-1200.webp` | feature-browser on `12-gallery-registry` (list view only, no prompt text) | done |
+| gallery 4 mobile report | `gallery-4-1200.webp` | contain on `mobile-report-crop` (derived 780px slice of `13-mobile-report`) | done |
+| architecture | `architecture.webp` | architecture template, humanized README graph | done |
+
+Pending recaptures: none for this page. Outstanding film work (2160p master,
+30 s/15 s cuts, YouTube upload + ID, owner watch-and-listen) is tracked in
+`docs/qa/supply-chain-compliance-copilot-py.md`.

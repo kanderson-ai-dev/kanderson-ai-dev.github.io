@@ -21,6 +21,7 @@ const shape = (obj: unknown): unknown =>
 describe('project registry', () => {
   it('contains the published projects: on-demand group first, then open-source, each by order', () => {
     expect(projects.map((p) => p.slug)).toEqual([
+      'supply-chain-compliance-copilot-py',
       'ecommerce-support-returns-copilot',
       'langgraph-multiagent-orchestrator',
       'mcp-agent-toolkit-py',

@@ -17,7 +17,7 @@ const gal = (n: number, alt: Localized) => ({
 export const project: Project = {
   slug: 'ecommerce-support-returns-copilot',
   access: 'on-demand',
-  order: 1,
+  order: 2,
   category: 'node',
   status: 'live',
   year: 2026,

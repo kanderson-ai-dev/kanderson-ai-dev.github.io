@@ -1,0 +1,326 @@
+{
+  "jobs": [
+    {
+      "name": "hero",
+      "template": "hero-trio",
+      "size": [1600, 1000],
+      "out": "hero-1600.webp",
+      "params": {
+        "kicker": "COMPLIANCE COPILOT · OPERATOR CONSOLE",
+        "kickerY": 16,
+        "center": {
+          "image": "_raw/supply-chain-compliance-copilot-py/07-overview.png",
+          "imgSize": [2880, 1800],
+          "crop": [330, 160, 2220, 1420],
+          "tag": "REAL APP · FIXTURE RUN"
+        },
+        "left": {
+          "image": "_raw/supply-chain-compliance-copilot-py/08-tablet-768.png",
+          "imgSize": [1536, 2048],
+          "crop": [30, 170, 1476, 1150],
+          "tag": "REPORT · TABLET"
+        },
+        "right": {
+          "image": "_raw/supply-chain-compliance-copilot-py/09-mobile-390.png",
+          "imgSize": [780, 1688],
+          "crop": [20, 430, 740, 1160],
+          "tag": "CASE · PHONE"
+        },
+        "centerWidth": 1050,
+        "sideWidth": 640,
+        "sideY": 330,
+        "centerY": 150
+      }
+    },
+    {
+      "name": "card",
+      "template": "card-thumb",
+      "size": [800, 500],
+      "out": "card-800.webp",
+      "params": {
+        "chrome": true,
+        "image": "_raw/supply-chain-compliance-copilot-py/07-overview.png",
+        "imgSize": [2880, 1800],
+        "crop": [330, 270, 2220, 560],
+        "winWidth": 820,
+        "lift": 10,
+        "kickerY": 16,
+        "kicker": "COMPLIANCE COPILOT"
+      }
+    },
+    {
+      "name": "og",
+      "template": "og-card",
+      "size": [1200, 630],
+      "out": "og.png",
+      "params": {
+        "image": "_raw/supply-chain-compliance-copilot-py/07-overview.png",
+        "imgSize": [2880, 1800],
+        "crop": [330, 270, 2220, 780],
+        "winWidth": 560,
+        "imgX": 40,
+        "tag": "REAL APP · FIXTURE RUN",
+        "kicker": "PRIVATE · ON DEMAND",
+        "title": "Supply Chain Compliance Co-Pilot",
+        "titleSize": 40,
+        "tagline": "AI agents that review supplier audits — and prove every finding.",
+        "taglineSize": 21
+      }
+    },
+    {
+      "name": "video-poster",
+      "template": "video-poster",
+      "size": [1920, 1080],
+      "out": "video-poster-1920.webp",
+      "params": {
+        "image": "_raw/supply-chain-compliance-copilot-py/stills/title.png",
+        "imgSize": [3840, 2160]
+      }
+    },
+    {
+      "name": "hook",
+      "template": "card-thumb",
+      "size": [1920, 1080],
+      "out": "hook-1920.webp",
+      "params": {
+        "image": "_raw/supply-chain-compliance-copilot-py/stills/hook.png",
+        "imgSize": [3840, 2160]
+      }
+    },
+    {
+      "name": "loop-poster",
+      "template": "card-thumb",
+      "size": [1280, 720],
+      "out": "loop-poster.webp",
+      "params": {
+        "image": "_raw/supply-chain-compliance-copilot-py/stills/loop-poster.png",
+        "imgSize": [3840, 2160]
+      }
+    },
+    {
+      "name": "feature-1",
+      "template": "detail-zoom",
+      "size": [1600, 900],
+      "out": "feature-1-1600.webp",
+      "params": {
+        "image": "_raw/supply-chain-compliance-copilot-py/01-finding-evidence.png",
+        "imgSize": [2880, 1800],
+        "crop": [918, 880, 1590, 200],
+        "zoomPos": [225, 370],
+        "zoomW": 1150,
+        "label": "EVERY FINDING QUOTES THE AUDIT — VERBATIM",
+        "tag": "CONSOLE · FINDINGS",
+        "bgScale": 0.5
+      }
+    },
+    {
+      "name": "feature-2",
+      "template": "feature-browser",
+      "size": [1600, 900],
+      "out": "feature-2-1600.webp",
+      "params": {
+        "image": "_raw/supply-chain-compliance-copilot-py/02-fanout-lanes.png",
+        "imgSize": [2132, 294],
+        "winWidth": 1400,
+        "tag": "CONSOLE · WORKER LANES",
+        "kicker": "ONE SUPERVISOR · FIVE SPECIALISTS"
+      }
+    },
+    {
+      "name": "feature-3",
+      "template": "feature-browser",
+      "size": [1600, 900],
+      "out": "feature-3-1600.webp",
+      "params": {
+        "image": "_raw/supply-chain-compliance-copilot-py/03-risk-panel.png",
+        "imgSize": [1412, 520],
+        "winWidth": 1250,
+        "tag": "CONSOLE · RISK BREAKDOWN"
+      }
+    },
+    {
+      "name": "feature-4",
+      "template": "feature-browser",
+      "size": [1600, 900],
+      "out": "feature-4-1600.webp",
+      "params": {
+        "image": "_raw/supply-chain-compliance-copilot-py/04-capa-modal.png",
+        "imgSize": [2880, 1800],
+        "crop": [660, 90, 1585, 660],
+        "winWidth": 1360,
+        "tag": "CONSOLE · CAPA REVIEW"
+      }
+    },
+    {
+      "name": "feature-5",
+      "template": "feature-browser",
+      "size": [1600, 900],
+      "out": "feature-5-1600.webp",
+      "params": {
+        "image": "_raw/supply-chain-compliance-copilot-py/05-report.png",
+        "imgSize": [2880, 1800],
+        "crop": [330, 30, 2220, 1030],
+        "winWidth": 1360,
+        "tag": "CONSOLE · STAKEHOLDER REPORT"
+      }
+    },
+    {
+      "name": "feature-6",
+      "template": "detail-zoom",
+      "size": [1600, 900],
+      "out": "feature-6-1600.webp",
+      "params": {
+        "image": "_raw/supply-chain-compliance-copilot-py/06a-blocked.png",
+        "imgSize": [2880, 1800],
+        "crop": [350, 1465, 2200, 300],
+        "zoomPos": [200, 360],
+        "zoomW": 1200,
+        "label": "BLOCKED BEFORE ANY ANALYSIS RUNS",
+        "tag": "INTAKE · BLOCKED",
+        "bgScale": 0.5
+      }
+    },
+    {
+      "name": "gallery-1",
+      "template": "feature-browser",
+      "size": [1200, 750],
+      "out": "gallery-1-1200.webp",
+      "params": {
+        "image": "_raw/supply-chain-compliance-copilot-py/10-gallery-eventlog.png",
+        "imgSize": [2880, 1800],
+        "crop": [330, 790, 2220, 990],
+        "winWidth": 1100,
+        "tag": "CONSOLE · EVENT LOG"
+      }
+    },
+    {
+      "name": "gallery-2",
+      "template": "feature-browser",
+      "size": [1200, 750],
+      "out": "gallery-2-1200.webp",
+      "params": {
+        "image": "_raw/supply-chain-compliance-copilot-py/11-gallery-capa.png",
+        "imgSize": [2880, 1800],
+        "crop": [330, 880, 2220, 900],
+        "winWidth": 1150,
+        "tag": "CONSOLE · CORRECTIVE ACTIONS"
+      }
+    },
+    {
+      "name": "gallery-3",
+      "template": "feature-browser",
+      "size": [1200, 750],
+      "out": "gallery-3-1200.webp",
+      "params": {
+        "image": "_raw/supply-chain-compliance-copilot-py/12-gallery-registry.png",
+        "imgSize": [2880, 1800],
+        "crop": [330, 240, 2220, 640],
+        "winWidth": 1200,
+        "tag": "CONSOLE · PROMPT REGISTRY"
+      }
+    },
+    {
+      "name": "gallery-4",
+      "template": "contain",
+      "size": [1200, 750],
+      "out": "gallery-4-1200.webp",
+      "params": {
+        "image": "_raw/supply-chain-compliance-copilot-py/mobile-report-crop.png",
+        "imgSize": [780, 1690],
+        "pad": 46,
+        "chrome": true,
+        "tag": "CONSOLE · PHONE"
+      }
+    },
+    {
+      "name": "architecture",
+      "template": "architecture",
+      "size": [1920, 1080],
+      "out": "architecture.webp",
+      "params": {
+        "unit": 100,
+        "nodeW": 230,
+        "nodeH": 96,
+        "edgeLabelSize": 18,
+        "labelSize": 22,
+        "kicker": "SUPERVISOR–WORKERS + HUMAN GATE",
+        "kickerX": 40,
+        "kickerY": 40,
+        "groups": [
+          {
+            "x": 12.5,
+            "y": 0.3,
+            "w": 2.9,
+            "h": 3.5,
+            "label": "FOUR AREAS — PARALLEL"
+          }
+        ],
+        "nodes": [
+          { "id": "UP", "label": "Audit upload", "sub": "operator console · API", "type": "dim", "x": 0.4, "y": 4.4, "w": 210, "h": 96 },
+          { "id": "G", "label": "Injection screen", "sub": "document = data, never orders", "type": "code", "x": 3.1, "y": 4.4, "w": 280, "h": 110 },
+          { "id": "REJ", "label": "Rejected", "sub": "no worker runs", "type": "danger", "x": 3.35, "y": 6.3, "w": 230, "h": 90 },
+          { "id": "S", "label": "Supervisor", "sub": "model router", "type": "model", "x": 6.5, "y": 4.4, "w": 250, "h": 110, "prominent": true },
+          { "id": "M", "label": "Supplier mapper", "sub": "country/sector/tier", "type": "model", "x": 9.7, "y": 0.55, "w": 240, "h": 86 },
+          { "id": "R", "label": "Risk scorer", "sub": "score computed in code", "type": "code", "x": 9.7, "y": 1.68, "w": 240, "h": 86 },
+          { "id": "C", "label": "Compliance analyst", "sub": "four areas at once", "type": "model", "x": 9.7, "y": 2.81, "w": 240, "h": 86 },
+          { "id": "W", "label": "CAPA writer", "sub": "drafts corrective actions", "type": "model", "x": 9.7, "y": 3.94, "w": 240, "h": 86 },
+          { "id": "P", "label": "Report writer", "sub": "stakeholder report", "type": "model", "x": 9.7, "y": 5.07, "w": 240, "h": 86 },
+          { "id": "P1", "label": "Labour standards", "type": "model", "x": 12.85, "y": 0.72, "w": 200, "h": 56 },
+          { "id": "P2", "label": "Health & safety", "type": "model", "x": 12.85, "y": 1.38, "w": 200, "h": 56 },
+          { "id": "P3", "label": "Environment", "type": "model", "x": 12.85, "y": 2.04, "w": 200, "h": 56 },
+          { "id": "P4", "label": "Business ethics", "type": "model", "x": 12.85, "y": 2.7, "w": 200, "h": 56 },
+          { "id": "MERGE", "label": "Merge + quote verifier", "sub": "deterministic · verbatim", "type": "code", "x": 12.5, "y": 4.1, "w": 290, "h": 104 },
+          { "id": "REM", "label": "Removed", "sub": "quote not in audit", "type": "danger", "x": 16.1, "y": 0.5, "w": 210, "h": 90 },
+          { "id": "REP", "label": "Report", "sub": "findings · evidence · actions", "type": "code", "x": 16.1, "y": 2.0, "w": 260, "h": 96 },
+          { "id": "HITL", "label": "Human CAPA review", "sub": "approve · edit · reject", "type": "human", "x": 16.1, "y": 5.6, "w": 260, "h": 110 },
+          { "id": "CP", "label": "Checkpointer", "sub": "pause survives restarts", "type": "store", "shape": "cyl", "x": 0.5, "y": 8.55, "w": 225, "h": 92 },
+          { "id": "DB", "label": "Case store", "sub": "cases · events", "type": "store", "shape": "cyl", "x": 3.4, "y": 8.55, "w": 225, "h": 92 },
+          { "id": "AUD", "label": "Audit trail", "sub": "hash-chained · re-verifiable", "type": "code", "shape": "cyl", "x": 6.3, "y": 8.55, "w": 240, "h": 92 },
+          { "id": "ADM", "label": "Prompt authoring", "sub": ["candidate → A/B gate →", "promote / rollback"], "type": "human", "x": 9.9, "y": 8.5, "w": 270, "h": 104 },
+          { "id": "REG", "label": "Prompt registry", "sub": "one promoted version", "type": "code", "shape": "cyl", "x": 13.1, "y": 8.55, "w": 250, "h": 92 }
+        ],
+        "edges": [
+          { "from": "UP", "to": "G" },
+          { "from": "G", "to": "REJ", "label": "blocked", "kind": "gate" },
+          { "from": "G", "to": "S", "label": "safe" },
+          { "from": "S", "to": "M", "kind": "bi" },
+          { "from": "S", "to": "R", "kind": "bi" },
+          { "from": "S", "to": "C", "kind": "bi" },
+          { "from": "S", "to": "W", "kind": "bi" },
+          { "from": "S", "to": "P", "kind": "bi" },
+          { "from": "C", "to": "P1" },
+          { "from": "C", "to": "P2" },
+          { "from": "C", "to": "P3" },
+          { "from": "C", "to": "P4" },
+          { "from": "P1", "to": "MERGE", "via": [[15.2, 1.0], [15.2, 4.25]], "fromSide": "r", "toSide": "r" },
+          { "from": "P2", "to": "MERGE", "via": [[15.2, 1.66], [15.2, 4.45]], "fromSide": "r", "toSide": "r" },
+          { "from": "P3", "to": "MERGE", "via": [[15.2, 2.32], [15.2, 4.65]], "fromSide": "r", "toSide": "r" },
+          { "from": "P4", "to": "MERGE", "via": [[15.2, 2.98], [15.2, 4.85]], "fromSide": "r", "toSide": "r" },
+          { "from": "MERGE", "to": "REM", "kind": "gate", "via": [[15.5, 4.62], [15.5, 0.95]], "fromSide": "r", "toSide": "l" },
+          { "from": "MERGE", "to": "W", "label": "verified", "loff": [-10, -34] },
+          { "from": "W", "to": "HITL", "label": "drafted CAPAs", "via": [[9.45, 4.37], [9.45, 7.0], [15.7, 7.0], [15.7, 6.15]], "fromSide": "l", "toSide": "l", "loff": [-170, 16] },
+          { "from": "HITL", "to": "P", "label": "sealed → resume", "color": "human", "via": [[15.4, 6.4], [15.4, 7.2], [10.9, 7.2]], "fromSide": "l", "toSide": "b", "loff": [60, 18] },
+          { "from": "P", "to": "REP", "label": "writes", "via": [[11.4, 7.7], [15.9, 7.7], [15.9, 2.48]], "fromSide": "b", "toSide": "l", "loff": [90, 14] },
+          { "from": "S", "to": "CP", "label": "state", "kind": "dotted", "via": [[7.0, 7.9], [1.63, 7.9]], "fromSide": "b", "toSide": "t", "loff": [-40, 14] },
+          { "from": "UP", "to": "DB", "label": "writes", "kind": "dotted", "via": [[1.45, 8.0], [4.53, 8.0]], "fromSide": "b", "toSide": "t", "loff": [30, 14] },
+          { "from": "S", "to": "AUD", "label": "every decision", "kind": "dotted", "via": [[8.2, 7.3], [7.48, 7.3]], "fromSide": "b", "toSide": "t", "loff": [55, 12] },
+          { "from": "ADM", "to": "REG" },
+          { "from": "REG", "to": "S", "label": "promoted prompt", "kind": "dotted", "color": "model", "via": [[13.9, 7.5], [8.55, 7.5]], "fromSide": "t", "toSide": "b", "loff": [-60, 16] },
+          { "from": "REG", "to": "M", "kind": "dotted", "color": "model", "via": [[14.4, 7.85], [12.25, 7.85], [12.25, 1.0]], "fromSide": "t", "toSide": "r" },
+          { "from": "REG", "to": "R", "kind": "dotted", "color": "model", "via": [[14.4, 7.85], [12.25, 7.85], [12.25, 2.11]], "fromSide": "t", "toSide": "r" },
+          { "from": "REG", "to": "C", "kind": "dotted", "color": "model", "via": [[14.4, 7.85], [12.25, 7.85], [12.25, 3.24]], "fromSide": "t", "toSide": "r" },
+          { "from": "REG", "to": "W", "kind": "dotted", "color": "model", "via": [[14.4, 7.85], [12.25, 7.85], [12.25, 4.6]], "fromSide": "t", "toSide": "r" },
+          { "from": "REG", "to": "P", "kind": "dotted", "color": "model", "via": [[14.4, 7.85], [12.25, 7.85], [12.25, 5.7]], "fromSide": "t", "toSide": "r" }
+        ],
+        "legend": [
+          { "text": "violet = model", "x": 70, "y": 1010 },
+          { "text": "turquoise = deterministic code", "x": 310, "y": 1010 },
+          { "text": "amber = human", "x": 780, "y": 1010 },
+          { "text": "red = blocked path", "x": 1030, "y": 1010 },
+          { "text": "dotted = prompts", "x": 1330, "y": 1010 },
+          { "text": "cylinders = stores", "x": 1590, "y": 1010 }
+        ]
+      }
+    }
+  ]
+}

@@ -7,7 +7,7 @@ window.render = (p) => {
   const W = innerWidth, H = innerHeight;
   if (p.image) {
     const w = p.winWidth || 620;
-    const { root } = chrome({ width: w, imgSrc: p.image, imgNatural: p.imgSize, crop: p.crop, tag: 'REAL APP · LIVE RUN' });
+    const { root } = chrome({ width: w, imgSrc: p.image, imgNatural: p.imgSize, crop: p.crop, tag: p.tag ?? 'REAL APP · LIVE RUN' });
     root.style.position = 'absolute';
     const rh = root.offsetHeight || 420;
     root.style.left = (p.imgX ?? 60) + 'px';
