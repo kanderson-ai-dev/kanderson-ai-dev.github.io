@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build && node scripts/postbuild.mjs",
+    "build": "tsc --noEmit && vite build && node scripts/postbuild.mjs && node scripts/check-seo.mjs",
+    "build:favicon": "node scripts/build-favicon.mjs",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",

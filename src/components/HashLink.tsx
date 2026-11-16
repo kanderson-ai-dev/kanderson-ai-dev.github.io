@@ -6,6 +6,7 @@
 import type { AnchorHTMLAttributes, ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { scrollToId } from '../hooks/useHashScroll';
+import { stripSlash } from '../url';
 
 type Props = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> & {
   to: string; // '#id' on this page, or '/es#id' / '/#id' across routes
@@ -21,7 +22,7 @@ export const HashLink = ({ to, children, onNavigate, onClick, ...rest }: Props) 
       {...rest}
       onClick={(e) => {
         const [path, id] = to.split('#');
-        const samePage = (!path || path === pathname) && !!id;
+        const samePage = (!path || stripSlash(path) === stripSlash(pathname)) && !!id;
         if (samePage && hash === `#${id}` && document.getElementById(id)) {
           e.preventDefault();
           scrollToId(id);

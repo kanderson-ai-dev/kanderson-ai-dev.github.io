@@ -30,3 +30,9 @@ Record one row per track/effect actually used in a published video: URL, title, 
 | Generic Trailer Music (generic_trailer.mp3, ~152 BPM) | Emma_MA | https://opengameart.org/content/generic-trailer-music | CC0 1.0 (public domain) | 2026-11-03 | langgraph-multiagent-orchestrator upgrade promo — rejected (192 kbps source artifacts), not shipped |
 | Net Infiltration (net_infiltration.mp3, ~99 BPM) | vitalezzz | https://opengameart.org/content/net-infiltration | CC0 1.0 (public domain) | 2026-11-06 | agentic-rag-system promo (pending final cut) |
 | Project Mass(Cinematic) (project_mass.wav, ~136 BPM) | Umplix | https://opengameart.org/content/project-masscinematic | CC0 1.0 (public domain) | 2026-11-07 | agentic-api flagship promo |
+
+## Site assets
+
+| Asset | Use | License | Source | Checked |
+|---|---|---|---|---|
+| KA_ favicon set (`public/favicon.svg`, `favicon-48.png`, `favicon-192.png`, `apple-touch-icon.png`, `favicon.ico`) | Site icons | Original work — no third-party material | n/a | 2026-11-16 |

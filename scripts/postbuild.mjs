@@ -12,24 +12,10 @@ const dist = resolve('dist');
 const template = readFileSync(resolve(dist, 'index.html'), 'utf8');
 copyFileSync(resolve(dist, 'index.html'), resolve(dist, '404.html'));
 
-const SITE = 'https://kaarstenanderson.com';
 const escapeHtml = (s) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const setMeta = (html, pattern, content) =>
   html.replace(pattern, (m) => m.replace(/content="[^"]*"/, `content="${escapeHtml(content)}"`));
-
-// The other-language twin of a route path ('/' <-> '/es', '/x' <-> '/es/x').
-const altPath = (path, to) =>
-  to === 'es' ? (path === '/' ? '/es' : `/es${path}`) : path.replace(/^\/es(?=\/|$)/, '') || '/';
-const alternates = (path) => {
-  const enPath = path === '/es' || path.startsWith('/es/') ? altPath(path, 'en') : path;
-  const esPath = altPath(enPath, 'es');
-  return [
-    `    <link rel="alternate" hreflang="en" href="${SITE}${enPath}" />`,
-    `    <link rel="alternate" hreflang="es" href="${SITE}${esPath}" />`,
-    `    <link rel="alternate" hreflang="x-default" href="${SITE}${enPath}" />`,
-  ].join('\n');
-};
 
 const vite = await createServer({
   server: { middlewareMode: true },
@@ -38,6 +24,17 @@ const vite = await createServer({
 });
 try {
   const { render, routes } = await vite.ssrLoadModule('/src/entry-server.tsx');
+  const { altPath, SITE } = await vite.ssrLoadModule('/src/url.ts');
+  // hreflang en/es/x-default triplet for a canonical (trailing-slash) path.
+  const alternates = (path) => {
+    const enPath = path === '/es' || path.startsWith('/es/') ? altPath(path, 'en') : path;
+    const esPath = altPath(enPath, 'es');
+    return [
+      `    <link rel="alternate" hreflang="en" href="${SITE}${enPath}" />`,
+      `    <link rel="alternate" hreflang="es" href="${SITE}${esPath}" />`,
+      `    <link rel="alternate" hreflang="x-default" href="${SITE}${enPath}" />`,
+    ].join('\n');
+  };
   for (const route of routes) {
     let html = template.replace(
       '<div id="root"></div>',
@@ -63,7 +60,7 @@ try {
     html = setMeta(html, /<meta\s+property="og:url"[^>]*\/>/, canonical);
     if (route.ogImage) html = setMeta(html, /<meta\s+property="og:image"[^>]*\/>/, route.ogImage);
     if (route.lang === 'es') html = html.replace('<html lang="en">', '<html lang="es">');
-    const out = resolve(dist, `.${route.path === '/' ? '' : route.path}/index.html`);
+    const out = resolve(dist, `.${route.path}index.html`);
     mkdirSync(dirname(out), { recursive: true });
     writeFileSync(out, html);
   }

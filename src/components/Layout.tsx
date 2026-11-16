@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { onDemandProjects, openSourceProjects, visibleProjects } from '../content/projects';
 import { copyFor, useLang, switchPath } from '../i18n';
+import { stripSlash } from '../url';
 import { AccessBadge, Button, StatusPill, GlassPanel, Kicker, SplitHeadline, EndCard } from './primitives';
 import { HashLink } from './HashLink';
 import s from './layout.module.css';
@@ -194,7 +195,9 @@ export const Navbar = () => {
 
   // About lives on the landing from every route; Contact uses the local
   // #contact band when the page renders one (landing, project pages).
-  const stripped = lang === 'es' ? pathname.replace(/^\/es(?=\/|$)/, '') || '/' : pathname;
+  const stripped = stripSlash(
+    lang === 'es' ? pathname.replace(/^\/es(?=\/|$)/, '') || '/' : pathname,
+  );
   const contactTo =
     stripped === '/' || stripped.startsWith('/projects/') ? '#contact' : `${l('/')}#contact`;
 

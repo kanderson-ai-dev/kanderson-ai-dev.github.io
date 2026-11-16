@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { en, type Dict } from './en';
 import { es } from './es';
 import { getProject } from '../content/projects';
+import { altPath, stripSlash, withSlash } from '../url';
 import type { Lang, Localized, Project, ProjectCopy } from '../content/types';
 
 export const dicts: Record<Lang, Dict> = { en, es };
@@ -21,25 +22,23 @@ export const langFromPath = (pathname: string): Lang =>
 export const useLang = (): { lang: Lang; dict: Dict; l: (path: string) => string } => {
   const { pathname } = useLocation();
   const lang = langFromPath(pathname);
-  const l = (path: string) => {
-    const p = path === '/' ? '' : path;
-    return lang === 'es' ? `/es${p || '/'}` : p || '/';
-  };
+  const l = (path: string) =>
+    lang === 'es' ? withSlash(path === '/' ? '/es' : `/es${path}`) : withSlash(path);
   return { lang, dict: dicts[lang], l };
 };
 
 export const switchPath = (pathname: string, to: Lang): string => {
   const lang = langFromPath(pathname);
   if (lang === to) return pathname;
-  if (to === 'es') return pathname === '/' ? '/es' : `/es${pathname}`;
-  return pathname.replace(/^\/es(?=\/|$)/, '') || '/';
+  return altPath(pathname, to);
 };
 
 // Document title for the route — same strings the prerender writes into <head>.
 export const titleForPath = (pathname: string): string => {
-  const lang = langFromPath(pathname);
+  const norm = stripSlash(pathname);
+  const lang = langFromPath(norm);
   const d = dicts[lang];
-  const stripped = lang === 'es' ? pathname.replace(/^\/es(?=\/|$)/, '') || '/' : pathname;
+  const stripped = lang === 'es' ? norm.replace(/^\/es(?=\/|$)/, '') || '/' : norm;
   const slug = stripped.match(/^\/projects\/([^/]+)/)?.[1];
   const p = slug && getProject(slug);
   if (p) return `${copyFor(p, lang).title} — Kaarsten Anderson`;

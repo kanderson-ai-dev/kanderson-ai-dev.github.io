@@ -28,8 +28,8 @@ describe('Navbar mega-menu', () => {
     expect(btn).toHaveAttribute('aria-expanded', 'true');
     const onDemand = document.getElementById('mega-on-demand');
     const openSource = document.getElementById('mega-open-source');
-    expect(onDemand).toHaveAttribute('href', '/projects#on-demand');
-    expect(openSource).toHaveAttribute('href', '/projects#open-source');
+    expect(onDemand).toHaveAttribute('href', '/projects/#on-demand');
+    expect(openSource).toHaveAttribute('href', '/projects/#open-source');
     expect(onDemand).toHaveTextContent(/on demand/i);
     expect(openSource).toHaveTextContent(/open source/i);
 

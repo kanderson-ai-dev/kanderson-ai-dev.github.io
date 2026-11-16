@@ -6,6 +6,7 @@ import { StaticRouter } from 'react-router-dom';
 import { Shell } from './App';
 import { projects } from './content/projects';
 import { copyFor, dicts } from './i18n';
+import { SITE, withSlash } from './url';
 import type { Lang } from './content/types';
 
 export const render = (url: string): string =>
@@ -25,15 +26,16 @@ export interface PrerenderRoute {
   lcpImage?: string;
 }
 
-const SITE = 'https://kaarstenanderson.com';
-
 const flagship = projects.find((p) => p.slug === 'langgraph-multiagent-orchestrator');
 const loopPoster = flagship?.loop ? `/projects/${flagship.slug}/loop-poster.webp` : undefined;
 const siteOg = flagship ? `${SITE}${flagship.ogImage}` : undefined;
 
 const routesFor = (lang: Lang): PrerenderRoute[] => {
   const d = dicts[lang];
-  const p = (path: string) => (lang === 'es' ? (path === '/' ? '/es' : `/es${path}`) : path);
+  // Route paths are the canonical trailing-slash form — the URLs GitHub
+  // Pages serves and the canonical/hreflang/sitemap targets.
+  const p = (path: string) =>
+    withSlash(lang === 'es' ? (path === '/' ? '/es' : `/es${path}`) : path);
   return [
     {
       path: p('/'),
