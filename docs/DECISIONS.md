@@ -96,19 +96,26 @@ system view); each is transcribed from its own README diagram.
 Owner decision 2026-11-13: on-demand projects are adapted to each client
 under contract, so scope gaps are rollout steps, not product limits. The
 page shows no "Known limitations" block. Metric evidence labels (`kind`,
-`EvidenceChip`, baseline caption) are unaffected and remain mandatory.
+`EvidenceChip`, baseline caption) remain mandatory on pages that publish
+metrics — after D-OD9 that is open-source pages and the grandfathered
+`ecommerce-support-returns-copilot` only.
 Open-source pages keep their limitations block.
 
 ## D-OD9 — On-demand pages sell the product, not the engineering
 
 Owner decision 2026-11-16: the buyer of an on-demand page is an operations
 lead, not a developer. On-demand pages carry **no architecture section, no
-test counts, no coverage and no CI/tooling talk** anywhere on the page
-(body, notes, alts, meta). The first image (card / hero / OG) is the
-product's first screen — the screen a new user opens, not an internal
-operator view. The tech stack (hero chips + Stack section) and the gallery
-remain allowed. `tests:` stays in the typed data — it feeds the landing
-counter strip — but the page never renders it.
+results section, no baseline band, no test counts, no coverage and no
+CI/tooling talk** anywhere on the page (body, notes, alts, meta). No
+metric figures of any kind in the copy — no percentages, counts, ratios or
+scores. Proof is the product itself: the film, the features with real
+captures, the gallery. Figures visible on screen inside the product
+captures are allowed — they are what the product shows, not page metrics.
+The first image (card / hero / OG) is the product's first screen — the
+screen a new user opens, not an internal operator view. The tech stack
+(hero chips + Stack section) and the gallery remain allowed. `tests:`
+stays in the typed data — it feeds the landing counter strip — but the
+page never renders it.
 
 Exception: `ecommerce-support-returns-copilot`, grandfathered as published
 (kept in `ON_DEMAND_LEGACY` in `scripts/validate-content.ts`, which fails

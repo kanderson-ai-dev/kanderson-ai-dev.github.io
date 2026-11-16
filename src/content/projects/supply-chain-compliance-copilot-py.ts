@@ -170,32 +170,6 @@ export const project: Project = {
           image: img(6, 'Intake form rejecting an audit document flagged by the input guardrail'),
         },
       ],
-      results: [
-        {
-          label: 'Hidden-instruction documents blocked',
-          value: '100%',
-          note: '3 of 3 tampered audits stopped before analysis',
-          kind: 'measured',
-        },
-        {
-          label: 'Corrective actions tied to a real finding',
-          value: '100%',
-          note: '26 of 26',
-          kind: 'measured',
-        },
-        {
-          label: 'Drafted findings that pass the quote check',
-          value: '96%',
-          note: 'the rest are removed before you see them',
-          kind: 'measured',
-        },
-      ],
-      baseline: {
-        label: 'Invented quotes in the report',
-        pipeline: '0%',
-        baseline: '10.4%',
-        note: 'This system vs a single AI prompt · 6 fictional audits',
-      },
       galleryHeadline: { title: 'Your framework. Your rules.', accent: 'Your systems.' },
       cta: {
         headline: 'Want this working in your compliance workflow?',
@@ -283,32 +257,6 @@ export const project: Project = {
           image: img(6, 'Formulario de admisión rechazando un documento de auditoría marcado por el guardrail de entrada'),
         },
       ],
-      results: [
-        {
-          label: 'Documentos con instrucciones ocultas bloqueados',
-          value: '100%',
-          note: '3 de 3 auditorías manipuladas detenidas antes del análisis',
-          kind: 'measured',
-        },
-        {
-          label: 'Acciones correctivas ligadas a un hallazgo real',
-          value: '100%',
-          note: '26 de 26',
-          kind: 'measured',
-        },
-        {
-          label: 'Hallazgos que superan la verificación de cita',
-          value: '96%',
-          note: 'el resto se elimina antes de que los veas',
-          kind: 'measured',
-        },
-      ],
-      baseline: {
-        label: 'Citas inventadas en el informe',
-        pipeline: '0%',
-        baseline: '10.4%',
-        note: 'Este sistema frente a un único prompt de IA · 6 auditorías ficticias',
-      },
       galleryHeadline: { title: 'Tu marco. Tus reglas.', accent: 'Tus sistemas.' },
       cta: {
         headline: '¿Lo pongo a funcionar en tu flujo de compliance?',

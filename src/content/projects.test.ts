@@ -66,14 +66,24 @@ describe('project registry', () => {
     }
   });
 
-  it('non-legacy on-demand pages sell the product: no architecture, no tests talk (D-OD9)', () => {
+  it('non-legacy on-demand pages sell the product: no architecture, no metrics (D-OD9)', () => {
     const LEGACY = new Set(['ecommerce-support-returns-copilot']);
+    const metricFigure = /\d+(?:[.,]\d+)?\s*%|\b\d+\s+(?:of|de)\s+\d+\b/i;
     const engineeringTalk = /\btests?\b|coverage|cobertura|\bCI\b|e2e/i;
+    const strings = (v: unknown, out: string[] = []): string[] => {
+      if (typeof v === 'string') out.push(v);
+      else if (Array.isArray(v)) v.forEach((x) => strings(x, out));
+      else if (v && typeof v === 'object') Object.values(v).forEach((x) => strings(x, out));
+      return out;
+    };
     for (const p of onDemandProjects.filter((x) => !LEGACY.has(x.slug))) {
       expect(p.architecture, p.slug).toBeUndefined();
       for (const lang of ['en', 'es'] as const) {
-        for (const r of p.copy[lang]?.results ?? []) {
-          expect(`${r.label} ${r.note}`, `${p.slug} (${lang})`).not.toMatch(engineeringTalk);
+        expect(p.copy[lang]?.results?.length ?? 0, `${p.slug} (${lang}) results`).toBe(0);
+        expect(p.copy[lang]?.baseline, `${p.slug} (${lang}) baseline`).toBeUndefined();
+        for (const s of strings(p.copy[lang])) {
+          expect(s, `${p.slug} (${lang})`).not.toMatch(metricFigure);
+          expect(s, `${p.slug} (${lang})`).not.toMatch(engineeringTalk);
         }
       }
     }

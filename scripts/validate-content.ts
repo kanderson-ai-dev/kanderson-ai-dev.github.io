@@ -115,11 +115,13 @@ const CONFIDENTIAL: [RegExp, string][] = [
 // Per-project allow-list for false positives: slug -> additional allowed strings.
 const CONFIDENTIAL_ALLOW: Record<string, string[]> = {};
 
-// D-OD9: on-demand pages sell the product — no architecture section and no
-// test/coverage/CI talk in the results. Pages published before the rule keep
-// their engineering content under this legacy allow-list.
+// D-OD9: on-demand pages sell the product — no architecture section, no
+// results/baseline and no metric figures or test/coverage/CI talk in the
+// copy. Pages published before the rule keep their engineering content
+// under this legacy allow-list.
 const ON_DEMAND_LEGACY = ['ecommerce-support-returns-copilot'];
 const ENGINEERING_TALK = /\btests?\b|coverage|cobertura|\bCI\b|e2e/i;
+const METRIC_FIGURE = /\d+(?:[.,]\d+)?\s*%|\b\d+\s+(?:of|de)\s+\d+\b/i;
 
 const copyStrings = (v: unknown, out: string[] = []): string[] => {
   if (typeof v === 'string') out.push(v);
@@ -284,13 +286,15 @@ const checkProject = async (p: Project) => {
     if (!ON_DEMAND_LEGACY.includes(p.slug)) {
       ok(!p.architecture, `${p.slug}: on-demand pages publish no architecture section (D-OD9)`);
       for (const lang of ['en', 'es'] as const) {
-        for (const [i, r] of (p.copy[lang]?.results ?? []).entries()) {
-          for (const s of [r.label, r.note]) {
-            ok(
-              !s || !ENGINEERING_TALK.test(s),
-              `${p.slug}: copy.${lang} result ${i + 1} mentions tests/coverage/CI (D-OD9) — "${s?.slice(0, 60)}"`,
-            );
-          }
+        ok(
+          !p.copy[lang]?.results?.length && !p.copy[lang]?.baseline,
+          `${p.slug}: on-demand pages publish no results section or baseline band (D-OD9)`,
+        );
+        for (const s of copyStrings(p.copy[lang])) {
+          ok(
+            !METRIC_FIGURE.test(s) && !ENGINEERING_TALK.test(s),
+            `${p.slug}: copy.${lang} contains a metric figure or tests/coverage/CI talk (D-OD9) — "${s.slice(0, 60)}"`,
+          );
         }
       }
     }
@@ -301,7 +305,9 @@ const checkProject = async (p: Project) => {
   ok(!!p.copy.en?.problem && !!p.copy.en?.solution, `${p.slug}: missing problem/solution`);
   ok((p.copy.en?.howItWorks?.length ?? 0) >= 3, `${p.slug}: needs >=3 how-it-works steps`);
   ok((p.copy.en?.features?.length ?? 0) >= 3, `${p.slug}: needs >=3 features`);
-  ok((p.copy.en?.results?.length ?? 0) >= 3, `${p.slug}: needs >=3 measured results`);
+  if (p.access !== 'on-demand' || ON_DEMAND_LEGACY.includes(p.slug)) {
+    ok((p.copy.en?.results?.length ?? 0) >= 3, `${p.slug}: needs >=3 measured results`);
+  }
 
   const used = new Set<string>();
   const track = (src: string | undefined) => {

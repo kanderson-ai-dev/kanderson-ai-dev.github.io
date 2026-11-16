@@ -237,11 +237,13 @@ The earlier architecture/results evidence above (`sec-arch.png`,
 - `results-1280.png` / `results-375.png` — counters settled: 100% blocked
   (3 of 3 tampered audits), 100% CAPA tied to a real finding (26 of 26),
   96% drafted findings passing the quote check; baseline band 0% vs 10.4%.
-  No test-count tile.
+  No test-count tile. **Superseded 2026-11-16 (D-OD9 / V3): the whole
+  Results section was removed — see "Fix V3" below.**
 - `cta-1280.png` — end-card CTA + next-project card.
 - `page-es-1280-top.png` / `results-es-1280.png` — Spanish page top
   (RESUMEN · DEMO · FUNCIONES · RESULTADOS · STACK, no ARQUITECTURA) and
-  Spanish results tiles, same metrics.
+  Spanish results tiles, same metrics. **Superseded 2026-11-16 (D-OD9 /
+  V3).**
 - 375 px horizontal overflow: `scrollWidth − innerWidth = 0`.
 - Rendered-page sweep (EN + ES `dist/` HTML): 0 hits for `705`,
   `automated tests`, `tests automatizados`, `coverage`, `cobertura`,
@@ -254,6 +256,56 @@ The earlier architecture/results evidence above (`sec-arch.png`,
   click swaps in the `youtube-nocookie` iframe (oEmbed title verified:
   "Supply Chain Compliance Co-Pilot: Every Supplier Audit Finding,
   Proven", 1:15, CC available).
+
+**Checks run:** `npm run lint` ✓ · `npm run typecheck` ✓ · `npm test`
+(38 tests, 6 files) ✓ · `npm run build` (prerender 16 routes + SEO guard) ✓ ·
+`npm run validate:content` (6 projects, all assets OK) ✓.
+
+## Fix V3 (2026-11-16) — no numbers, no tests
+
+Owner review: the page must carry **no metric figures at all**. V2 kept the
+percentage tiles and the baseline band as buyer proof; removed entirely per
+`projects/supply-chain-compliance-copilot-py/PLAN_FIX_V3.md`. Evidence in
+`docs/qa/supply-chain-compliance-copilot-py/fix-v3/`.
+
+- **F-05 — Results section removed.** `results` and `baseline` deleted from
+  `copy.en` and `copy.es`; `ProjectPage` already hides the section and the
+  sub-nav entry when `results` is absent (`copy.results?.length` gates
+  both). Sub-nav reads Overview · Demo · Features · Stack / Resumen · Demo ·
+  Funciones · Stack. `tests: 705` stays in the typed data for the landing
+  counters only.
+- **F-06 — standing rule tightened.** D-OD9 amended: on-demand pages carry
+  no results section, no baseline band and no metric figures (percentages,
+  counts, ratios, scores); D-OD8's evidence-label rule rescoped to
+  open-source + legacy. `validate-content.ts` fails non-legacy on-demand
+  projects on `results`/`baseline` or
+  `/\d+(?:[.,]\d+)?\s*%|\b\d+\s+(of|de)\s+\d+\b/i` in any copy string;
+  `projects.test.ts` asserts the same. D-OD9 notes updated in all on-demand
+  plans + root `Plan.md` §5.
+- Figures on screen inside the product captures and the film itself are
+  unaffected (owner decision).
+
+**Site QA — evidence in `fix-v3/`** (Playwright against `vite preview` on
+`:4180`, prerendered `dist/`)
+
+- `subnav-en-1280.png` / `subnav-es-1280.png` — sub-nav reads `OVERVIEW ·
+  DEMO · FEATURES · STACK` / `RESUMEN · DEMO · FUNCIONES · STACK`; script
+  confirms `results present: false` in both languages.
+- `stack-en-1280.png` / `stack-es-1280.png` — gallery → Stack chips →
+  next-project card; no Results section between Features and Stack.
+- `mid-375.png` / `cta-375.png` — mobile features and the end-card CTA;
+  zero horizontal overflow at 375 (`scrollWidth − innerWidth = 0`).
+- Rendered-text sweep (`document.body` text-node walk, script/style
+  excluded, after a full scroll-through; EN + ES). Every remaining digit on
+  the page: `01`–`06` how-it-works step ordinals (list numbering, not
+  metrics); `01`–`04` mega-menu project numbers and the other projects'
+  menu blurbs (site chrome, shared header); `Kaarsten Anderson · 2026`
+  footer (site chrome). **Zero hits** for `%`, `tests`, `coverage`,
+  `cobertura`, `\bCI\b`, `measured`/`medido`, `baseline`/`referencia`,
+  `705`, `automated`/`automatizad`.
+- Lighthouse mobile (`fix-v3/lighthouse-mobile.json`): perf **98**,
+  a11y **100**, best-practices **96**, SEO **100** — budgets pass
+  (≥90 / ≥95).
 
 **Checks run:** `npm run lint` ✓ · `npm run typecheck` ✓ · `npm test`
 (38 tests, 6 files) ✓ · `npm run build` (prerender 16 routes + SEO guard) ✓ ·
