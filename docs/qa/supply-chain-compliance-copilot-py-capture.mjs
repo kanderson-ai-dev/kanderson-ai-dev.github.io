@@ -65,7 +65,6 @@ const goto = async (page, url) => {
   // counters strip is the hero figures section
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.waitForTimeout(400);
-  const fig = page.locator('section[aria-label]').first();
   await shot(page, S9, 'home-counters');
   await ctx.close();
 }

@@ -66,6 +66,19 @@ describe('project registry', () => {
     }
   });
 
+  it('non-legacy on-demand pages sell the product: no architecture, no tests talk (D-OD9)', () => {
+    const LEGACY = new Set(['ecommerce-support-returns-copilot']);
+    const engineeringTalk = /\btests?\b|coverage|cobertura|\bCI\b|e2e/i;
+    for (const p of onDemandProjects.filter((x) => !LEGACY.has(x.slug))) {
+      expect(p.architecture, p.slug).toBeUndefined();
+      for (const lang of ['en', 'es'] as const) {
+        for (const r of p.copy[lang]?.results ?? []) {
+          expect(`${r.label} ${r.note}`, `${p.slug} (${lang})`).not.toMatch(engineeringTalk);
+        }
+      }
+    }
+  });
+
   it('keeps honest numbers: every result carries a measured/simulated kind', () => {
     for (const p of projects)
       for (const r of p.copy.en?.results ?? [])

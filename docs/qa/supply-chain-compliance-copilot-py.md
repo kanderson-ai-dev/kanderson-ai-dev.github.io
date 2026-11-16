@@ -65,7 +65,9 @@ names, no cost panels, no real names/emails):
 
 | File | Content | Review |
 |---|---|---|
-| 00-intake.png | New case form (Kestrelford Textiles Ltd, BD, Apparel & Garments, Tier 2, smeta-audit-sample.txt) | ✓ fictional fixture data only |
+| 00-intake.png | New case form (Kestrelford Textiles Ltd, BD, Apparel & Garments, Tier 2, audit-kestrelford-bd.txt) | ✓ recaptured 2026-11-16: neutral filename; HQ-country hint shortened to "Two-letter ISO-3166 code." (the static "Not in risk table" clause was wrong for BD); fictional fixture data only |
+| 00-intake-768.png | Same form at 768×1024 | ✓ same pass |
+| 00-intake-390.png | Same form at 390×844 (top slice used; site-row overflow at 390 px stays out of frame) | ✓ same pass |
 | 01-finding-evidence.png | Risk breakdown + Non-conformities (8) with verbatim Evidence column + CAPA table head | ✓ |
 | 02-fanout-lanes.png | Five worker cards (Mapper · Risk Scorer · Compliance Analyst + four area lanes · CAPA Writer · Report Writer) | ✓ |
 | 03-risk-panel.png | Risk breakdown element crop (Country 72/100 · Sector 70/100 · tier uplift +8) | ✓ |
@@ -131,12 +133,15 @@ Captured with `docs/qa/supply-chain-compliance-copilot-py-capture.mjs`
   badges).
 - `sec-how.png`, `sec-arch.png` — six-step workflow and the conceptual
   architecture figure with "Simplified from the private codebase" note and
-  accessible "Text description of the diagram" details.
+  accessible "Text description of the diagram" details. **Superseded
+  2026-11-16 (D-OD9): the architecture section was removed; `sec-arch.png`
+  is kept only as history.**
 - `sec-results.png` / `results-baseline.png` — counters settled at exact
   figures: 0.96 faithfulness (baseline 0.90, scorecard 0.963/0.896), 100%
   injection block (3 docs), 100% CAPA grounding, 705 tests
   (575 backend 91% branch + 123 frontend + 7 e2e); fabricated quotes 0% vs
-  10.4%.
+  10.4%. **Superseded 2026-11-16 (D-OD9): results rewritten in buyer
+  language — see "Fix V2" below.**
 - `cta.png` — end-card CTA; `mailto:contact@kaarstenanderson.com` (both mailto
   links verified in DOM; only GitHub anchors are the site-wide owner profile
   in nav/footer — no project repo link).
@@ -172,6 +177,82 @@ matching end-card CTA.
 **Checks run:** `npm run typecheck` ✓ · `npm test` (37 tests, 6 files) ✓ ·
 `npm run lint` ✓ · `npm run build` (Vite + prerender 16 routes + SEO guard) ✓ ·
 `npm run validate:content` ✓.
+
+## Fix V2 (2026-11-16) — sell the product, not the engineering
+
+Owner review flagged four problems (F-01…F-04); fixed per
+`projects/supply-chain-compliance-copilot-py/PLAN_FIX_V2.md`. Evidence in
+`docs/qa/supply-chain-compliance-copilot-py/fix-v2/`.
+
+- **F-01 — first image is the product's first screen.** Intake recaptured at
+  all three sizes (`node recapture.mjs --intake` against the fixture demo
+  env): `00-intake` (1440×900@2), `00-intake-768`, `00-intake-390`. Neutral
+  filename `audit-kestrelford-bd.txt`; the static HQ-country hint
+  "…Not in risk table: default baseline applies." was wrong for BD (real
+  baseline 72/100), so the capture-time DOM patch keeps only "Two-letter
+  ISO-3166 code." — the hint never updates on blur, and a mid-form band
+  cannot be cropped out. `hero-1600.webp` (trio: desktop/tablet/phone
+  intake, kicker `COMPLIANCE COPILOT`, center tag `REAL APP · FIXTURE RUN`),
+  `card-800.webp` (title + New case → Supplier tier) and `og.png` (same
+  crop, existing title/tagline) regenerated and re-reviewed as images.
+  Card/hero alts updated EN+ES.
+- **F-02 — results in buyer language.** "Automated tests · 705" removed
+  (EN+ES); remaining tiles now read: 100% hidden-instruction documents
+  blocked (3 of 3), 100% corrective actions tied to a real finding (26 of
+  26), 96% drafted findings passing the quote check — all `measured`, all
+  traceable to `evaluation/scorecard.json` (injection_block_rate 1.0,
+  capa_grounding 1.0 = 26 CAPAs, citation_faithfulness 0.963). Baseline band
+  relabelled "Invented quotes in the report" / "Citas inventadas en el
+  informe" — "This system vs a single AI prompt · 6 fictional audits"
+  (hallucinated_quote_rate 0.0 vs 0.10416, `cases_evaluated` 6). `tests: 705`
+  stays in the typed data (landing counters) but is never rendered.
+- **F-03 — architecture removed.** `architecture` field deleted (section +
+  sub-nav entry hide automatically in `ProjectPage`), mockup `architecture`
+  job deleted, `architecture.webp` removed, engineering talk swept
+  (supervisor → coordinator; deterministic/scored in code → fixed rules;
+  "in parallel" → "at the same time"/"a la vez"; ES mirrored).
+- **F-04 — standing rule.** `docs/DECISIONS.md` D-OD9 added; D-OD4/D-OD7
+  scoped to open-source + the grandfathered page. `validate-content.ts`
+  fails non-legacy on-demand projects on `architecture` or
+  `/\btests?\b|coverage|cobertura|\bCI\b|e2e/i` in result label/note;
+  `projects.test.ts` asserts the same. D-OD9 note added to the unbuilt
+  on-demand plans and root `Plan.md` §5.
+
+The earlier architecture/results evidence above (`sec-arch.png`,
+`m375-arch.png`, first `sec-results.png`) is superseded, kept as history.
+
+**Site QA — evidence in `fix-v2/`** (captured with
+`docs/qa/supply-chain-compliance-copilot-py-fix-v2.mjs`, Playwright against
+`vite preview` on `:4180`, prerendered `dist/`)
+
+- `megamenu-1280.png` — header On-demand column: the Supply Chain card now
+  leads with the intake form, legible at menu size.
+- `home-od-1280.png` / `projects-od-1280.png` — landing On-demand act and
+  `/projects#on-demand`: the card image is the New case intake crop
+  (`COMPLIANCE COPILOT` caption); E-commerce card unchanged.
+- `page-1280-top.png` / `page-768-top.png` / `page-375-top.png` — hero trio
+  (desktop/tablet/phone intake) under the hook band at all three widths.
+- `subnav-1280.png` — sub-nav reads `overview · demo · features · results ·
+  stack`; script confirms `architecture in subnav: false`.
+- `results-1280.png` / `results-375.png` — counters settled: 100% blocked
+  (3 of 3 tampered audits), 100% CAPA tied to a real finding (26 of 26),
+  96% drafted findings passing the quote check; baseline band 0% vs 10.4%.
+  No test-count tile.
+- `cta-1280.png` — end-card CTA + next-project card.
+- `page-es-1280-top.png` / `results-es-1280.png` — Spanish page top
+  (RESUMEN · DEMO · FUNCIONES · RESULTADOS · STACK, no ARQUITECTURA) and
+  Spanish results tiles, same metrics.
+- 375 px horizontal overflow: `scrollWidth − innerWidth = 0`.
+- Rendered-page sweep (EN + ES `dist/` HTML): 0 hits for `705`,
+  `automated tests`, `tests automatizados`, `coverage`, `cobertura`,
+  `architecture`, `arquitectura`, `\bCI\b`.
+- Lighthouse mobile (`fix-v2/lighthouse-mobile.json`): perf **98**,
+  a11y **100**, best-practices **96**, SEO **100** — budgets pass
+  (≥90 / ≥95).
+
+**Checks run:** `npm run lint` ✓ · `npm run typecheck` ✓ · `npm test`
+(38 tests, 6 files) ✓ · `npm run build` (prerender 16 routes + SEO guard) ✓ ·
+`npm run validate:content` (6 projects, all assets OK) ✓.
 
 ## Pending (owner actions — not doable from the repo)
 

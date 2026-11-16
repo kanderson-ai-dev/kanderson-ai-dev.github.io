@@ -126,7 +126,7 @@ renders at `--scale=2`, `burnSubtitles:false`.
 | gallery 2 CAPA table | `gallery-2-1200.webp` | feature-browser on `11-gallery-capa` | done |
 | gallery 3 registry | `gallery-3-1200.webp` | feature-browser on `12-gallery-registry` (list view only, no prompt text) | done |
 | gallery 4 mobile report | `gallery-4-1200.webp` | contain on `mobile-report-crop` (derived 780px slice of `13-mobile-report`) | done |
-| architecture | `architecture.webp` | architecture template, humanized README graph | done |
+| ~~architecture~~ | ~~`architecture.webp`~~ | removed under D-OD9 (2026-11-16): on-demand pages ship no architecture section | superseded |
 
 Pending recaptures: none for this page. Outstanding film work (2160p master,
 30 s/15 s cuts, YouTube upload + ID, owner watch-and-listen) is tracked in

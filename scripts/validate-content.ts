@@ -115,6 +115,12 @@ const CONFIDENTIAL: [RegExp, string][] = [
 // Per-project allow-list for false positives: slug -> additional allowed strings.
 const CONFIDENTIAL_ALLOW: Record<string, string[]> = {};
 
+// D-OD9: on-demand pages sell the product — no architecture section and no
+// test/coverage/CI talk in the results. Pages published before the rule keep
+// their engineering content under this legacy allow-list.
+const ON_DEMAND_LEGACY = ['ecommerce-support-returns-copilot'];
+const ENGINEERING_TALK = /\btests?\b|coverage|cobertura|\bCI\b|e2e/i;
+
 const copyStrings = (v: unknown, out: string[] = []): string[] => {
   if (typeof v === 'string') out.push(v);
   else if (Array.isArray(v)) v.forEach((x) => copyStrings(x, out));
@@ -275,6 +281,19 @@ const checkProject = async (p: Project) => {
       !p.copy.en?.limitations && !p.copy.es?.limitations,
       `${p.slug}: on-demand projects must not publish limitations (D-OD8)`,
     );
+    if (!ON_DEMAND_LEGACY.includes(p.slug)) {
+      ok(!p.architecture, `${p.slug}: on-demand pages publish no architecture section (D-OD9)`);
+      for (const lang of ['en', 'es'] as const) {
+        for (const [i, r] of (p.copy[lang]?.results ?? []).entries()) {
+          for (const s of [r.label, r.note]) {
+            ok(
+              !s || !ENGINEERING_TALK.test(s),
+              `${p.slug}: copy.${lang} result ${i + 1} mentions tests/coverage/CI (D-OD9) — "${s?.slice(0, 60)}"`,
+            );
+          }
+        }
+      }
+    }
     confidentialScan(p);
   } else {
     ok((p.copy.en?.limitations?.length ?? 0) >= 1, `${p.slug}: limitations must be stated honestly`);

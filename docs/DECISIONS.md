@@ -54,6 +54,10 @@ notes stay. Private repos count only once their page exists.
 
 ## D-OD4 — On-demand architecture: shown, simplified, never internals
 
+Scope after D-OD9 (2026-11-16): open-source pages and the grandfathered
+`ecommerce-support-returns-copilot` only — every other on-demand page ships
+no architecture section at all.
+
 Publish only a conceptual diagram transcribed from the project README graph,
 with humanized labels. Never publish: source paths, class/error/env-var
 names, API routes, prompt text, detector patterns, dataset items, commit
@@ -81,6 +85,9 @@ of D-OD2 stands.
 
 ## D-OD7 — Several architecture views per project
 
+Scope after D-OD9 (2026-11-16): open-source pages and the grandfathered
+`ecommerce-support-returns-copilot` only.
+
 A project may publish several architecture views (e.g. runtime flow +
 system view); each is transcribed from its own README diagram.
 
@@ -91,6 +98,22 @@ under contract, so scope gaps are rollout steps, not product limits. The
 page shows no "Known limitations" block. Metric evidence labels (`kind`,
 `EvidenceChip`, baseline caption) are unaffected and remain mandatory.
 Open-source pages keep their limitations block.
+
+## D-OD9 — On-demand pages sell the product, not the engineering
+
+Owner decision 2026-11-16: the buyer of an on-demand page is an operations
+lead, not a developer. On-demand pages carry **no architecture section, no
+test counts, no coverage and no CI/tooling talk** anywhere on the page
+(body, notes, alts, meta). The first image (card / hero / OG) is the
+product's first screen — the screen a new user opens, not an internal
+operator view. The tech stack (hero chips + Stack section) and the gallery
+remain allowed. `tests:` stays in the typed data — it feeds the landing
+counter strip — but the page never renders it.
+
+Exception: `ecommerce-support-returns-copilot`, grandfathered as published
+(kept in `ON_DEMAND_LEGACY` in `scripts/validate-content.ts`, which fails
+the build on a violation). D-OD4 and D-OD7 now cover open-source pages and
+that page only.
 
 ## D-I18N1 — Every published project ships full Spanish copy
 
