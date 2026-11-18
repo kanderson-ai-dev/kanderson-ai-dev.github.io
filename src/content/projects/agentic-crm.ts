@@ -45,7 +45,7 @@ export const project: Project = {
   },
   ogImage: `${dir}/og.png`,
   video: {
-    youtubeId: null,
+    youtubeId: 'GHT5MMegGCk',
     poster: {
       src: `${dir}/video-poster-1920.webp`,
       alt: {

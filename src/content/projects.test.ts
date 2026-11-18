@@ -118,7 +118,7 @@ describe('project registry', () => {
     expect(getProject('mcp-agent-toolkit-py')?.video?.youtubeId).toBe('3UZH518sOVg');
     expect(getProject('agentic-rag-system')?.video?.youtubeId).toBe('EWf5Oz8u7Xg');
     expect(getProject('agentic-api')?.video?.youtubeId).toBe('coUgnI7RFAI');
-    expect(getProject('agentic-crm')?.video?.youtubeId).toBeNull(); // set once the film is uploaded
+    expect(getProject('agentic-crm')?.video?.youtubeId).toBe('GHT5MMegGCk');
   });
 
   it('declares English burned-in plus Spanish CC captions on every film', () => {
