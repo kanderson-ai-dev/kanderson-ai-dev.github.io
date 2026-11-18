@@ -289,9 +289,9 @@
   font-size: 0.92rem;
   color: var(--text);
   display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
 }
 .megaBlurb {
   font-size: 0.75rem;
