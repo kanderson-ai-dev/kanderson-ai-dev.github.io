@@ -4,13 +4,24 @@
 // preloadable LCP image. React hydrates the static markup on load.
 // Each route also gets its own canonical, hreflang en/es/x-default triplet,
 // og locale and per-route title/description/image (D-I18N1).
-import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
+import { copyFileSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
 import { createServer } from 'vite';
 
 const dist = resolve('dist');
 const template = readFileSync(resolve(dist, 'index.html'), 'utf8');
 copyFileSync(resolve(dist, 'index.html'), resolve(dist, '404.html'));
+
+// Critical fonts (display weight for the H1, body text) — preloading them makes
+// the first paint use the real face instead of the metric-matched fallback.
+const assets = readdirSync(join(dist, 'assets'));
+const fontPreloads = [
+  /chakra-petch-latin-700-normal-[^.]+\.woff2$/,
+  /inter-latin-400-normal-[^.]+\.woff2$/,
+]
+  .map((re) => assets.find((f) => re.test(f)))
+  .filter(Boolean)
+  .map((f) => `/assets/${f}`);
 
 const escapeHtml = (s) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -47,9 +58,11 @@ try {
       `    <meta property="og:locale" content="${route.lang === 'es' ? 'es_ES' : 'en_US'}" />`,
       `    <meta property="og:locale:alternate" content="${route.lang === 'es' ? 'en_US' : 'es_ES'}" />`,
     ];
-    if (route.lcpImage) {
+    // The LCP <img fetchPriority="high"> gets its own preload link hoisted into
+    // the head by React during SSR — no manual image preload needed here.
+    for (const f of fontPreloads) {
       head.push(
-        `    <link rel="preload" as="image" href="${route.lcpImage}" fetchpriority="high" />`,
+        `    <link rel="preload" as="font" type="font/woff2" crossorigin href="${f}" />`,
       );
     }
     html = html.replace('</head>', `${head.join('\n')}\n  </head>`);

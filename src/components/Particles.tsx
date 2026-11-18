@@ -1,7 +1,8 @@
 // Particles — rising, twinkling accent dots (Plan.md §3.3).
 // One canvas, deterministic seeded positions, DPR<=2, <=40 dots,
-// paused off-screen and in background tabs, lazy-started after LCP,
-// static frame under prefers-reduced-motion.
+// paused off-screen and in background tabs, setup deferred to idle so it
+// stays off the main thread during LCP, static frame under
+// prefers-reduced-motion, skipped entirely on Save-Data.
 import { useEffect, useRef } from 'react';
 
 const mulberry32 = (seed: number) => () => {
@@ -18,98 +19,118 @@ export const Particles = ({ count = 32, seed = 7 }: { count?: number; seed?: num
   useEffect(() => {
     const canvas = ref.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    if (
+      (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData ===
+      true
+    )
+      return;
 
-    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const rnd = mulberry32(seed);
-    const dots = Array.from({ length: Math.min(count, 40) }, () => ({
-      x: rnd(),
-      y: rnd(),
-      r: 0.6 + rnd() * 1.8,
-      vy: 0.00018 + rnd() * 0.0005,
-      ph: rnd() * Math.PI * 2,
-      a: 0.25 + rnd() * 0.55,
-    }));
+    let cleanup: (() => void) | undefined;
+    const setup = () => {
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
 
-    let w = 0;
-    let h = 0;
-    let raf = 0;
-    let running = false;
-    let visible = true;
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const rnd = mulberry32(seed);
+      const dots = Array.from({ length: Math.min(count, 40) }, () => ({
+        x: rnd(),
+        y: rnd(),
+        r: 0.6 + rnd() * 1.8,
+        vy: 0.00018 + rnd() * 0.0005,
+        ph: rnd() * Math.PI * 2,
+        a: 0.25 + rnd() * 0.55,
+      }));
 
-    const resize = () => {
-      const dpr = Math.min(devicePixelRatio || 1, 2);
-      const box = canvas.getBoundingClientRect();
-      w = box.width;
-      h = box.height;
-      canvas.width = Math.max(1, Math.round(w * dpr));
-      canvas.height = Math.max(1, Math.round(h * dpr));
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
+      let w = 0;
+      let h = 0;
+      let raf = 0;
+      let running = false;
+      let visible = true;
 
-    const draw = (t: number) => {
-      ctx.clearRect(0, 0, w, h);
-      for (const d of dots) {
-        const y = ((d.y - t * d.vy) % 1 + 1) % 1;
-        const tw = reduced ? 1 : 0.55 + 0.45 * Math.sin(t * 0.0016 + d.ph);
-        ctx.beginPath();
-        ctx.arc(d.x * w, y * h, d.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0,245,212,${(d.a * tw).toFixed(3)})`;
-        ctx.shadowColor = 'rgba(0,245,212,0.7)';
-        ctx.shadowBlur = 6;
-        ctx.fill();
-      }
-    };
+      const resize = () => {
+        const dpr = Math.min(devicePixelRatio || 1, 2);
+        const box = canvas.getBoundingClientRect();
+        w = box.width;
+        h = box.height;
+        canvas.width = Math.max(1, Math.round(w * dpr));
+        canvas.height = Math.max(1, Math.round(h * dpr));
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      };
 
-    const loop = (t: number) => {
-      if (!running) return;
-      draw(t * 0.001);
-      raf = requestAnimationFrame(loop);
-    };
+      const draw = (t: number) => {
+        ctx.clearRect(0, 0, w, h);
+        for (const d of dots) {
+          const y = ((d.y - t * d.vy) % 1 + 1) % 1;
+          const tw = reduced ? 1 : 0.55 + 0.45 * Math.sin(t * 0.0016 + d.ph);
+          ctx.beginPath();
+          ctx.arc(d.x * w, y * h, d.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(0,245,212,${(d.a * tw).toFixed(3)})`;
+          ctx.shadowColor = 'rgba(0,245,212,0.7)';
+          ctx.shadowBlur = 6;
+          ctx.fill();
+        }
+      };
 
-    const start = () => {
-      if (running || !visible) return;
-      running = true;
-      if (reduced) {
-        draw(0);
+      const loop = (t: number) => {
+        if (!running) return;
+        draw(t * 0.001);
+        raf = requestAnimationFrame(loop);
+      };
+
+      const start = () => {
+        if (running || !visible) return;
+        running = true;
+        if (reduced) {
+          draw(0);
+          running = false;
+          return;
+        }
+        raf = requestAnimationFrame(loop);
+      };
+      const stop = () => {
         running = false;
-        return;
-      }
-      raf = requestAnimationFrame(loop);
+        cancelAnimationFrame(raf);
+      };
+
+      resize();
+      const ro = new ResizeObserver(resize);
+      ro.observe(canvas);
+
+      const inView = new IntersectionObserver(
+        (e) => {
+          visible = e[0].isIntersecting;
+          if (visible) start();
+          else stop();
+        },
+        { threshold: 0 },
+      );
+      inView.observe(canvas);
+
+      const onVis = () => (document.hidden ? stop() : start());
+      document.addEventListener('visibilitychange', onVis);
+
+      // lazy start after LCP
+      if (document.readyState === 'complete') start();
+      else addEventListener('load', start, { once: true });
+
+      cleanup = () => {
+        stop();
+        ro.disconnect();
+        inView.disconnect();
+        document.removeEventListener('visibilitychange', onVis);
+        removeEventListener('load', start);
+      };
     };
-    const stop = () => {
-      running = false;
-      cancelAnimationFrame(raf);
-    };
 
-    resize();
-    const ro = new ResizeObserver(resize);
-    ro.observe(canvas);
-
-    const inView = new IntersectionObserver(
-      (e) => {
-        visible = e[0].isIntersecting;
-        if (visible) start();
-        else stop();
-      },
-      { threshold: 0 },
-    );
-    inView.observe(canvas);
-
-    const onVis = () => (document.hidden ? stop() : start());
-    document.addEventListener('visibilitychange', onVis);
-
-    // lazy start after LCP
-    if (document.readyState === 'complete') start();
-    else addEventListener('load', start, { once: true });
-
+    const idle =
+      typeof requestIdleCallback === 'function'
+        ? requestIdleCallback
+        : (cb: () => void) => window.setTimeout(cb, 300);
+    const idleId = idle(setup);
     return () => {
-      stop();
-      ro.disconnect();
-      inView.disconnect();
-      document.removeEventListener('visibilitychange', onVis);
-      removeEventListener('load', start);
+      cleanup?.();
+      if ('cancelIdleCallback' in window) cancelIdleCallback(idleId as number);
+      else clearTimeout(idleId as number);
     };
   }, [count, seed]);
 

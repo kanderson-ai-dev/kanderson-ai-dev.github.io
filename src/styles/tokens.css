@@ -18,9 +18,9 @@
   --warn: #ffb020;
   --glow: rgba(0, 245, 212, 0.4);
 
-  --font-display: 'Chakra Petch', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-display: 'Chakra Petch', 'Chakra Petch Fallback', sans-serif;
+  --font-body: 'Inter', 'Inter Fallback', sans-serif;
+  --font-mono: 'JetBrains Mono', 'JetBrains Mono Fallback', monospace;
 
   --ease: cubic-bezier(0.33, 1, 0.68, 1);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);

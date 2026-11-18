@@ -23,11 +23,9 @@ export interface PrerenderRoute {
   description: string;
   ogDescription?: string;
   ogImage?: string;
-  lcpImage?: string;
 }
 
 const flagship = projects.find((p) => p.slug === 'langgraph-multiagent-orchestrator');
-const loopPoster = flagship?.loop ? `/projects/${flagship.slug}/loop-poster.webp` : undefined;
 const siteOg = flagship ? `${SITE}${flagship.ogImage}` : undefined;
 
 const routesFor = (lang: Lang): PrerenderRoute[] => {
@@ -44,7 +42,6 @@ const routesFor = (lang: Lang): PrerenderRoute[] => {
       description: d.meta.description,
       ogDescription: d.meta.ogDescription,
       ogImage: siteOg,
-      lcpImage: loopPoster,
     },
     {
       path: p('/projects'),
@@ -62,7 +59,6 @@ const routesFor = (lang: Lang): PrerenderRoute[] => {
         title: `${copy.title} — Kaarsten Anderson`,
         description: copy.tagline,
         ogImage: `${SITE}${proj.ogImage}`,
-        lcpImage: `/projects/${proj.slug}/hook-1920.webp`,
       };
     }),
   ];

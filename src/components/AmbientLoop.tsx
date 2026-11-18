@@ -27,7 +27,13 @@ export const AmbientLoop = ({
   const noMotion = useRef(
     typeof matchMedia !== 'undefined' &&
       (matchMedia('(prefers-reduced-motion: reduce)').matches ||
-        (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true),
+        (navigator as Navigator & {
+          connection?: { saveData?: boolean; effectiveType?: string };
+        }).connection?.saveData === true ||
+        ['2g', '3g'].includes(
+          (navigator as Navigator & { connection?: { effectiveType?: string } }).connection
+            ?.effectiveType ?? '',
+        )),
   );
 
   useEffect(() => {

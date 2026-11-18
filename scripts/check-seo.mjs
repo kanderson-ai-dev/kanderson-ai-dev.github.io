@@ -47,6 +47,10 @@ for (const file of walk(DIST)) {
   const og = attr(html, /<meta property="og:url" content="([^"]+)"/);
   if (og && og !== canonical) err(`${rel}: og:url '${og}' != canonical '${canonical}'`);
 
+  const preloads = [...html.matchAll(/<link rel="preload"[^>]*href="([^"]+)"/g)].map((m) => m[1]);
+  const dupes = preloads.filter((p, i) => preloads.indexOf(p) !== i);
+  if (dupes.length) err(`${rel}: duplicate <link rel="preload"> href(s): ${[...new Set(dupes)].join(', ')}`);
+
   const alts = [...html.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"/g)];
   const langs = Object.fromEntries(alts.map((m) => [m[1], m[2]]));
   const selfLang = route === '/es/' || route.startsWith('/es/') ? 'es' : 'en';
