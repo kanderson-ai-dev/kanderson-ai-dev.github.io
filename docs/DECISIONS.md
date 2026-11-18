@@ -122,6 +122,21 @@ Exception: `ecommerce-support-returns-copilot`, grandfathered as published
 the build on a violation). D-OD4 and D-OD7 now cover open-source pages and
 that page only.
 
+## D-OD10 — Multi-Agent CRM is presented as a finished product
+
+Owner decision 2026-11-17: `agentic-crm` ships with `status: 'live'` and
+present-tense copy, even though its agent runtime and governance screens
+are still being built — the buyer sees the product the film sells. Every
+"this is the product" image is a real UI capture; mechanisms without a
+finished screen (agent team, Policy Gate, Approvals Inbox, Audit Chain)
+are shown with film stills as illustrations (D3). The product name on the
+site is **Multi-Agent CRM** — never the working title. `tests: 600` is an
+owner-provided figure that feeds the landing counter only; it is never
+rendered and is to be replaced with the real count once the product's
+test suite ships. Unfinished-product wording ("coming soon", "in
+development", "beta", "roadmap", "planned", "available soon") is banned
+on the page and enforced by `scripts/validate-content.ts`.
+
 ## D-I18N1 — Every published project ships full Spanish copy
 
 All five published projects carry `copy.en` **and** `copy.es` and declare

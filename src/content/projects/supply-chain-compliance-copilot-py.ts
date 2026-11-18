@@ -17,7 +17,7 @@ const gal = (n: number, alt: Localized) => ({
 export const project: Project = {
   slug: 'supply-chain-compliance-copilot-py',
   access: 'on-demand',
-  order: 1,
+  order: 2, // second in the On-demand group; agentic-crm leads, e-commerce is 3
   category: 'python',
   status: 'live',
   year: 2026,

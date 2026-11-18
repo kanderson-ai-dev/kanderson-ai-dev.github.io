@@ -115,6 +115,23 @@ const CONFIDENTIAL: [RegExp, string][] = [
 // Per-project allow-list for false positives: slug -> additional allowed strings.
 const CONFIDENTIAL_ALLOW: Record<string, string[]> = {};
 
+// Working title, demo workspaces and seed names that collide with real
+// companies — they must never reach a published on-demand page (D-OD10).
+const BANNED_NAMES: [RegExp, string][] = [
+  [/\bagentic\s+(?:ai\s+)?crm\b/i, 'product working title'],
+  [/\b(?:northwind|globex|northbeam|meridian|bluepeak|tennyson)\b/i, 'banned workspace/seed name'],
+];
+
+// On-demand pages present finished products (D-OD10): no unfinished-product
+// wording anywhere in copy or alts, in either language.
+const UNFINISHED: [RegExp, string][] = [
+  [
+    /\bcoming soon\b|\bin development\b|\bbeta\b|\broadmap\b|\bplanned\b|\blater milestone\b|\bavailable soon\b/i,
+    'unfinished-product wording',
+  ],
+  [/\bpr[oó]ximamente\b|\ben desarrollo\b|\bhoja de ruta\b/i, 'unfinished-product wording (ES)'],
+];
+
 // D-OD9: on-demand pages sell the product — no architecture section, no
 // results/baseline and no metric figures or test/coverage/CI talk in the
 // copy. Pages published before the rule keep their engineering content
@@ -175,7 +192,7 @@ const confidentialScan = (p: Project) => {
     }
   }
   for (const [text, where] of texts) {
-    for (const [re, what] of CONFIDENTIAL) {
+    for (const [re, what] of [...CONFIDENTIAL, ...BANNED_NAMES, ...UNFINISHED]) {
       const m = re.exec(text);
       if (m && !allow.has(m[0])) {
         errors.push(`${p.slug}: ${where} leaks ${what} — "${m[0]}" in "${text.slice(0, 90)}"`);

@@ -1,0 +1,208 @@
+{
+  "jobs": [
+    {
+      "name": "hero",
+      "template": "hero-trio",
+      "size": [1600, 1000],
+      "out": "hero-1600.webp",
+      "params": {
+        "kicker": "MULTI-AGENT CRM",
+        "kickerY": 16,
+        "center": {
+          "image": "_raw/agentic-crm/00-dashboard-dark.png",
+          "imgSize": [2880, 1800],
+          "crop": [0, 0, 2880, 1760],
+          "tag": "PRODUCT · DASHBOARD"
+        },
+        "left": {
+          "image": "_raw/agentic-crm/00-dashboard-tablet-768.png",
+          "imgSize": [1536, 2048],
+          "crop": [0, 0, 1536, 1500],
+          "tag": "DEALS · TABLET"
+        },
+        "right": {
+          "image": "_raw/agentic-crm/00-dashboard-phone-390.png",
+          "imgSize": [1170, 2532],
+          "crop": [0, 0, 1170, 1950],
+          "tag": "DASHBOARD · PHONE"
+        },
+        "centerWidth": 960,
+        "sideWidth": 620,
+        "sideY": 330,
+        "centerY": 110
+      }
+    },
+    {
+      "name": "card",
+      "template": "card-thumb",
+      "size": [800, 500],
+      "out": "card-800.webp",
+      "params": {
+        "chrome": true,
+        "image": "_raw/agentic-crm/00-dashboard-dark.png",
+        "imgSize": [2880, 1800],
+        "crop": [0, 0, 2880, 1560],
+        "winWidth": 740,
+        "lift": 20,
+        "kickerY": 16,
+        "kicker": "MULTI-AGENT CRM"
+      }
+    },
+    {
+      "name": "og",
+      "template": "og-card",
+      "size": [1200, 630],
+      "out": "og.png",
+      "params": {
+        "image": "_raw/agentic-crm/00-dashboard-dark.png",
+        "imgSize": [2880, 1800],
+        "crop": [0, 0, 2880, 1560],
+        "winWidth": 560,
+        "imgX": 40,
+        "tag": "PRODUCT · DASHBOARD",
+        "kicker": "PRIVATE · ON DEMAND",
+        "title": "Multi-Agent CRM",
+        "titleSize": 46,
+        "tagline": "AI agents do the busywork. You approve the big changes.",
+        "taglineSize": 21
+      }
+    },
+    {
+      "name": "video-poster",
+      "template": "video-poster",
+      "size": [1920, 1080],
+      "out": "video-poster-1920.webp",
+      "params": {
+        "image": "_raw/agentic-crm/stills/title.png",
+        "imgSize": [3840, 2160]
+      }
+    },
+    {
+      "name": "hook",
+      "template": "card-thumb",
+      "size": [1920, 1080],
+      "out": "hook-1920.webp",
+      "params": {
+        "image": "_raw/agentic-crm/stills/hook.png",
+        "imgSize": [3840, 2160]
+      }
+    },
+    {
+      "name": "loop-poster",
+      "template": "card-thumb",
+      "size": [1280, 720],
+      "out": "loop-poster.webp",
+      "params": {
+        "image": "_raw/agentic-crm/stills/loop-poster.png",
+        "imgSize": [2560, 1440]
+      }
+    },
+    {
+      "name": "feature-1",
+      "template": "feature-browser",
+      "size": [1600, 900],
+      "out": "feature-1-1600.webp",
+      "params": {
+        "image": "_raw/agentic-crm/00-dashboard-dark.png",
+        "imgSize": [2880, 1800],
+        "crop": [0, 0, 2880, 1760],
+        "winWidth": 1300,
+        "tag": "PRODUCT · DASHBOARD"
+      }
+    },
+    {
+      "name": "feature-2",
+      "template": "card-thumb",
+      "size": [1600, 900],
+      "out": "feature-2-1600.webp",
+      "params": { "image": "_raw/agentic-crm/stills/team.png", "imgSize": [3840, 2160] }
+    },
+    {
+      "name": "feature-3",
+      "template": "card-thumb",
+      "size": [1600, 900],
+      "out": "feature-3-1600.webp",
+      "params": { "image": "_raw/agentic-crm/stills/gate.png", "imgSize": [3840, 2160] }
+    },
+    {
+      "name": "feature-4",
+      "template": "card-thumb",
+      "size": [1600, 900],
+      "out": "feature-4-1600.webp",
+      "params": { "image": "_raw/agentic-crm/stills/inbox.png", "imgSize": [3840, 2160] }
+    },
+    {
+      "name": "feature-5",
+      "template": "card-thumb",
+      "size": [1600, 900],
+      "out": "feature-5-1600.webp",
+      "params": { "image": "_raw/agentic-crm/stills/chain.png", "imgSize": [3840, 2160] }
+    },
+    {
+      "name": "feature-6",
+      "template": "feature-browser",
+      "size": [1600, 900],
+      "out": "feature-6-1600.webp",
+      "params": {
+        "image": "_raw/agentic-crm/02-deals-board-dark.png",
+        "imgSize": [2880, 1800],
+        "crop": [0, 0, 2880, 1760],
+        "winWidth": 1300,
+        "tag": "PRODUCT · DEALS BOARD"
+      }
+    },
+    {
+      "name": "gallery-1",
+      "template": "feature-browser",
+      "size": [1200, 750],
+      "out": "gallery-1-1200.webp",
+      "params": {
+        "image": "_raw/agentic-crm/10-deal-record-light.png",
+        "imgSize": [2880, 1800],
+        "crop": [0, 0, 2880, 1740],
+        "winWidth": 1060,
+        "tag": "PRODUCT · DEAL RECORD"
+      }
+    },
+    {
+      "name": "gallery-2",
+      "template": "feature-browser",
+      "size": [1200, 750],
+      "out": "gallery-2-1200.webp",
+      "params": {
+        "image": "_raw/agentic-crm/11-account-detail-dark.png",
+        "imgSize": [2880, 1800],
+        "crop": [0, 0, 2880, 1260],
+        "winWidth": 1120,
+        "tag": "PRODUCT · ACCOUNT"
+      }
+    },
+    {
+      "name": "gallery-3",
+      "template": "feature-browser",
+      "size": [1200, 750],
+      "out": "gallery-3-1200.webp",
+      "params": {
+        "image": "_raw/agentic-crm/12-leads-dialog-light.png",
+        "imgSize": [2880, 1800],
+        "crop": [0, 0, 2880, 1740],
+        "winWidth": 1060,
+        "tag": "PRODUCT · LEADS"
+      }
+    },
+    {
+      "name": "gallery-4",
+      "template": "phone-duo",
+      "size": [1200, 750],
+      "out": "gallery-4-1200.webp",
+      "params": {
+        "phones": [
+          { "image": "_raw/agentic-crm/00-dashboard-phone-390.png", "imgSize": [1170, 2532], "crop": [0, 0, 1170, 2100] },
+          { "image": "_raw/agentic-crm/13-deals-phone-390.png", "imgSize": [1170, 2532], "crop": [0, 0, 1170, 2100] }
+        ],
+        "phoneHeight": 610,
+        "gap": 80
+      }
+    }
+  ]
+}

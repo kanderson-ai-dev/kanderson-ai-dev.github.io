@@ -19,6 +19,8 @@ if (shots) mkdirSync('docs/qa/spanish', { recursive: true });
 const ROUTES = [
   '/es',
   '/es/projects',
+  '/es/projects/agentic-crm',
+  '/es/projects/supply-chain-compliance-copilot-py',
   '/es/projects/ecommerce-support-returns-copilot',
   '/es/projects/langgraph-multiagent-orchestrator',
   '/es/projects/mcp-agent-toolkit-py',
@@ -61,7 +63,7 @@ const EN_LEAKS = [
 // chrome labels render via CSS text-transform: uppercase. Nav labels only
 // exist in the open burger on mobile, so they are asserted on desktop only.
 const EXPECT = {
-  landing: [/Medido\./i, /BAJO DEMANDA|CÓDIGO ABIERTO/i],
+  landing: [/medido/i, /BAJO DEMANDA|CÓDIGO ABIERTO/i],
   projects: [/Cada proyecto,/i, /un sistema en producción\./i, /Bajo demanda/i, /Código abierto/i],
   project: [/El problema/i, /La solución/i, /Cómo funciona/i, /Resultados/i, /Resumen|Demo/i],
 };
@@ -97,6 +99,12 @@ const run = async () => {
         `${tag}: <title> still English — ${title}`,
       );
 
+      if (route === '/es') {
+        for (let i = 0; i < 12; i++) {
+          await page.mouse.wheel(0, 900);
+          await page.waitForTimeout(200);
+        }
+      }
       const body = (await page.locator('body').innerText()).replace(/\s+/g, ' ');
       for (const re of EN_LEAKS) {
         const m = re.exec(body);
@@ -104,7 +112,10 @@ const run = async () => {
       }
 
       const kind = route === '/es' ? 'landing' : route === '/es/projects' ? 'projects' : 'project';
+      // non-legacy on-demand pages carry no Results section (D-OD9)
+      const noResults = /agentic-crm|supply-chain-compliance/.test(route);
       for (const re of EXPECT[kind]) {
+        if (noResults && /Resultados/.test(String(re))) continue;
         pass(re.test(body), `${tag}: expected Spanish text missing — ${re}`);
       }
       if (!vp.mobile) {

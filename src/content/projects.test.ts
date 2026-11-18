@@ -21,6 +21,7 @@ const shape = (obj: unknown): unknown =>
 describe('project registry', () => {
   it('contains the published projects: on-demand group first, then open-source, each by order', () => {
     expect(projects.map((p) => p.slug)).toEqual([
+      'agentic-crm',
       'supply-chain-compliance-copilot-py',
       'ecommerce-support-returns-copilot',
       'langgraph-multiagent-orchestrator',
@@ -117,6 +118,7 @@ describe('project registry', () => {
     expect(getProject('mcp-agent-toolkit-py')?.video?.youtubeId).toBe('3UZH518sOVg');
     expect(getProject('agentic-rag-system')?.video?.youtubeId).toBe('EWf5Oz8u7Xg');
     expect(getProject('agentic-api')?.video?.youtubeId).toBe('coUgnI7RFAI');
+    expect(getProject('agentic-crm')?.video?.youtubeId).toBeNull(); // set once the film is uploaded
   });
 
   it('declares English burned-in plus Spanish CC captions on every film', () => {
@@ -129,6 +131,8 @@ describe('project registry', () => {
     expect(totals.testsPublic).toBe(openSourceProjects.reduce((a, p) => a + p.tests, 0));
     expect(totals.projects).toBe(visibleProjects.length);
     expect(totals.openSource + totals.onDemand).toBe(totals.projects);
+    expect([totals.projects, totals.openSource, totals.onDemand]).toEqual([7, 4, 3]);
+    expect([totals.tests, totals.testsPublic, totals.testsPrivate]).toEqual([3453, 1662, 1791]);
   });
 });
 
