@@ -17,7 +17,7 @@ window.render = (p) => {
   const top = (H - ph - bezel * 2 - 5) / 2 + 10;
   for (const sh of shots) {
     const frame = document.createElement('div');
-    frame.style.cssText = `position:absolute;left:${x}px;top:${top}px;width:${sh.pw}px;padding:${bezel}px;border-radius:34px;background:#0b0f12;border:2.5px solid #2a3f3a;
+    frame.style.cssText = `position:absolute;left:${x}px;top:${top}px;width:${sh.pw + bezel * 2 + 5}px;padding:${bezel}px;border-radius:34px;background:#0b0f12;border:2.5px solid #2a3f3a;
       box-shadow:0 34px 90px #000000e0,0 0 0 1px #00F5D42e,0 0 60px #00F5D422;z-index:4`;
     const scr = document.createElement('div');
     scr.style.cssText = `position:relative;width:${sh.pw}px;height:${ph}px;border-radius:24px;overflow:hidden;background:#fff`;
