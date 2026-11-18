@@ -143,8 +143,8 @@ export const project: Project = {
           tone: 'model',
           text: 'The Supervisor routes each job to the right specialist: Lead Qualifier, Account Researcher, Deal Strategist, Meeting Analyst, Email Composer, Compliance Reviewer, Data Steward and Forecast Analyst. Each one does one sales job well.',
           image: img(2, {
-            en: 'Illustration of a Supervisor agent connected to its team of specialist agents',
-            es: 'Ilustración de un agente Supervisor conectado a su equipo de agentes especialistas',
+            en: 'Mockup of the agent team screen: a Supervisor connected to its specialist agents',
+            es: 'Maqueta de la pantalla del equipo de agentes: un Supervisor conectado a sus agentes especialistas',
           }),
         },
         {
@@ -153,8 +153,8 @@ export const project: Project = {
           tone: 'accent',
           text: 'Agents never edit your CRM directly: every change arrives as a proposal. Plain rules, not the AI, decide which ones apply and which ones wait for you.',
           image: img(3, {
-            en: 'Illustration of change proposals passing a policy gate that applies some and holds others',
-            es: 'Ilustración de propuestas de cambio pasando una puerta de reglas que aplica unas y retiene otras',
+            en: 'Mockup of the change proposals screen: some changes applied, others waiting for approval, with the policy rules alongside',
+            es: 'Maqueta de la pantalla de propuestas de cambio: unos cambios aplicados, otros esperando aprobación, con las reglas de política al lado',
           }),
         },
         {
@@ -163,8 +163,8 @@ export const project: Project = {
           tone: 'human',
           text: 'Closing a deal, a large amount change or any outbound email lands in your Approvals Inbox. You see exactly what changes and why, then approve, edit or reject.',
           image: img(4, {
-            en: 'Illustration of an approvals inbox showing an amount change and the reason it needs a human decision',
-            es: 'Ilustración de una bandeja de aprobaciones con un cambio de importe y el motivo por el que necesita una decisión humana',
+            en: 'Mockup of the Approvals Inbox with an amount change, the reason it needs a human decision and Approve, Edit and Reject buttons',
+            es: 'Maqueta del Approvals Inbox con un cambio de importe, el motivo por el que necesita una decisión humana y los botones Aprobar, Editar y Rechazar',
           }),
         },
         {
@@ -173,8 +173,8 @@ export const project: Project = {
           tone: 'accent',
           text: 'Every change, decision and approval joins a tamper-evident Audit Chain. Any edit to the record is detected, so you can always show who changed what, and why.',
           image: img(5, {
-            en: 'Illustration of a tamper-evident audit chain linking each logged change in order',
-            es: 'Ilustración de una cadena de auditoría a prueba de manipulaciones que enlaza en orden cada cambio registrado',
+            en: 'Mockup of the audit chain screen listing each change in order, verified and linked to the previous entry',
+            es: 'Maqueta de la pantalla de la cadena de auditoría con cada cambio en orden, verificado y enlazado con la entrada anterior',
           }),
         },
         {
@@ -248,8 +248,8 @@ export const project: Project = {
           tone: 'model',
           text: 'El Supervisor envía cada tarea al especialista adecuado: Lead Qualifier, Account Researcher, Deal Strategist, Meeting Analyst, Email Composer, Compliance Reviewer, Data Steward y Forecast Analyst. Cada uno hace bien una tarea de ventas.',
           image: img(2, {
-            en: 'Illustration of a Supervisor agent connected to its team of specialist agents',
-            es: 'Ilustración de un agente Supervisor conectado a su equipo de agentes especialistas',
+            en: 'Mockup of the agent team screen: a Supervisor connected to its specialist agents',
+            es: 'Maqueta de la pantalla del equipo de agentes: un Supervisor conectado a sus agentes especialistas',
           }),
         },
         {
@@ -258,8 +258,8 @@ export const project: Project = {
           tone: 'accent',
           text: 'Los agentes nunca editan tu CRM directamente: cada cambio llega como una propuesta. Reglas claras, no la IA, deciden cuáles se aplican y cuáles te esperan.',
           image: img(3, {
-            en: 'Illustration of change proposals passing a policy gate that applies some and holds others',
-            es: 'Ilustración de propuestas de cambio pasando una puerta de reglas que aplica unas y retiene otras',
+            en: 'Mockup of the change proposals screen: some changes applied, others waiting for approval, with the policy rules alongside',
+            es: 'Maqueta de la pantalla de propuestas de cambio: unos cambios aplicados, otros esperando aprobación, con las reglas de política al lado',
           }),
         },
         {
@@ -268,8 +268,8 @@ export const project: Project = {
           tone: 'human',
           text: 'Cerrar un trato, un cambio grande de importe o cualquier email saliente llega a tu Approvals Inbox. Ves exactamente qué cambia y por qué, y apruebas, editas o rechazas.',
           image: img(4, {
-            en: 'Illustration of an approvals inbox showing an amount change and the reason it needs a human decision',
-            es: 'Ilustración de una bandeja de aprobaciones con un cambio de importe y el motivo por el que necesita una decisión humana',
+            en: 'Mockup of the Approvals Inbox with an amount change, the reason it needs a human decision and Approve, Edit and Reject buttons',
+            es: 'Maqueta del Approvals Inbox con un cambio de importe, el motivo por el que necesita una decisión humana y los botones Aprobar, Editar y Rechazar',
           }),
         },
         {
@@ -278,8 +278,8 @@ export const project: Project = {
           tone: 'accent',
           text: 'Cada cambio, decisión y aprobación entra en una Audit Chain a prueba de manipulaciones. Cualquier edición del registro se detecta, así que siempre puedes mostrar quién cambió qué y por qué.',
           image: img(5, {
-            en: 'Illustration of a tamper-evident audit chain linking each logged change in order',
-            es: 'Ilustración de una cadena de auditoría a prueba de manipulaciones que enlaza en orden cada cambio registrado',
+            en: 'Mockup of the audit chain screen listing each change in order, verified and linked to the previous entry',
+            es: 'Maqueta de la pantalla de la cadena de auditoría con cada cambio en orden, verificado y enlazado con la entrada anterior',
           }),
         },
         {

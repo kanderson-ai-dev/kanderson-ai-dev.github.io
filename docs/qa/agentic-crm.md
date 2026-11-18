@@ -26,9 +26,13 @@
 | 13-deals-phone-390 | pass |
 | 14-command-palette-dark | first take listed "Style guide" -> hidden, retaken, pass; not published (optional slot unused) |
 
+## Designed screens (features 2-5)
+
+The product has no agent, proposal, approval or audit screens yet. Features 2-5 use authored HTML screens (agent team, change proposals, approvals inbox, audit chain) rendered inside the running product's real shell (sidebar, header, fonts, tokens), kept local like the capture script. They are mockups, labelled as such in the image alts; replace them with real captures once the product ships those screens.
+
 ## Film-derived images
 
-Stills rendered with `scripts/render-stills.mjs` from the Remotion compositions (no captions, no brackets): hook, title, team, gate, inbox, chain. `CrmLoop` is 6.0 s, 1280x720, silent (webm 1.1 MB, mp4 0.55 MB). Loop poster at frame 270; frame 0 and the last frame are the same empty world (seamless).
+Still rendering below is used only for the film poster, hook and loop poster. Stills rendered with `scripts/render-stills.mjs` from the Remotion compositions (no captions, no brackets): hook, title, team, gate, inbox, chain. `CrmLoop` is 6.0 s, 1280x720, silent (webm 1.1 MB, mp4 0.55 MB). Loop poster at frame 270; frame 0 and the last frame are the same empty world (seamless).
 
 ## Checks run
 
